@@ -1,0 +1,17 @@
+#game-wrapper__player-board-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  height: 500px;
+  width: 500px;
+}
+
+.emptyBlock {
+  background: white;
+  border: solid 1px black;
+}
+
+.shipBlock {
+  background: red;
+  border: solid 1px black;
+}

@@ -1,14 +1,25 @@
 import gameboardFactory from './gameboardFactory';
 
-it('correctly returns the size', () => {
-  let newGrid = gameboardFactory(4);
-  expect(newGrid.gameBoardArray.length).toEqual(4);
+it('returns the size', () => {
+  let newGrid = gameboardFactory();
+  expect(newGrid.gameBoardArray.length).toEqual(10);
 });
 
-it('correctly places a ship', () => {
+it('places a ship', () => {
   let newGrid = gameboardFactory(10);
   newGrid.placeShip(5, 3);
   expect(newGrid.gameBoardArray[5].empty).toEqual(false);
 });
 
-//replace gameboard array indexes of empty blocks with ships
+it('receives attacks', () => {
+  let newGrid = gameboardFactory(10);
+  newGrid.placeShip(5, 3);
+  newGrid.receiveAttack(5);
+  expect(newGrid.gameBoardArray[5].ship.positions[0]).toEqual('X');
+});
+
+it('registers misses', () => {
+  let newGrid = gameboardFactory(10);
+  newGrid.receiveAttack(5);
+  expect(newGrid.gameBoardArray[5].miss).toEqual(true);
+});

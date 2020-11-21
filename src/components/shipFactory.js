@@ -1,6 +1,6 @@
-const shipFactory = (shipLength) => {
+const shipFactory = (coords, shipLength) => {
   let positions = [];
-  for (let i = 0; i < shipLength; i++) {
+  for (let i = coords; i < coords + shipLength; i++) {
     positions.push(i);
   }
 
