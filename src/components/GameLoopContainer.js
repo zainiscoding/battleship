@@ -8,19 +8,41 @@ const GameLoopContainer = (props) => {
   const [player, setPlayer] = useState(playerFactory('Player'));
   const [computer, setComputer] = useState(playerFactory('PC'));
   const [playerShips, setPlayerShips] = useState([]);
-  const [playerBoard, setPlayerBoard] = useState(player.playerBoard);
-  const [computerBoard, setComputerBoard] = useState(computer.playerBoard);
+
+  useEffect(() => {
+    console.log(player);
+    console.log(computer);
+    // eslint-disable-next-line
+  }, [computer]);
 
   function playerHandler() {
-    setPlayerBoard(player.playerBoard.placeShip(3, 3));
+    setComputer((prevState) => {
+      prevState.playerBoard.placeShip(3, 9, 3);
+      return { ...prevState };
+    });
+  }
+
+  function playerAttackHandler(e) {
+    const targetBlock = parseInt(e.target.id);
+    console.log(targetBlock);
+    setComputer((prevState) => {
+      prevState.playerBoard.receiveAttack(targetBlock);
+      return { ...prevState };
+    });
+    console.log(computer);
+  }
+
+  function logger(e) {
+    console.log(e.target.id);
   }
 
   return (
     <DisplayGame
       player={player}
       computer={computer}
-      setPlayerBoard={setPlayerBoard}
       playerHandler={playerHandler}
+      logger={logger}
+      playerAttackHandler={playerAttackHandler}
     />
   );
 };

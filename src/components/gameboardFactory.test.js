@@ -2,12 +2,12 @@ import gameboardFactory from './gameboardFactory';
 
 it('returns the size', () => {
   let newGrid = gameboardFactory();
-  expect(newGrid.gameBoardArray.length).toEqual(10);
+  expect(newGrid.gameBoardArray.length).toEqual(100);
 });
 
 it('places a ship', () => {
   let newGrid = gameboardFactory(10);
-  newGrid.placeShip(5, 3);
+  newGrid.placeShip(5, 10, 3);
   expect(newGrid.gameBoardArray[5].empty).toEqual(false);
 });
 

@@ -1,3 +1,8 @@
+#game-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
 #game-wrapper__player-board-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -6,12 +11,24 @@
   width: 500px;
 }
 
-.emptyBlock {
+#game-wrapper__computer-board-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  height: 500px;
+  width: 500px;
+}
+.empty-block {
   background: white;
   border: solid 1px black;
 }
 
-.shipBlock {
+.ship-block {
+  background: red;
+  border: solid 1px black;
+}
+
+.computer-ship-block {
   background: red;
   border: solid 1px black;
 }

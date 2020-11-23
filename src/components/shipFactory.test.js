@@ -1,7 +1,7 @@
 import shipFactory from './shipFactory';
 
 it('returns the size', () => {
-  let newShip = shipFactory(1, 3);
+  let newShip = shipFactory(1, 3, 3);
   expect(newShip.shipLength).toEqual(3);
 });
 
