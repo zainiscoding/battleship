@@ -17,7 +17,7 @@ it.only('returns the coords', () => {
 
 it.only('gets hit', () => {
   let newShip = shipFactory(5, 3, 3);
-  newShip.hit(6);
+  newShip.hit(6, 3);
   expect(newShip.positions[1].hit).toEqual(true);
 });
 

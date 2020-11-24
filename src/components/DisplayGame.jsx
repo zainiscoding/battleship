@@ -21,69 +21,56 @@ const DisplayGame = (props) => {
       <div id='game-wrapper__computer-board-wrapper'>
         {props.computer.playerBoard.gameBoardArray.map((block, index) => {
           if (block.ship) {
-            for (let i = 0; i < block.ship.positions.length; i++) {
-              return block.ship.positions[i].hit === true ? (
-                <div
-                  key={index}
-                  className='enemy-ship-block'
-                  id={props.setId(index) + ' HIT'}
-                  x={props.setId(index) + ' HIT'}
-                >
-                  HIT
-                </div>
-              ) : (
-                <div
-                  key={index}
-                  className='enemy-ship-block'
-                  id={props.setId(index)}
-                  onClick={props.playerAttackHandler}
-                >
-                  Ship
-                </div>
-              );
-            }
-
-            {
-              /* return block.ship.positions.map((position) => {
-              return position === true ? (
-                <div
-                  key={index}
-                  className='enemy-ship-block'
-                  id={index + ' HIT'}
-                  onClick={props.playerAttackHandler}
-                >
-                  HIT
-                </div>
-              ) : (
-                <div
-                  key={index}
-                  className='enemy-ship-block'
-                  id={index}
-                  onClick={props.playerAttackHandler}
-                >
-                  ship
-                </div>
-              );
-            }); */
-            }
+            return (
+              <div id='ship'>
+                {[...block.ship.positions].map((position) => {
+                  return position.hit === true ? (
+                    <div
+                      key={index}
+                      className='enemy-ship-block'
+                      id={index}
+                      onClick={props.playerAttackHandler}
+                      data-x={props.setX(index)}
+                      data-y={props.setY(index)}
+                    >
+                      HIT
+                    </div>
+                  ) : (
+                    <div
+                      key={index}
+                      id={index}
+                      className='enemy-ship-block'
+                      onClick={props.playerAttackHandler}
+                      data-x={props.setX(index)}
+                      data-y={props.setY(index)}
+                    >
+                      Ship
+                    </div>
+                  );
+                })}
+              </div>
+            );
           } else if (block.miss) {
             return (
               <div key={index} className='miss-block'>
                 Miss
               </div>
             );
-          } else {
-            return (
-              <div
-                key={index}
-                className='empty-block'
-                id={index}
-                x={props.setX(index)}
-                y={props.setY(index)}
-                onClick={props.playerAttackHandler}
-              ></div>
-            );
           }
+          return (
+            <>
+              {!block.ship && (
+                <div
+                  key={index}
+                  className='empty-block'
+                  id={index}
+                  data-x={props.setX(index)}
+                  data-y={props.setY(index)}
+                  onClick={props.playerAttackHandler}
+                ></div>
+              )}
+            </>
+          );
         })}
       </div>
       <button onClick={props.placeTestShip}>Test</button>

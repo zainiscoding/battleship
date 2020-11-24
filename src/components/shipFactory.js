@@ -6,16 +6,17 @@ const shipFactory = (x, y, shipLength) => {
     positions.push(newPosition);
   }
 
-  function hit(coords) {
+  function hit(a, b) {
     positions.forEach((shipBlock) => {
-      if (shipBlock.x === coords) {
+      if (shipBlock.x === a && shipBlock.y === b) {
+        // index(hit);
         positions.splice(positions.indexOf(shipBlock), 1, {
           blockNumber: shipBlock.blockNumber,
           x: shipBlock.x,
           y: shipBlock.y,
           hit: true,
         });
-        console.log(positions);
+        // index(positions);
       }
     });
   }

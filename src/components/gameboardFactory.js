@@ -53,14 +53,19 @@ const gameboardFactory = () => {
     });
   }
 
-  function receiveAttack(coords) {
+  function receiveAttack(blockNumber, a, b) {
     let missBlock = { empty: false, miss: true };
-    if (gameBoardArray[coords].ship) {
-      console.log('hit!');
-      gameBoardArray[coords].ship.hit(coords);
+    let targetArrayBlock = gameBoardArray[blockNumber];
+    if (targetArrayBlock.ship) {
+      targetArrayBlock.ship.positions.forEach((position) => {
+        if (position.x === a && position.y === b) {
+          console.log('hit!');
+          targetArrayBlock.ship.hit(a, b);
+        }
+      });
     } else {
       console.log('MISS!');
-      gameBoardArray.splice(coords, 1, missBlock);
+      gameBoardArray.splice(blockNumber, 1, missBlock);
     }
   }
 

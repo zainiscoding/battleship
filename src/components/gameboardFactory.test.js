@@ -14,7 +14,7 @@ it('places a ship', () => {
 it('receives attacks', () => {
   let newGrid = gameboardFactory(10);
   newGrid.placeShip(5, 9, 3);
-  newGrid.receiveAttack(5);
+  newGrid.receiveAttack(5, 5, 9);
   expect(newGrid.gameBoardArray[5].ship.positions[0].hit).toEqual(true);
 });
 

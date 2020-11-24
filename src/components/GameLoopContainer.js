@@ -10,23 +10,26 @@ const GameLoopContainer = (props) => {
   const [playerShips, setPlayerShips] = useState([]);
 
   useEffect(() => {
-    console.log(player);
-    console.log(computer);
+    // console.log(player);
+    // console.log(computer);
     // eslint-disable-next-line
   }, [computer]);
 
   function placeTestShip() {
     setComputer((prevState) => {
-      prevState.playerBoard.placeShip(3, 0, 3);
+      prevState.playerBoard.placeShip(3, 5, 3);
       return { ...prevState };
     });
+    console.log(computer);
   }
 
   function playerAttackHandler(e) {
-    const targetBlock = parseInt(e.target.id);
-    console.log(targetBlock);
     setComputer((prevState) => {
-      prevState.playerBoard.receiveAttack(targetBlock);
+      prevState.playerBoard.receiveAttack(
+        e.target.id,
+        parseInt(e.target.getAttribute('data-x')),
+        parseInt(e.target.getAttribute('data-y'))
+      );
       return { ...prevState };
     });
   }
@@ -51,6 +54,10 @@ const GameLoopContainer = (props) => {
     }
   }
 
+  function logger(e) {
+    console.log(e.target.getAttribute('data-x'));
+  }
+
   return (
     <DisplayGame
       player={player}
@@ -59,6 +66,7 @@ const GameLoopContainer = (props) => {
       playerAttackHandler={playerAttackHandler}
       setX={setX}
       setY={setY}
+      logger={logger}
     />
   );
 };
