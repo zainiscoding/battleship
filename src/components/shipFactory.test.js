@@ -1,27 +1,32 @@
 import shipFactory from './shipFactory';
 
-it('returns the size', () => {
+it.only('returns the size', () => {
   let newShip = shipFactory(1, 3, 3);
   expect(newShip.shipLength).toEqual(3);
 });
 
-it('returns the coords', () => {
-  let newShip = shipFactory(1, 3);
-  expect(newShip.positions).toEqual([1, 2, 3]);
+it.only('returns the coords', () => {
+  let newShip = shipFactory(1, 3, 3);
+  expect(newShip.positions[0]).toEqual({
+    blockNumber: 0,
+    x: 1,
+    y: 3,
+    hit: false,
+  });
 });
 
-it('gets hit', () => {
-  let newShip = shipFactory(5, 3);
-  newShip.hit(5);
-  expect(newShip.positions).toEqual(['X', 6, 7]);
+it.only('gets hit', () => {
+  let newShip = shipFactory(5, 3, 3);
+  newShip.hit(6);
+  expect(newShip.positions[1].hit).toEqual(true);
 });
 
-it('not sunk by default', () => {
-  let newShip = shipFactory(1, 3);
+it.only('not sunk by default', () => {
+  let newShip = shipFactory(1, 3, 3);
   expect(newShip.isSunk()).toEqual(false);
 });
 
-it('gets sunk', () => {
+it.only('gets sunk', () => {
   let newShip = shipFactory(1, 3);
   newShip.hit(0);
   expect(newShip.isSunk()).toEqual(true);

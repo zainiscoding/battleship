@@ -47,7 +47,7 @@ const gameboardFactory = () => {
       //   return y;
       // }
 
-      let emptyBlock = { empty: true, x: setX(), y: setY() };
+      let emptyBlock = { empty: true, x: setX(), y: setY(), blockNumber: i };
 
       gameBoardArray.push(emptyBlock);
     }
@@ -80,8 +80,10 @@ const gameboardFactory = () => {
   function receiveAttack(coords) {
     let missBlock = { empty: false, miss: true };
     if (gameBoardArray[coords].ship) {
+      console.log('hit!');
       gameBoardArray[coords].ship.hit(coords);
     } else {
+      console.log('MISS!');
       gameBoardArray.splice(coords, 1, missBlock);
     }
   }

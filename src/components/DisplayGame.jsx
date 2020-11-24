@@ -21,16 +21,27 @@ const DisplayGame = (props) => {
       <div id='game-wrapper__computer-board-wrapper'>
         {props.computer.playerBoard.gameBoardArray.map((block, index) => {
           if (block.ship) {
-            return (
-              <div
-                key={index}
-                className='enemy-ship-block'
-                id={index}
-                onClick={props.playerAttackHandler}
-              >
-                ship
-              </div>
-            );
+            {
+              return block.ship.position !== 'X' ? (
+                <div
+                  key={index}
+                  className='enemy-ship-block'
+                  id={index}
+                  onClick={props.playerAttackHandler}
+                >
+                  ship
+                </div>
+              ) : (
+                <div
+                  key={index}
+                  className='enemy-ship-block'
+                  id={index}
+                  onClick={props.playerAttackHandler}
+                >
+                  X
+                </div>
+              );
+            }
           } else if (block.miss) {
             return (
               <div key={index} className='miss-block'>
