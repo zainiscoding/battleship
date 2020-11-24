@@ -7,15 +7,15 @@ it('returns the size', () => {
 
 it('places a ship', () => {
   let newGrid = gameboardFactory(10);
-  newGrid.placeShip(5, 10, 3);
+  newGrid.placeShip(5, 9, 3);
   expect(newGrid.gameBoardArray[5].empty).toEqual(false);
 });
 
 it('receives attacks', () => {
   let newGrid = gameboardFactory(10);
-  newGrid.placeShip(5, 3);
+  newGrid.placeShip(5, 9, 3);
   newGrid.receiveAttack(5);
-  expect(newGrid.gameBoardArray[5].ship.positions[0]).toEqual('X');
+  expect(newGrid.gameBoardArray[5].ship.positions[0].hit).toEqual(true);
 });
 
 it('registers misses', () => {

@@ -21,15 +21,38 @@ const DisplayGame = (props) => {
       <div id='game-wrapper__computer-board-wrapper'>
         {props.computer.playerBoard.gameBoardArray.map((block, index) => {
           if (block.ship) {
-            {
-              return block.ship.position !== 'X' ? (
+            for (let i = 0; i < block.ship.positions.length; i++) {
+              return block.ship.positions[i].hit === true ? (
                 <div
                   key={index}
                   className='enemy-ship-block'
-                  id={index}
+                  id={props.setId(index) + ' HIT'}
+                  x={props.setId(index) + ' HIT'}
+                >
+                  HIT
+                </div>
+              ) : (
+                <div
+                  key={index}
+                  className='enemy-ship-block'
+                  id={props.setId(index)}
                   onClick={props.playerAttackHandler}
                 >
-                  ship
+                  Ship
+                </div>
+              );
+            }
+
+            {
+              /* return block.ship.positions.map((position) => {
+              return position === true ? (
+                <div
+                  key={index}
+                  className='enemy-ship-block'
+                  id={index + ' HIT'}
+                  onClick={props.playerAttackHandler}
+                >
+                  HIT
                 </div>
               ) : (
                 <div
@@ -38,14 +61,15 @@ const DisplayGame = (props) => {
                   id={index}
                   onClick={props.playerAttackHandler}
                 >
-                  X
+                  ship
                 </div>
               );
+            }); */
             }
           } else if (block.miss) {
             return (
               <div key={index} className='miss-block'>
-                X
+                Miss
               </div>
             );
           } else {
@@ -54,13 +78,15 @@ const DisplayGame = (props) => {
                 key={index}
                 className='empty-block'
                 id={index}
+                x={props.setX(index)}
+                y={props.setY(index)}
                 onClick={props.playerAttackHandler}
               ></div>
             );
           }
         })}
       </div>
-      <button onClick={props.playerHandler}>Test</button>
+      <button onClick={props.placeTestShip}>Test</button>
     </div>
   );
 };
