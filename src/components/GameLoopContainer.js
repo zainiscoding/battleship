@@ -1,17 +1,20 @@
-import shipFactory from './shipFactory';
 import playerFactory from './playerFactory';
 import DisplayGame from './DisplayGame';
 import { useEffect, useState } from 'react';
 
 const GameLoopContainer = (props) => {
-  const [playerTurn, setPlayerTurn] = useState(true);
   const [player, setPlayer] = useState(playerFactory('Player'));
   const [computer, setComputer] = useState(playerFactory('PC'));
-  const [playerShips, setPlayerShips] = useState([]);
+  const [computerBoard, setComputerBoard] = useState([]);
 
   useEffect(() => {
-    // console.log(player);
-    // console.log(computer);
+    console.log(player);
+    console.log(computer);
+    // eslint-disable-next-line
+  }, [computer]);
+
+  useEffect(() => {
+    setComputerBoard(computer.playerBoard.gameBoardArray);
     // eslint-disable-next-line
   }, [computer]);
 
@@ -20,7 +23,6 @@ const GameLoopContainer = (props) => {
       prevState.playerBoard.placeShip(3, 5, 3);
       return { ...prevState };
     });
-    console.log(computer);
   }
 
   function playerAttackHandler(e) {
@@ -30,6 +32,7 @@ const GameLoopContainer = (props) => {
         parseInt(e.target.getAttribute('data-x')),
         parseInt(e.target.getAttribute('data-y'))
       );
+      console.log(prevState);
       return { ...prevState };
     });
   }
@@ -54,10 +57,6 @@ const GameLoopContainer = (props) => {
     }
   }
 
-  function logger(e) {
-    console.log(e.target.getAttribute('data-x'));
-  }
-
   return (
     <DisplayGame
       player={player}
@@ -66,7 +65,6 @@ const GameLoopContainer = (props) => {
       playerAttackHandler={playerAttackHandler}
       setX={setX}
       setY={setY}
-      logger={logger}
     />
   );
 };

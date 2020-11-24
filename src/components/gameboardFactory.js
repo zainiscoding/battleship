@@ -51,6 +51,7 @@ const gameboardFactory = () => {
         }
       });
     });
+    console.log(listShips());
   }
 
   function receiveAttack(blockNumber, a, b) {
@@ -69,7 +70,15 @@ const gameboardFactory = () => {
     }
   }
 
-  return { gameBoardArray, placeShip, receiveAttack };
+  function listShips() {
+    gameBoardArray.forEach((block) => {
+      if (block.ship) {
+        return block;
+      }
+    });
+  }
+
+  return { gameBoardArray, placeShip, receiveAttack, listShips };
 };
 
 export default gameboardFactory;

@@ -1,5 +1,3 @@
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-
 const DisplayGame = (props) => {
   return (
     <div id='game-wrapper'>
@@ -50,7 +48,9 @@ const DisplayGame = (props) => {
                 })}
               </div>
             );
-          } else if (block.miss) {
+          }
+
+          if (block.miss) {
             return (
               <div key={index} className='miss-block'>
                 Miss

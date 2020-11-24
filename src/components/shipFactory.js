@@ -9,14 +9,12 @@ const shipFactory = (x, y, shipLength) => {
   function hit(a, b) {
     positions.forEach((shipBlock) => {
       if (shipBlock.x === a && shipBlock.y === b) {
-        // index(hit);
         positions.splice(positions.indexOf(shipBlock), 1, {
           blockNumber: shipBlock.blockNumber,
           x: shipBlock.x,
           y: shipBlock.y,
           hit: true,
         });
-        // index(positions);
       }
     });
   }

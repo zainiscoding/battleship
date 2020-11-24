@@ -28,7 +28,19 @@
   border: solid 1px black;
 }
 
-.computer-ship-block {
+.enemy-ship-block {
+  background: white;
+  border: solid 1px black;
+  height: 100%;
+}
+
+.enemy-ship-block-hit {
   background: red;
+  border: solid 1px black;
+  height: 100%;
+}
+
+.ship {
+  background: white;
   border: solid 1px black;
 }
