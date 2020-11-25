@@ -20,7 +20,8 @@ const shipFactory = (x, y, shipLength) => {
   }
 
   function isSunk() {
-    return positions.every((sunkBlock) => sunkBlock.hit === true);
+    console.log('all sunk');
+    return positions.every((hitBlock) => hitBlock.hit === true);
   }
 
   return { shipLength, positions, hit, isSunk };

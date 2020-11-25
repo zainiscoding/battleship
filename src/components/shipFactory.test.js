@@ -27,7 +27,9 @@ it.only('not sunk by default', () => {
 });
 
 it.only('gets sunk', () => {
-  let newShip = shipFactory(1, 3);
-  newShip.hit(0);
+  let newShip = shipFactory(1, 3, 3);
+  newShip.hit(1, 3);
+  newShip.hit(2, 3);
+  newShip.hit(3, 3);
   expect(newShip.isSunk()).toEqual(true);
 });

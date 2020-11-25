@@ -18,7 +18,7 @@ const DisplayGame = (props) => {
       </div>
       <div id='game-wrapper__computer-board-wrapper'>
         {props.computer.playerBoard.gameBoardArray.map((block, index) => {
-          if (block.hit) {
+          if (block.ship && block.sunk) {
             return (
               <div
                 key={index}
@@ -28,12 +28,23 @@ const DisplayGame = (props) => {
                 data-x={props.setX(index)}
                 data-y={props.setY(index)}
               >
-                HIT
+                Sunk Ship
               </div>
             );
-          }
-
-          if (block.ship && !block.hit) {
+          } else if (block.hit) {
+            return (
+              <div
+                key={index}
+                className='enemy-ship-block'
+                id={index}
+                onClick={props.playerAttackHandler}
+                data-x={props.setX(index)}
+                data-y={props.setY(index)}
+              >
+                Hit
+              </div>
+            );
+          } else if (block.ship && !block.hit) {
             return (
               <div
                 key={index}
@@ -46,9 +57,7 @@ const DisplayGame = (props) => {
                 Ship
               </div>
             );
-          }
-
-          if (block.miss) {
+          } else if (block.miss) {
             return (
               <div key={index} className='miss-block'>
                 Miss

@@ -32,7 +32,6 @@ const GameLoopContainer = (props) => {
         parseInt(e.target.getAttribute('data-x')),
         parseInt(e.target.getAttribute('data-y'))
       );
-      console.log(prevState);
       return { ...prevState };
     });
   }
