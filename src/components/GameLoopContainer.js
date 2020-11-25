@@ -7,12 +7,6 @@ const GameLoopContainer = (props) => {
   const [computer, setComputer] = useState(playerFactory('PC'));
   const [playerTurn, setPlayerTurn] = useState(true);
 
-  useEffect(() => {
-    console.log(player);
-    console.log(computer);
-    // eslint-disable-next-line
-  }, [computer]);
-
   function placeTestShip() {
     setComputer((prevState) => {
       prevState.playerBoard.placeShip(3, 5, 3, 'horizontal');
@@ -45,6 +39,23 @@ const GameLoopContainer = (props) => {
       setPlayerTurn(true);
     }
   }
+
+  //The computer takes a turn every time it's array changes (as a result of being attackedf)
+  useEffect(() => {
+    if (playerTurn === false) {
+      //Timeout used to give the computer some fake thinking time
+      setTimeout(function () {
+        computerAttack();
+      }, 1500);
+    }
+    // eslint-disable-next-line
+  }, [playerTurn]);
+
+  useEffect(() => {
+    console.log(player);
+    console.log(computer);
+    // eslint-disable-next-line
+  }, [computer]);
 
   //Used to set data values in the JSX of <DisplayGame>
   function setX(index) {
