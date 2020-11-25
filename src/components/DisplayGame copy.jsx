@@ -1,21 +1,9 @@
+import DisplayPlayerBoard from './DisplayPlayerBoard';
+
 const DisplayGame = (props) => {
   return (
     <div id='game-wrapper'>
-      <div id='game-wrapper__player-board-wrapper'>
-        {props.player.playerBoard.gameBoardArray.map((block, index) => {
-          if (block.ship) {
-            return <div key={index} className='ship-block'></div>;
-          } else if (block.miss) {
-            return (
-              <div key={index} className='miss-block'>
-                X
-              </div>
-            );
-          } else {
-            return <div key={index} className='empty-block'></div>;
-          }
-        })}
-      </div>
+      <DisplayPlayerBoard setX={props.setX} setY={props.setY} />
       <div id='game-wrapper__computer-board-wrapper'>
         {props.computer.playerBoard.gameBoardArray.map((block, index) => {
           if (block.ship) {

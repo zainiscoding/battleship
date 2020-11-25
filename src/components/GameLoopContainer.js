@@ -5,16 +5,11 @@ import { useEffect, useState } from 'react';
 const GameLoopContainer = (props) => {
   const [player, setPlayer] = useState(playerFactory('Player'));
   const [computer, setComputer] = useState(playerFactory('PC'));
-  const [computerBoard, setComputerBoard] = useState([]);
+  const [playerTurn, setPlayerTurn] = useState(true);
 
   useEffect(() => {
     console.log(player);
     console.log(computer);
-    // eslint-disable-next-line
-  }, [computer]);
-
-  useEffect(() => {
-    setComputerBoard(computer.playerBoard.gameBoardArray);
     // eslint-disable-next-line
   }, [computer]);
 
@@ -27,16 +22,31 @@ const GameLoopContainer = (props) => {
   }
 
   function playerAttackHandler(e) {
-    setComputer((prevState) => {
-      prevState.playerBoard.receiveAttack(
-        e.target.id,
-        parseInt(e.target.getAttribute('data-x')),
-        parseInt(e.target.getAttribute('data-y'))
-      );
-      return { ...prevState };
-    });
+    if (playerTurn === true) {
+      setComputer((prevState) => {
+        prevState.playerBoard.receiveAttack(
+          e.target.id,
+          parseInt(e.target.getAttribute('data-x')),
+          parseInt(e.target.getAttribute('data-y'))
+        );
+        return { ...prevState };
+      });
+      setPlayerTurn(false);
+    }
   }
 
+  function computerAttack() {
+    let randomPosition = Math.floor(Math.random() * 100);
+    if (playerTurn === false) {
+      setPlayer((prevState) => {
+        prevState.playerBoard.receiveAttack(randomPosition);
+        return { ...prevState };
+      });
+      setPlayerTurn(true);
+    }
+  }
+
+  //Used to set data values in the JSX of <DisplayGame>
   function setX(index) {
     let x = index;
     if (index > 9) {
@@ -46,6 +56,7 @@ const GameLoopContainer = (props) => {
     }
   }
 
+  //Same as above
   //Thanks to 'cyborg/human#5133' on TOP Discord for the way cleaner version of this function!
   function setY(index) {
     let y = 9;
@@ -65,6 +76,7 @@ const GameLoopContainer = (props) => {
       playerAttackHandler={playerAttackHandler}
       setX={setX}
       setY={setY}
+      computerAttack={computerAttack}
     />
   );
 };

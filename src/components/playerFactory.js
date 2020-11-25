@@ -3,12 +3,12 @@ import gameboardFactory from './gameboardFactory';
 const playerFactory = (name) => {
   const playerBoard = gameboardFactory();
 
-  function makePlay(x, y, length) {
-    let randomPosition = Math.random() * 10;
+  function makePlay(toAttack, x, y, length) {
+    let randomPosition = Math.floor(Math.random() * 100);
     if (x !== undefined) {
-      playerBoard.placeShip(x, y, length);
+      toAttack.placeShip(x, y, length);
     } else {
-      playerBoard.placeShip(randomPosition, randomPosition + 1, 3);
+      toAttack.receiveAttack(randomPosition);
     }
   }
 

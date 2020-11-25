@@ -61,6 +61,7 @@ const gameboardFactory = () => {
   }
 
   function receiveAttack(blockNumber, a, b) {
+    console.log(blockNumber);
     let targetArrayBlock = gameBoardArray[blockNumber];
     let missBlock = { empty: false, miss: true, hit: false };
     let hitBlock = {
