@@ -20,7 +20,8 @@ const GameLoopContainer = (props) => {
 
   function placeTestShip() {
     setComputer((prevState) => {
-      prevState.playerBoard.placeShip(3, 5, 3);
+      prevState.playerBoard.placeShip(3, 5, 3, 'horizontal');
+      prevState.playerBoard.placeShip(3, 5, 3, 'vertical');
       return { ...prevState };
     });
   }

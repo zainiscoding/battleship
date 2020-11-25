@@ -31,26 +31,33 @@ const gameboardFactory = () => {
     }
   })();
 
-  function placeShip(x, y, shipLength) {
-    const newShip = shipFactory(x, y, shipLength);
+  function placeShip(x, y, shipLength, orientation) {
+    const newShip = shipFactory(x, y, shipLength, orientation);
+
     let shipBlock = {
       empty: false,
       ship: newShip,
     };
-    gameBoardArray.forEach((emptyBlock) => {
-      shipBlock.ship.positions.forEach((shipPosition) => {
-        if (
-          shipPosition.x === emptyBlock.x &&
-          shipPosition.y === emptyBlock.y
-        ) {
-          gameBoardArray.splice(
-            gameBoardArray.indexOf(emptyBlock),
-            1,
-            shipBlock
-          );
+
+    function addTheShip(shipToAdd) {
+      gameBoardArray.forEach((emptyBlock) => {
+        if (shipToAdd.ship !== null) {
+          shipToAdd.ship.positions.forEach((shipPosition) => {
+            if (
+              shipPosition.x === emptyBlock.x &&
+              shipPosition.y === emptyBlock.y
+            ) {
+              gameBoardArray.splice(
+                gameBoardArray.indexOf(emptyBlock),
+                1,
+                shipToAdd
+              );
+            }
+          });
         }
       });
-    });
+    }
+    addTheShip(shipBlock);
   }
 
   function receiveAttack(blockNumber, a, b) {
