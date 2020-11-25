@@ -27,7 +27,6 @@ const shipFactory = (x, y, shipLength, orientation) => {
   }
 
   function isSunk() {
-    console.log('all sunk');
     return positions.every((hitBlock) => hitBlock.hit === true);
   }
 

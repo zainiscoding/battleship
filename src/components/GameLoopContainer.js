@@ -7,11 +7,11 @@ const GameLoopContainer = (props) => {
   const [computer, setComputer] = useState(playerFactory('PC'));
   const [playerTurn, setPlayerTurn] = useState(true);
   const [hitPlayerBlocks, setHitPlayerBlocks] = useState([]);
+  const [gameOver, setGameOver] = useState(false);
 
   function placeTestShip() {
     setComputer((prevState) => {
       prevState.playerBoard.placeShip(3, 5, 3, 'horizontal');
-      prevState.playerBoard.placeShip(3, 5, 3, 'vertical');
       return { ...prevState };
     });
     setPlayer((prevState) => {
@@ -55,23 +55,6 @@ const GameLoopContainer = (props) => {
     setPlayerTurn(true);
   }
 
-  //The computer takes a turn every time it's array changes (as a result of being attackedf)
-  useEffect(() => {
-    if (playerTurn === false) {
-      //Timeout used to give the computer some fake thinking time
-      setTimeout(function () {
-        computerAttack();
-      }, 0);
-    }
-    // eslint-disable-next-line
-  }, [playerTurn]);
-
-  useEffect(() => {
-    console.log(player);
-    console.log(computer);
-    // eslint-disable-next-line
-  }, [computer]);
-
   //Used to set data values in the JSX of <DisplayGame>
   function setX(index) {
     let x = index;
@@ -93,6 +76,51 @@ const GameLoopContainer = (props) => {
       return (y = 9 - val);
     }
   }
+
+  //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
+  useEffect(() => {
+    if (playerTurn === false) {
+      //Timeout used to give the computer some fake thinking time
+      setTimeout(function () {
+        computerAttack();
+      }, 0);
+    }
+    // eslint-disable-next-line
+  }, [playerTurn]);
+
+  useEffect(() => {
+    console.log(player);
+    console.log(computer);
+    // eslint-disable-next-line
+  }, [computer]);
+
+  useEffect(() => {
+    const computerShips = [];
+    const playerShips = [];
+    computer.playerBoard.gameBoardArray.forEach((arrayItem) => {
+      if (arrayItem.ship && !computerShips.includes(arrayItem.ship)) {
+        computerShips.push(arrayItem.ship);
+        console.log(computerShips);
+      }
+    });
+
+    player.playerBoard.gameBoardArray.forEach((arrayItem) => {
+      if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
+        playerShips.push(arrayItem.ship);
+        console.log(computerShips);
+      }
+    });
+
+    if (computerShips.every((ship) => ship.isSunk())) {
+      console.log('all sunk! winner!');
+      setGameOver(true);
+    }
+    if (playerShips.every((ship) => ship.isSunk())) {
+      console.log('all sunk! loser!');
+      setGameOver(true);
+    }
+    // eslint-disable-next-line
+  }, [computer]);
 
   return (
     <DisplayGame
