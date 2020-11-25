@@ -55,17 +55,18 @@ const gameboardFactory = () => {
   }
 
   function receiveAttack(blockNumber, a, b) {
-    let missBlock = { empty: false, miss: true };
     let targetArrayBlock = gameBoardArray[blockNumber];
+    let missBlock = { empty: false, miss: true };
+    let hitBlock = {
+      empty: false,
+      hit: true,
+      ship: gameBoardArray[blockNumber].ship,
+    };
+    console.log(blockNumber, a, b);
     if (targetArrayBlock.ship) {
-      targetArrayBlock.ship.positions.forEach((position) => {
-        if (position.x === a && position.y === b) {
-          console.log('hit!');
-          targetArrayBlock.ship.hit(a, b);
-        }
-      });
+      targetArrayBlock.ship.hit(a, b);
+      gameBoardArray.splice(blockNumber, 1, hitBlock);
     } else {
-      console.log('MISS!');
       gameBoardArray.splice(blockNumber, 1, missBlock);
     }
   }

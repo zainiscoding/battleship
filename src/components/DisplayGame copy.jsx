@@ -18,32 +18,34 @@ const DisplayGame = (props) => {
       </div>
       <div id='game-wrapper__computer-board-wrapper'>
         {props.computer.playerBoard.gameBoardArray.map((block, index) => {
-          if (block.hit) {
+          if (block.ship) {
             return (
-              <div
-                key={index}
-                className='enemy-ship-block'
-                id={index}
-                onClick={props.playerAttackHandler}
-                data-x={props.setX(index)}
-                data-y={props.setY(index)}
-              >
-                HIT
-              </div>
-            );
-          }
-
-          if (block.ship && !block.hit) {
-            return (
-              <div
-                key={index}
-                className='enemy-ship-block'
-                id={index}
-                onClick={props.playerAttackHandler}
-                data-x={props.setX(index)}
-                data-y={props.setY(index)}
-              >
-                Ship
+              <div id='ship'>
+                {[...block.ship.positions].map((position) => {
+                  return position.hit === true ? (
+                    <div
+                      key={index}
+                      className='enemy-ship-block'
+                      id={index}
+                      onClick={props.playerAttackHandler}
+                      data-x={props.setX(index)}
+                      data-y={props.setY(index)}
+                    >
+                      HIT
+                    </div>
+                  ) : (
+                    <div
+                      key={index}
+                      id={index}
+                      className='enemy-ship-block'
+                      onClick={props.playerAttackHandler}
+                      data-x={props.setX(index)}
+                      data-y={props.setY(index)}
+                    >
+                      Ship
+                    </div>
+                  );
+                })}
               </div>
             );
           }
