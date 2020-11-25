@@ -98,7 +98,7 @@ const gameboardFactory = () => {
 
     //Else if you missed, replace the clicked block with a 'miss' block
     else {
-      gameBoardArray.splice(blockNumber, 1, missBlock);
+      return gameBoardArray.splice(blockNumber, 1, missBlock);
     }
   }
 

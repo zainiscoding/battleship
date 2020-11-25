@@ -6,11 +6,19 @@ const GameLoopContainer = (props) => {
   const [player, setPlayer] = useState(playerFactory('Player'));
   const [computer, setComputer] = useState(playerFactory('PC'));
   const [playerTurn, setPlayerTurn] = useState(true);
+  const [hitPlayerBlocks, setHitPlayerBlocks] = useState([]);
 
   function placeTestShip() {
     setComputer((prevState) => {
       prevState.playerBoard.placeShip(3, 5, 3, 'horizontal');
       prevState.playerBoard.placeShip(3, 5, 3, 'vertical');
+      return { ...prevState };
+    });
+    setPlayer((prevState) => {
+      prevState.playerBoard.placeShip(3, 5, 3, 'horizontal');
+      prevState.playerBoard.placeShip(3, 5, 3, 'vertical');
+      prevState.playerBoard.placeShip(1, 3, 3, 'horizontal');
+      prevState.playerBoard.placeShip(1, 5, 3, 'vertical');
       return { ...prevState };
     });
   }
@@ -30,14 +38,21 @@ const GameLoopContainer = (props) => {
   }
 
   function computerAttack() {
-    let randomPosition = Math.floor(Math.random() * 100);
-    if (playerTurn === false) {
-      setPlayer((prevState) => {
-        prevState.playerBoard.receiveAttack(randomPosition);
-        return { ...prevState };
-      });
-      setPlayerTurn(true);
+    let position = 0;
+    function getPosition() {
+      return (position = Math.floor(Math.random() * 100));
     }
+    setHitPlayerBlocks([...hitPlayerBlocks, getPosition()]);
+
+    while (hitPlayerBlocks.includes(position) && hitPlayerBlocks.length < 100) {
+      setHitPlayerBlocks([...hitPlayerBlocks, getPosition()]);
+    }
+
+    setPlayer((prevState) => {
+      prevState.playerBoard.receiveAttack(position);
+      return { ...prevState };
+    });
+    setPlayerTurn(true);
   }
 
   //The computer takes a turn every time it's array changes (as a result of being attackedf)
@@ -46,7 +61,7 @@ const GameLoopContainer = (props) => {
       //Timeout used to give the computer some fake thinking time
       setTimeout(function () {
         computerAttack();
-      }, 1500);
+      }, 0);
     }
     // eslint-disable-next-line
   }, [playerTurn]);
