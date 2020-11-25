@@ -28,6 +28,17 @@
   border: solid 1px black;
 }
 
+.player-ship-block {
+  border: solid 1px black;
+  height: 100%;
+}
+
+.invisible-block {
+  background: white;
+  height: 100%;
+  width: 100%;
+}
+
 .enemy-ship-block {
   background: white;
   border: solid 1px black;

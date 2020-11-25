@@ -8,6 +8,7 @@ const GameLoopContainer = (props) => {
   const [playerTurn, setPlayerTurn] = useState(true);
   const [hitPlayerBlocks, setHitPlayerBlocks] = useState([]);
   const [gameOver, setGameOver] = useState(false);
+  const [startingPlayerShips, setStartingPlayerShips] = useState([]);
 
   function placeTestShip() {
     setComputer((prevState) => {
@@ -89,10 +90,23 @@ const GameLoopContainer = (props) => {
   }, [playerTurn]);
 
   useEffect(() => {
-    console.log(player);
-    console.log(computer);
+    console.log(startingPlayerShips);
     // eslint-disable-next-line
-  }, [computer]);
+  }, []);
+
+  useEffect(() => {
+    setStartingPlayerShips((prevState) => {
+      console.log(player.playerShipsStart);
+      const shipsToAdd = player.playerShipsStart;
+      // player.playerBoard.gameBoardArray.forEach((block) => {
+      //   if (block.ship && !shipsToAdd.includes(block.ship)) {
+      //     shipsToAdd.push(block.ship);
+      //   }
+      // });
+      return { ...prevState, shipsToAdd };
+    });
+    // eslint-disable-next-line
+  }, [player]);
 
   useEffect(() => {
     const computerShips = [];
@@ -100,14 +114,12 @@ const GameLoopContainer = (props) => {
     computer.playerBoard.gameBoardArray.forEach((arrayItem) => {
       if (arrayItem.ship && !computerShips.includes(arrayItem.ship)) {
         computerShips.push(arrayItem.ship);
-        console.log(computerShips);
       }
     });
 
     player.playerBoard.gameBoardArray.forEach((arrayItem) => {
       if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
         playerShips.push(arrayItem.ship);
-        console.log(computerShips);
       }
     });
 
@@ -115,6 +127,7 @@ const GameLoopContainer = (props) => {
       console.log('all sunk! winner!');
       setGameOver(true);
     }
+
     if (playerShips.every((ship) => ship.isSunk())) {
       console.log('all sunk! loser!');
       setGameOver(true);
@@ -131,6 +144,7 @@ const GameLoopContainer = (props) => {
       setX={setX}
       setY={setY}
       computerAttack={computerAttack}
+      startingPlayerShips={startingPlayerShips}
     />
   );
 };
