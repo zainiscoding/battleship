@@ -1,20 +1,18 @@
-import { DragDropContext } from 'react-beautiful-dnd';
-
-const DisplayPlayerShips = (props) => {
+const DisplayPlayerShipDock = (props) => {
   return (
     <div id='player-ships-wrapper'>
-      {props.startingPlayerShips.shipsToAdd.map((ship, index) => {
+      {props.player.playerShips.map((ship, index) => {
         return (
           <div
             key={index}
-            className='player-ship-block'
-            id={index}
-            data-x={props.setX(index)}
-            data-y={props.setY(index)}
+            className={'player-ships-wrapper__ship--' + ship.getOrientation()}
+            data-shipnumber={index}
+            data-length={ship.getShipLength()}
+            data-orientation={ship.getOrientation()}
+            onClick={props.chooseShip}
           >
-            Ship {index}
-            {ship.shipLength}
-            <div>
+            <button onClick={props.rotateShip}>Rotate</button>
+            <>
               {ship.positions.map((position, index) => {
                 return (
                   <div
@@ -28,7 +26,7 @@ const DisplayPlayerShips = (props) => {
                   </div>
                 );
               })}
-            </div>
+            </>
           </div>
         );
       })}
@@ -36,4 +34,4 @@ const DisplayPlayerShips = (props) => {
   );
 };
 
-export default DisplayPlayerShips;
+export default DisplayPlayerShipDock;

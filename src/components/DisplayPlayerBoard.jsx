@@ -55,6 +55,7 @@ const DisplayPlayerBoard = (props) => {
                   id={index}
                   data-x={props.setX(index)}
                   data-y={props.setY(index)}
+                  onClick={props.placeChosenShip}
                 ></div>
               )}
             </>

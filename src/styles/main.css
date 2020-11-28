@@ -51,7 +51,38 @@
   height: 100%;
 }
 
+#player-ships-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: fit-content;
+}
+
 .ship {
   background: white;
   border: solid 1px black;
+}
+
+.player-ships-wrapper__ship--horizontal {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  padding: 20px;
+}
+
+.player-ships-wrapper__ship--vertical {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  padding: 20px;
+}
+
+.player-ship__ship-blocks {
+  display: flex;
+}
+
+.player-ship-block {
+  height: 49px;
+  width: 49px;
+  border: solid 1px black;
+  pointer-events: none;
 }

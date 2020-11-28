@@ -33,13 +33,16 @@ const gameboardFactory = () => {
 
   function placeShip(x, y, shipLength, orientation) {
     const newShip = shipFactory(x, y, shipLength, orientation);
-
+    console.log(shipLength);
+    console.log(newShip);
     let shipBlock = {
       empty: false,
       ship: newShip,
     };
+    console.log('----------------');
 
     function addTheShip(shipToAdd) {
+      console.log(shipToAdd);
       gameBoardArray.forEach((emptyBlock) => {
         if (shipToAdd.ship !== null) {
           shipToAdd.ship.positions.forEach((shipPosition) => {

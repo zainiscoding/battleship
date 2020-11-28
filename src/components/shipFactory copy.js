@@ -41,14 +41,14 @@ const shipFactory = (x, y, shipLength, orientation) => {
 
   function rotateSelf() {
     if (orientation === 'horizontal') {
-      this.orientation = 'vertical';
+      orientation = 'vertical';
     } else if (orientation === 'vertical') {
-      this.orientation = 'horizontal';
+      orientation = 'horizontal';
     }
-    console.log(getOrientation());
+    return orientation;
   }
 
-  return { getShipLength, getOrientation, positions, hit, isSunk, rotateSelf };
+  return { getShipLength, orientation, positions, hit, isSunk, rotateSelf };
 };
 
 export default shipFactory;

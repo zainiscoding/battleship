@@ -1,6 +1,7 @@
 import DisplayPlayerBoard from './DisplayPlayerBoard';
-import DisplayPlayerShips from './DisplayPlayerShips';
+import DisplayPlayerShips from './DisplayPlayerShipDock';
 import DisplayComputerBoard from './DisplayComputerBoard';
+import PlayerShipDockContainer from './PlayerShipDockContainer';
 
 const DisplayGame = (props) => {
   return (
@@ -9,21 +10,22 @@ const DisplayGame = (props) => {
         player={props.player}
         setX={props.setX}
         setY={props.setY}
+        placeChosenShip={props.placeChosenShip}
       />
       <DisplayComputerBoard
         computerBoardArray={props.computer.playerBoard.gameBoardArray}
         setX={props.setX}
         setY={props.setY}
         playerAttackHandler={props.playerAttackHandler}
+        placeChosenShip={props.placeChosenShip}
       />
-      {props.startingPlayerShips.shipsToAdd !== undefined && (
-        <DisplayPlayerShips
-          player={props.player}
-          startingPlayerShips={props.startingPlayerShips}
-          setX={props.setX}
-          setY={props.setY}
-        />
-      )}
+      <PlayerShipDockContainer
+        player={props.player}
+        setX={props.setX}
+        setY={props.setY}
+        chooseShip={props.chooseShip}
+        rotateShip={props.rotateShip}
+      />
       <button onClick={props.placeTestShip}>Test</button>
       <button onClick={props.computerAttack}>Attacked</button>
       <div id='player-ship-wrapper'></div>

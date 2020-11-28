@@ -8,18 +8,13 @@ const GameLoopContainer = (props) => {
   const [playerTurn, setPlayerTurn] = useState(true);
   const [hitPlayerBlocks, setHitPlayerBlocks] = useState([]);
   const [gameOver, setGameOver] = useState(false);
-  const [startingPlayerShips, setStartingPlayerShips] = useState([]);
+  const [preparing, setPreparing] = useState(true);
+  const [placingShip, setPlacingShip] = useState(false);
+  const [chosenShip, setChosenShip] = useState();
 
   function placeTestShip() {
     setComputer((prevState) => {
       prevState.playerBoard.placeShip(3, 5, 3, 'horizontal');
-      return { ...prevState };
-    });
-    setPlayer((prevState) => {
-      prevState.playerBoard.placeShip(3, 5, 3, 'horizontal');
-      prevState.playerBoard.placeShip(3, 5, 3, 'vertical');
-      prevState.playerBoard.placeShip(1, 3, 3, 'horizontal');
-      prevState.playerBoard.placeShip(1, 5, 3, 'vertical');
       return { ...prevState };
     });
   }
@@ -78,59 +73,90 @@ const GameLoopContainer = (props) => {
     }
   }
 
+  function chooseShip(e) {
+    const chosenShip = {};
+    chosenShip.shipLength = parseInt(e.target.getAttribute('data-length'));
+    chosenShip.orientation = e.target.getAttribute('data-orientation');
+    setPlacingShip(true);
+    setChosenShip(chosenShip);
+  }
+
+  function rotateShip(e) {
+    const targetShipNumber = e.target.parentNode.getAttribute(
+      'data-shipnumber'
+    );
+    console.log('input ^^^^ orientation');
+    setPlayer((prevState) => {
+      prevState.rotateShip(targetShipNumber);
+      return { ...prevState };
+    });
+
+    // orientation === 'horizontal'
+    //   ? setPlayer((prevState) => {
+    //       console.log(prevState.playerShips[targetShipNumber]);
+    //       prevState.rotateHorizontalShip(targetShipNumber);
+    //       return { ...prevState };
+    //     })
+    //   : setPlayer((prevState) => {
+    //       console.log(prevState.playerShips[targetShipNumber]);
+    //       prevState.rotateVerticalShip(targetShipNumber);
+    //       return { ...prevState };
+    //     });
+  }
+
+  function placeChosenShip(e) {
+    console.log(chosenShip);
+    console.log(chosenShip.shipLength);
+    const targetBlockX = parseInt(e.target.getAttribute('data-x'));
+    const targetBlockY = parseInt(e.target.getAttribute('data-y'));
+    setPlayer((prevState) => {
+      prevState.playerBoard.placeShip(
+        targetBlockX,
+        targetBlockY,
+        chosenShip.shipLength,
+        chosenShip.orientation
+      );
+      return { ...prevState };
+    });
+  }
+
   //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
   useEffect(() => {
     if (playerTurn === false) {
-      //Timeout used to give the computer some fake thinking time
+      //     //Timeout used to give the computer some fake thinking time
       setTimeout(function () {
         computerAttack();
       }, 0);
     }
-    // eslint-disable-next-line
+    //   // eslint-disable-next-line
   }, [playerTurn]);
 
+  //Checks for game over
   useEffect(() => {
-    console.log(startingPlayerShips);
-    // eslint-disable-next-line
-  }, []);
+    if (!preparing) {
+      const computerShips = [];
+      const playerShips = [];
+      computer.playerBoard.gameBoardArray.forEach((arrayItem) => {
+        if (arrayItem.ship && !computerShips.includes(arrayItem.ship)) {
+          computerShips.push(arrayItem.ship);
+        }
+      });
 
-  useEffect(() => {
-    setStartingPlayerShips((prevState) => {
-      console.log(player.playerShipsStart);
-      const shipsToAdd = player.playerShipsStart;
-      // player.playerBoard.gameBoardArray.forEach((block) => {
-      //   if (block.ship && !shipsToAdd.includes(block.ship)) {
-      //     shipsToAdd.push(block.ship);
-      //   }
-      // });
-      return { ...prevState, shipsToAdd };
-    });
-    // eslint-disable-next-line
-  }, [player]);
+      player.playerBoard.gameBoardArray.forEach((arrayItem) => {
+        if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
+          playerShips.push(arrayItem.ship);
+        }
+      });
 
-  useEffect(() => {
-    const computerShips = [];
-    const playerShips = [];
-    computer.playerBoard.gameBoardArray.forEach((arrayItem) => {
-      if (arrayItem.ship && !computerShips.includes(arrayItem.ship)) {
-        computerShips.push(arrayItem.ship);
+      if (computerShips.every((ship) => ship.isSunk())) {
+        console.log('all sunk! winner!');
+        setGameOver(true);
       }
-    });
 
-    player.playerBoard.gameBoardArray.forEach((arrayItem) => {
-      if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
-        playerShips.push(arrayItem.ship);
+      if (playerShips.every((ship) => ship.isSunk())) {
+        console.log('all sunk! loser!');
+        setGameOver(true);
       }
-    });
-
-    if (computerShips.every((ship) => ship.isSunk())) {
-      console.log('all sunk! winner!');
-      setGameOver(true);
-    }
-
-    if (playerShips.every((ship) => ship.isSunk())) {
-      console.log('all sunk! loser!');
-      setGameOver(true);
     }
     // eslint-disable-next-line
   }, [computer]);
@@ -144,7 +170,9 @@ const GameLoopContainer = (props) => {
       setX={setX}
       setY={setY}
       computerAttack={computerAttack}
-      startingPlayerShips={startingPlayerShips}
+      chooseShip={chooseShip}
+      placeChosenShip={placeChosenShip}
+      rotateShip={rotateShip}
     />
   );
 };
