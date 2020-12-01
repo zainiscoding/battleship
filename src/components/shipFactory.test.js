@@ -1,14 +1,13 @@
 import shipFactory from './shipFactory';
 
 it('returns the size', () => {
-  let newShip = shipFactory(1, 3, 3);
-  expect(newShip.shipLength).toEqual(3);
+  let newShip = shipFactory(1, 3, 3, 'horizontal');
+  expect(newShip.getShipLength()).toEqual(3);
 });
 
 it('returns the coords', () => {
   let newShip = shipFactory(1, 3, 3, 'horizontal');
   expect(newShip.positions[2]).toEqual({
-    blockNumber: 2,
     x: 3,
     y: 3,
     hit: false,
@@ -18,7 +17,6 @@ it('returns the coords', () => {
 it('rotates correctly', () => {
   let newShip = shipFactory(1, 3, 3, 'vertical');
   expect(newShip.positions[2]).toEqual({
-    blockNumber: 2,
     x: 1,
     y: 1,
     hit: false,
@@ -59,6 +57,12 @@ it('gets sunk vertically', () => {
 });
 
 it('doesnt break the grid', () => {
-  let newShip = shipFactory(8, 3, 3);
+  let newShip = shipFactory(8, 3, 3, 'horizontal');
   expect(newShip).toEqual(null);
+});
+
+it('doesnt overlap other ships', () => {
+  let newShip = shipFactory(1, 3, 3, 'horizontal');
+  let newShip2 = shipFactory(0, 3, 5, 'horizontal');
+  expect(newShip2).toEqual(null);
 });

@@ -2,12 +2,12 @@ const shipFactory = (x, y, shipLength, orientation) => {
   let positions = [];
   if (orientation === 'horizontal') {
     for (let i = 0; i < shipLength; i++) {
-      const newPosition = { blockNumber: i, x: x + i, y: y, hit: false };
+      const newPosition = { x: x + i, y: y, hit: false };
       positions.push(newPosition);
     }
   } else {
     for (let i = 0; i < shipLength; i++) {
-      const newPosition = { blockNumber: i, x: x, y: y - i, hit: false };
+      const newPosition = { x: x, y: y - i, hit: false };
       positions.push(newPosition);
     }
   }
@@ -19,7 +19,6 @@ const shipFactory = (x, y, shipLength, orientation) => {
     positions.forEach((shipBlock) => {
       if (shipBlock.x === a && shipBlock.y === b) {
         positions.splice(positions.indexOf(shipBlock), 1, {
-          blockNumber: shipBlock.blockNumber,
           x: shipBlock.x,
           y: shipBlock.y,
           hit: true,
@@ -39,16 +38,7 @@ const shipFactory = (x, y, shipLength, orientation) => {
     return null;
   }
 
-  function rotateSelf() {
-    if (orientation === 'horizontal') {
-      this.orientation = 'vertical';
-    } else if (orientation === 'vertical') {
-      this.orientation = 'horizontal';
-    }
-    console.log(getOrientation());
-  }
-
-  return { getShipLength, getOrientation, positions, hit, isSunk, rotateSelf };
+  return { getShipLength, getOrientation, positions, hit, isSunk };
 };
 
 export default shipFactory;

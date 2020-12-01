@@ -2,6 +2,7 @@ import shipFactory from './shipFactory';
 
 const gameboardFactory = () => {
   const gameBoardArray = [];
+  const currentShipPositions = [];
 
   let loopCounter = 0;
 
@@ -25,7 +26,7 @@ const gameboardFactory = () => {
         return y - loopCounter;
       }
 
-      let emptyBlock = { empty: true, x: setX(), y: setY(), blockNumber: i };
+      let emptyBlock = { empty: true, x: setX(), y: setY() };
 
       gameBoardArray.push(emptyBlock);
     }
@@ -33,32 +34,53 @@ const gameboardFactory = () => {
 
   function placeShip(x, y, shipLength, orientation) {
     const newShip = shipFactory(x, y, shipLength, orientation);
-    console.log(shipLength);
-    console.log(newShip);
+
     let shipBlock = {
       empty: false,
       ship: newShip,
     };
-    console.log('----------------');
+
+    //Try filter gameboard array for available blocks
+    //Then check if positions.every position === available blocck ?
+    const availableBlocks = [...gameBoardArray.filter((block) => block.empty)];
 
     function addTheShip(shipToAdd) {
-      console.log(shipToAdd);
-      gameBoardArray.forEach((emptyBlock) => {
-        if (shipToAdd.ship !== null) {
-          shipToAdd.ship.positions.forEach((shipPosition) => {
+      const shipPositions = [...shipToAdd.ship.positions];
+      let shipOverlap = false;
+
+      currentShipPositions.forEach((currentPosition) => {
+        if (
+          shipPositions.some(
+            (position) =>
+              position.x === currentPosition.x &&
+              position.y === currentPosition.y
+          )
+        ) {
+          return (shipOverlap = true);
+        }
+      });
+
+      if (shipToAdd.ship !== null && shipOverlap === false) {
+        shipPositions.forEach((shipPosition) => {
+          availableBlocks.forEach((block) => {
             if (
-              shipPosition.x === emptyBlock.x &&
-              shipPosition.y === emptyBlock.y
+              shipPosition.x === block.x &&
+              shipPosition.y === block.y &&
+              block.empty
             ) {
               gameBoardArray.splice(
-                gameBoardArray.indexOf(emptyBlock),
+                gameBoardArray.indexOf(block),
                 1,
                 shipToAdd
               );
+              currentShipPositions.push(shipPosition);
+              console.log(currentShipPositions);
             }
           });
-        }
-      });
+        });
+      } else {
+        return;
+      }
     }
     addTheShip(shipBlock);
   }
@@ -113,7 +135,13 @@ const gameboardFactory = () => {
     });
   }
 
-  return { gameBoardArray, placeShip, receiveAttack, listShips };
+  return {
+    gameBoardArray,
+    currentShipPositions,
+    placeShip,
+    receiveAttack,
+    listShips,
+  };
 };
 
 export default gameboardFactory;

@@ -2,6 +2,7 @@ import gameboardFactory from './gameboardFactory';
 import shipFactory from './shipFactory';
 
 const playerFactory = (name) => {
+  const getName = () => name;
   const playerBoard = gameboardFactory();
 
   let newShip = shipFactory(undefined, undefined, 3, 'horizontal');
@@ -11,6 +12,7 @@ const playerFactory = (name) => {
   playerShips.push(newShip, newShip2, newShip3);
 
   function rotateHorizontalShip(shipIndex) {
+    console.log('rotating');
     const newVerticalShip = shipFactory(
       playerShips[shipIndex].x,
       playerShips[shipIndex].y,
@@ -30,18 +32,22 @@ const playerFactory = (name) => {
     return playerShips.splice(shipIndex, 1, newHorizontalShip);
   }
 
-  function rotateShip(shipIndex) {
-    const orientation =
-      playerShips[shipIndex].getOrientation() === 'horizontal'
-        ? 'vertical'
-        : 'horizontal'; // we reverse the orientation here
-    const newShip = shipFactory(
-      playerShips[shipIndex].x,
-      playerShips[shipIndex].y,
-      playerShips[shipIndex].getShipLength(),
-      orientation // here will be the right orientation we need (reversed)
-    );
-    return playerShips.splice(shipIndex, 1, newShip); // no need for second block
+  // function rotateShip(shipIndex) {
+  //   const orientation =
+  //     playerShips[shipIndex].getOrientation() === 'horizontal'
+  //       ? 'vertical'
+  //       : 'horizontal';
+  //   const newShip = shipFactory(
+  //     playerShips[shipIndex].x,
+  //     playerShips[shipIndex].y,
+  //     playerShips[shipIndex].getShipLength(),
+  //     orientation
+  //   );
+  //   return playerShips.splice(shipIndex, 1, newShip);
+  // }
+
+  function removeShip(shipIndex) {
+    return playerShips.splice(shipIndex, 1);
   }
 
   function makePlay(toAttack, x, y, length) {
@@ -54,11 +60,11 @@ const playerFactory = (name) => {
   }
 
   return {
+    getName,
     playerBoard,
-    name,
     makePlay,
+    removeShip,
     playerShips,
-    rotateShip,
     rotateHorizontalShip,
     rotateVerticalShip,
   };

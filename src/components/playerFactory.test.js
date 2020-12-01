@@ -1,7 +1,7 @@
 import playerFactory from './playerFactory';
 
-it('makes plays', () => {
+it('receives attacks', () => {
   let newPlayer = playerFactory();
-  newPlayer.makePlay(3, 9, 3);
+  newPlayer.makePlay(newPlayer.playerBoard, 3, 9, 3);
   expect(newPlayer.playerBoard.gameBoardArray[3].empty).toBe(false);
 });

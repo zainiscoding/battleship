@@ -8,6 +8,7 @@ const PlayerShipDockContainer = (props) => {
       setY={props.setY}
       chooseShip={props.chooseShip}
       rotateShip={props.rotateShip}
+      mouseMove={props.mouseMove}
     />
   );
 };

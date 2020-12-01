@@ -78,46 +78,53 @@ const GameLoopContainer = (props) => {
     chosenShip.shipLength = parseInt(e.target.getAttribute('data-length'));
     chosenShip.orientation = e.target.getAttribute('data-orientation');
     setPlacingShip(true);
+    console.log('choosing');
     setChosenShip(chosenShip);
-  }
-
-  function rotateShip(e) {
-    const targetShipNumber = e.target.parentNode.getAttribute(
-      'data-shipnumber'
-    );
-    console.log('input ^^^^ orientation');
-    setPlayer((prevState) => {
-      prevState.rotateShip(targetShipNumber);
-      return { ...prevState };
-    });
-
-    // orientation === 'horizontal'
-    //   ? setPlayer((prevState) => {
-    //       console.log(prevState.playerShips[targetShipNumber]);
-    //       prevState.rotateHorizontalShip(targetShipNumber);
-    //       return { ...prevState };
-    //     })
-    //   : setPlayer((prevState) => {
-    //       console.log(prevState.playerShips[targetShipNumber]);
-    //       prevState.rotateVerticalShip(targetShipNumber);
-    //       return { ...prevState };
-    //     });
   }
 
   function placeChosenShip(e) {
     console.log(chosenShip);
     console.log(chosenShip.shipLength);
-    const targetBlockX = parseInt(e.target.getAttribute('data-x'));
-    const targetBlockY = parseInt(e.target.getAttribute('data-y'));
-    setPlayer((prevState) => {
-      prevState.playerBoard.placeShip(
-        targetBlockX,
-        targetBlockY,
-        chosenShip.shipLength,
-        chosenShip.orientation
+    if (placingShip === true) {
+      const targetBlockX = parseInt(e.target.getAttribute('data-x'));
+      const targetBlockY = parseInt(e.target.getAttribute('data-y'));
+      setPlayer((prevState) => {
+        prevState.playerBoard.placeShip(
+          targetBlockX,
+          targetBlockY,
+          chosenShip.shipLength,
+          chosenShip.orientation
+        );
+        return { ...prevState };
+      });
+      setPlacingShip(false);
+    }
+    console.log(player.currentShipPositions);
+  }
+
+  function rotateShip(e) {
+    e.stopPropagation();
+    if (placingShip === false) {
+      const targetShipNumber = e.target.parentNode.getAttribute(
+        'data-shipnumber'
       );
-      return { ...prevState };
-    });
+
+      const orientation = e.target.parentNode.getAttribute('data-orientation');
+      // setPlayer((prevState) => {
+      //   prevState.rotateShip(targetShipNumber);
+      //   return { ...prevState };
+      // });
+
+      orientation === 'horizontal'
+        ? setPlayer((prevState) => {
+            prevState.rotateHorizontalShip(targetShipNumber);
+            return { ...prevState };
+          })
+        : setPlayer((prevState) => {
+            prevState.rotateVerticalShip(targetShipNumber);
+            return { ...prevState };
+          });
+    }
   }
 
   //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
