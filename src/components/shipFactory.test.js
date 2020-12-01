@@ -60,9 +60,3 @@ it('doesnt break the grid', () => {
   let newShip = shipFactory(8, 3, 3, 'horizontal');
   expect(newShip).toEqual(null);
 });
-
-it('doesnt overlap other ships', () => {
-  let newShip = shipFactory(1, 3, 3, 'horizontal');
-  let newShip2 = shipFactory(0, 3, 5, 'horizontal');
-  expect(newShip2).toEqual(null);
-});

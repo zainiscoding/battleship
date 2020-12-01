@@ -83,8 +83,6 @@ const GameLoopContainer = (props) => {
   }
 
   function placeChosenShip(e) {
-    console.log(chosenShip);
-    console.log(chosenShip.shipLength);
     if (placingShip === true) {
       const targetBlockX = parseInt(e.target.getAttribute('data-x'));
       const targetBlockY = parseInt(e.target.getAttribute('data-y'));
@@ -99,7 +97,6 @@ const GameLoopContainer = (props) => {
       });
       setPlacingShip(false);
     }
-    console.log(player.currentShipPositions);
   }
 
   function rotateShip(e) {

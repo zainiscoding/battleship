@@ -7,8 +7,15 @@ it('returns the size', () => {
 
 it('places a ship', () => {
   let newGrid = gameboardFactory(10);
-  newGrid.placeShip(5, 9, 3);
+  newGrid.placeShip(5, 9, 3, 'horizontal');
   expect(newGrid.gameBoardArray[5].empty).toEqual(false);
+});
+
+it('doesnt overlap other ships', () => {
+  let newGrid = gameboardFactory();
+  newGrid.placeShip(5, 9, 3, 'horizontal');
+  newGrid.placeShip(3, 9, 5, 'horizontal');
+  expect(newGrid.gameBoardArray[3].empty).toEqual(true);
 });
 
 it('receives attacks on ship positions', () => {
