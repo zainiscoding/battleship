@@ -54,14 +54,10 @@ const gameboardFactory = () => {
       }
     });
 
-    if (shipBlock.ship !== null && shipOverlap === false) {
+    if (shipBlock.ship !== null && !shipOverlap) {
       shipPositions.forEach((shipPosition) => {
         gameBoardArray.forEach((block) => {
-          if (
-            shipPosition.x === block.x &&
-            shipPosition.y === block.y &&
-            block.empty
-          ) {
+          if (shipPosition.x === block.x && shipPosition.y === block.y) {
             gameBoardArray.splice(gameBoardArray.indexOf(block), 1, shipBlock);
             currentShipPositions.push(shipPosition);
           }

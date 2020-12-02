@@ -20,7 +20,7 @@ const GameLoopContainer = (props) => {
   }
 
   function playerAttackHandler(e) {
-    if (playerTurn === true) {
+    if (playerTurn && !preparing) {
       setComputer((prevState) => {
         prevState.playerBoard.receiveAttack(
           e.target.id,
@@ -74,16 +74,16 @@ const GameLoopContainer = (props) => {
   }
 
   function chooseShip(e) {
-    const chosenShip = {};
-    chosenShip.shipLength = parseInt(e.target.getAttribute('data-length'));
-    chosenShip.orientation = e.target.getAttribute('data-orientation');
+    const chosenShip = {
+      shipLength: parseInt(e.target.getAttribute('data-length')),
+      orientation: e.target.getAttribute('data-orientation'),
+    };
     setPlacingShip(true);
-    console.log('choosing');
     setChosenShip(chosenShip);
   }
 
   function placeChosenShip(e) {
-    if (placingShip === true) {
+    if (placingShip) {
       const targetBlockX = parseInt(e.target.getAttribute('data-x'));
       const targetBlockY = parseInt(e.target.getAttribute('data-y'));
       setPlayer((prevState) => {
@@ -93,6 +93,7 @@ const GameLoopContainer = (props) => {
           chosenShip.shipLength,
           chosenShip.orientation
         );
+        player.removeShip(e.target.getAttribute('ship-number'));
         return { ...prevState };
       });
       setPlacingShip(false);
@@ -101,16 +102,11 @@ const GameLoopContainer = (props) => {
 
   function rotateShip(e) {
     e.stopPropagation();
-    if (placingShip === false) {
+    if (!placingShip) {
       const targetShipNumber = e.target.parentNode.getAttribute(
         'data-shipnumber'
       );
-
       const orientation = e.target.parentNode.getAttribute('data-orientation');
-      // setPlayer((prevState) => {
-      //   prevState.rotateShip(targetShipNumber);
-      //   return { ...prevState };
-      // });
 
       orientation === 'horizontal'
         ? setPlayer((prevState) => {
@@ -124,15 +120,25 @@ const GameLoopContainer = (props) => {
     }
   }
 
-  //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
   useEffect(() => {
-    if (playerTurn === false) {
-      //     //Timeout used to give the computer some fake thinking time
+    if (!player.playerShips.length) {
+      //Timeout used to give the computer some fake thinking time
       setTimeout(function () {
         computerAttack();
       }, 0);
     }
-    //   // eslint-disable-next-line
+    //eslint-disable-next-line
+  }, [playerTurn]);
+
+  //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
+  useEffect(() => {
+    if (!playerTurn) {
+      //Timeout used to give the computer some fake thinking time
+      setTimeout(function () {
+        computerAttack();
+      }, 0);
+    }
+    //eslint-disable-next-line
   }, [playerTurn]);
 
   //Checks for game over
@@ -165,6 +171,10 @@ const GameLoopContainer = (props) => {
     // eslint-disable-next-line
   }, [computer]);
 
+  function startGame() {
+    setPreparing(false);
+  }
+
   return (
     <DisplayGame
       player={player}
@@ -177,6 +187,8 @@ const GameLoopContainer = (props) => {
       chooseShip={chooseShip}
       placeChosenShip={placeChosenShip}
       rotateShip={rotateShip}
+      preparing={preparing}
+      startGame={startGame}
     />
   );
 };

@@ -5,14 +5,16 @@ const playerFactory = (name) => {
   const getName = () => name;
   const playerBoard = gameboardFactory();
 
-  let newShip = shipFactory(undefined, undefined, 3, 'horizontal');
-  let newShip2 = shipFactory(undefined, undefined, 5, 'horizontal');
-  let newShip3 = shipFactory(undefined, undefined, 6, 'horizontal');
+  let newShip = shipFactory(undefined, undefined, 5, 'horizontal');
+  let newShip2 = shipFactory(undefined, undefined, 4, 'horizontal');
+  let newShip3 = shipFactory(undefined, undefined, 3, 'horizontal');
+  let newShip4 = shipFactory(undefined, undefined, 3, 'horizontal');
+  let newShip5 = shipFactory(undefined, undefined, 2, 'horizontal');
   const playerShips = [];
-  playerShips.push(newShip, newShip2, newShip3);
+  playerShips.push(newShip, newShip2, newShip3, newShip4, newShip5);
 
+  //It's possible to consolidate the following two rotation functions into one, but requires React to not run in Strict Mode.
   function rotateHorizontalShip(shipIndex) {
-    console.log('rotating');
     const newVerticalShip = shipFactory(
       playerShips[shipIndex].x,
       playerShips[shipIndex].y,
@@ -32,23 +34,12 @@ const playerFactory = (name) => {
     return playerShips.splice(shipIndex, 1, newHorizontalShip);
   }
 
-  // function rotateShip(shipIndex) {
-  //   const orientation =
-  //     playerShips[shipIndex].getOrientation() === 'horizontal'
-  //       ? 'vertical'
-  //       : 'horizontal';
-  //   const newShip = shipFactory(
-  //     playerShips[shipIndex].x,
-  //     playerShips[shipIndex].y,
-  //     playerShips[shipIndex].getShipLength(),
-  //     orientation
-  //   );
-  //   return playerShips.splice(shipIndex, 1, newShip);
-  // }
-
   function removeShip(shipIndex) {
-    return playerShips.splice(shipIndex, 1);
+    console.log(
+      playerShips.filter((ship) => playerShips.indexOf(ship) === shipIndex)
+    );
   }
+  //check CV builder
 
   function makePlay(toAttack, x, y, length) {
     let randomPosition = Math.floor(Math.random() * 100);

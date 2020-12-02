@@ -1,18 +1,28 @@
 #game-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
 }
 
-#game-wrapper__player-board-wrapper {
+#board-wrapper {
   display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+  place-items: center;
+  align-self: center;
+}
+
+#board-wrapper__player-board-wrapper {
+  display: grid;
+  grid-column: 1;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   height: 500px;
   width: 500px;
 }
 
-#game-wrapper__computer-board-wrapper {
+#board-wrapper__computer-board-wrapper {
   display: grid;
+  grid-column: 3;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   height: 500px;

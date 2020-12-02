@@ -6,19 +6,24 @@ import PlayerShipDockContainer from './PlayerShipDockContainer';
 const DisplayGame = (props) => {
   return (
     <div id='game-wrapper'>
-      <DisplayPlayerBoard
-        player={props.player}
-        setX={props.setX}
-        setY={props.setY}
-        placeChosenShip={props.placeChosenShip}
-      />
-      <DisplayComputerBoard
-        computerBoardArray={props.computer.playerBoard.gameBoardArray}
-        setX={props.setX}
-        setY={props.setY}
-        playerAttackHandler={props.playerAttackHandler}
-        placeChosenShip={props.placeChosenShip}
-      />
+      <div id='board-wrapper'>
+        <DisplayPlayerBoard
+          player={props.player}
+          setX={props.setX}
+          setY={props.setY}
+          placeChosenShip={props.placeChosenShip}
+        />
+        {props.preparing && (
+          <button onClick={props.startGame}>Start game</button>
+        )}
+        <DisplayComputerBoard
+          computerBoardArray={props.computer.playerBoard.gameBoardArray}
+          setX={props.setX}
+          setY={props.setY}
+          playerAttackHandler={props.playerAttackHandler}
+          placeChosenShip={props.placeChosenShip}
+        />
+      </div>
       <PlayerShipDockContainer
         player={props.player}
         setX={props.setX}
