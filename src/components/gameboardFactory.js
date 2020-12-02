@@ -35,53 +35,39 @@ const gameboardFactory = () => {
   function placeShip(x, y, shipLength, orientation) {
     const newShip = shipFactory(x, y, shipLength, orientation);
 
-    let shipBlock = {
+    const shipBlock = {
       empty: false,
       ship: newShip,
     };
 
-    //Try filter gameboard array for available blocks
-    //Then check if positions.every position === available blocck ?
-    const availableBlocks = [...gameBoardArray.filter((block) => block.empty)];
+    const shipPositions = [...shipBlock.ship.positions];
+    let shipOverlap = false;
 
-    function addTheShip(shipToAdd) {
-      const shipPositions = [...shipToAdd.ship.positions];
-      let shipOverlap = false;
-
-      currentShipPositions.forEach((currentPosition) => {
-        if (
-          shipPositions.some(
-            (position) =>
-              position.x === currentPosition.x &&
-              position.y === currentPosition.y
-          )
-        ) {
-          return (shipOverlap = true);
-        }
-      });
-
-      if (shipToAdd.ship !== null && shipOverlap === false) {
-        shipPositions.forEach((shipPosition) => {
-          availableBlocks.forEach((block) => {
-            if (
-              shipPosition.x === block.x &&
-              shipPosition.y === block.y &&
-              block.empty
-            ) {
-              gameBoardArray.splice(
-                gameBoardArray.indexOf(block),
-                1,
-                shipToAdd
-              );
-              currentShipPositions.push(shipPosition);
-            }
-          });
-        });
-      } else {
-        return;
+    currentShipPositions.forEach((currentPosition) => {
+      if (
+        shipPositions.some(
+          (position) =>
+            position.x === currentPosition.x && position.y === currentPosition.y
+        )
+      ) {
+        return (shipOverlap = true);
       }
+    });
+
+    if (shipBlock.ship !== null && shipOverlap === false) {
+      shipPositions.forEach((shipPosition) => {
+        gameBoardArray.forEach((block) => {
+          if (
+            shipPosition.x === block.x &&
+            shipPosition.y === block.y &&
+            block.empty
+          ) {
+            gameBoardArray.splice(gameBoardArray.indexOf(block), 1, shipBlock);
+            currentShipPositions.push(shipPosition);
+          }
+        });
+      });
     }
-    addTheShip(shipBlock);
   }
 
   function receiveAttack(blockNumber, a, b) {
