@@ -1,6 +1,7 @@
 import DisplayPlayerBoard from './DisplayPlayerBoard';
 import DisplayComputerBoard from './DisplayComputerBoard';
 import PlayerShipDockContainer from './PlayerShipDockContainer';
+import DisplayPlacementError from './DisplayPlacementError';
 
 const DisplayGame = (props) => {
   return (
@@ -23,6 +24,7 @@ const DisplayGame = (props) => {
       </div>
       {props.preparing && (
         <>
+          {props.placementError && <DisplayPlacementError />}
           <PlayerShipDockContainer
             player={props.player}
             setX={props.setX}

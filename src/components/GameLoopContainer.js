@@ -12,6 +12,7 @@ const GameLoopContainer = (props) => {
   const [placingShip, setPlacingShip] = useState(false);
   const [chosenShip, setChosenShip] = useState();
   const [shipNumber, setShipNumber] = useState(0);
+  const [placementError, setPlacementError] = useState(false);
 
   function placeTestShip() {
     setComputer((prevState) => {
@@ -21,17 +22,17 @@ const GameLoopContainer = (props) => {
   }
 
   function playerAttackHandler(e) {
-    if (playerTurn && !preparing) {
-      setComputer((prevState) => {
+    setComputer((prevState) => {
+      if (playerTurn && !preparing) {
         prevState.playerBoard.receiveAttack(
           e.target.id,
           parseInt(e.target.getAttribute('data-x')),
           parseInt(e.target.getAttribute('data-y'))
         );
+        setPlayerTurn(false);
         return { ...prevState };
-      });
-      setPlayerTurn(false);
-    }
+      }
+    });
   }
 
   function computerAttack() {
@@ -85,10 +86,10 @@ const GameLoopContainer = (props) => {
   }
 
   function placeChosenShip(e) {
-    if (placingShip) {
-      const targetBlockX = parseInt(e.target.getAttribute('data-x'));
-      const targetBlockY = parseInt(e.target.getAttribute('data-y'));
-      setPlayer((prevState) => {
+    setPlayer((prevState) => {
+      if (placingShip) {
+        const targetBlockX = parseInt(e.target.getAttribute('data-x'));
+        const targetBlockY = parseInt(e.target.getAttribute('data-y'));
         let placedShip = prevState.playerBoard.placeShip(
           targetBlockX,
           targetBlockY,
@@ -96,28 +97,29 @@ const GameLoopContainer = (props) => {
           chosenShip.orientation,
           shipNumber
         );
-        console.log(placedShip);
+        setPlacingShip(false);
         if (placedShip) {
           player.playerShips[shipNumber].placed = true;
+          setPlacementError(false);
+        } else {
+          setPlacementError(true);
         }
         return { ...prevState };
-      });
-      setPlacingShip(false);
-      console.log(player.playerBoard);
-    }
+      }
+    });
   }
 
   function removeShipFromBoard(e) {
-    if (preparing) {
-      const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
-      const blockId = parseInt(e.target.id);
-      console.log(blockId);
-      setPlayer((prevState) => {
+    setPlayer((prevState) => {
+      if (preparing) {
+        const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
+        const blockId = parseInt(e.target.id);
+        console.log(blockId);
         player.playerShips[targetShip].placed = false;
         player.playerBoard.removeShip(targetShip, blockId);
         return { ...prevState };
-      });
-    }
+      }
+    });
   }
 
   function rotateShip(e) {
@@ -210,6 +212,7 @@ const GameLoopContainer = (props) => {
       preparing={preparing}
       startGame={startGame}
       removeShipFromBoard={removeShipFromBoard}
+      placementError={placementError}
     />
   );
 };
