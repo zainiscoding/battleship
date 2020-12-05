@@ -1,5 +1,4 @@
 import DisplayPlayerBoard from './DisplayPlayerBoard';
-import DisplayPlayerShips from './DisplayPlayerShipDock';
 import DisplayComputerBoard from './DisplayComputerBoard';
 import PlayerShipDockContainer from './PlayerShipDockContainer';
 
@@ -13,9 +12,6 @@ const DisplayGame = (props) => {
           setY={props.setY}
           placeChosenShip={props.placeChosenShip}
         />
-        {props.preparing && (
-          <button onClick={props.startGame}>Start game</button>
-        )}
         <DisplayComputerBoard
           computerBoardArray={props.computer.playerBoard.gameBoardArray}
           setX={props.setX}
@@ -24,16 +20,20 @@ const DisplayGame = (props) => {
           placeChosenShip={props.placeChosenShip}
         />
       </div>
-      <PlayerShipDockContainer
-        player={props.player}
-        setX={props.setX}
-        setY={props.setY}
-        chooseShip={props.chooseShip}
-        rotateShip={props.rotateShip}
-      />
+      {props.preparing && (
+        <>
+          <PlayerShipDockContainer
+            player={props.player}
+            setX={props.setX}
+            setY={props.setY}
+            chooseShip={props.chooseShip}
+            rotateShip={props.rotateShip}
+          />
+          <button onClick={props.startGame}>Start game</button>
+        </>
+      )}
       <button onClick={props.placeTestShip}>Test</button>
       <button onClick={props.computerAttack}>Attacked</button>
-      <div id='player-ship-wrapper'></div>
     </div>
   );
 };

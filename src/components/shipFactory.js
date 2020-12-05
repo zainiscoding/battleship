@@ -14,6 +14,7 @@ const shipFactory = (x, y, shipLength, orientation) => {
 
   const getShipLength = () => shipLength;
   const getOrientation = () => orientation;
+  let placed = false;
 
   function hit(a, b) {
     positions.forEach((shipBlock) => {
@@ -38,7 +39,14 @@ const shipFactory = (x, y, shipLength, orientation) => {
     return null;
   }
 
-  return { getShipLength, getOrientation, positions, hit, isSunk };
+  return {
+    getShipLength,
+    getOrientation,
+    positions,
+    hit,
+    isSunk,
+    placed,
+  };
 };
 
 export default shipFactory;

@@ -10,7 +10,7 @@ const playerFactory = (name) => {
   let newShip3 = shipFactory(undefined, undefined, 3, 'horizontal');
   let newShip4 = shipFactory(undefined, undefined, 3, 'horizontal');
   let newShip5 = shipFactory(undefined, undefined, 2, 'horizontal');
-  const playerShips = [];
+  let playerShips = [];
   playerShips.push(newShip, newShip2, newShip3, newShip4, newShip5);
 
   //It's possible to consolidate the following two rotation functions into one, but requires React to not run in Strict Mode.
@@ -35,9 +35,11 @@ const playerFactory = (name) => {
   }
 
   function removeShip(shipIndex) {
-    console.log(
-      playerShips.filter((ship) => playerShips.indexOf(ship) === shipIndex)
+    console.log(playerShips[shipIndex]);
+    const filteredShips = playerShips.filter(
+      (ship) => ship !== playerShips[shipIndex]
     );
+    return (playerShips = [...filteredShips]);
   }
   //check CV builder
 

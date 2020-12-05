@@ -11,6 +11,7 @@ const GameLoopContainer = (props) => {
   const [preparing, setPreparing] = useState(true);
   const [placingShip, setPlacingShip] = useState(false);
   const [chosenShip, setChosenShip] = useState();
+  const [shipNumber, setShipNumber] = useState(0);
 
   function placeTestShip() {
     setComputer((prevState) => {
@@ -79,6 +80,7 @@ const GameLoopContainer = (props) => {
       orientation: e.target.getAttribute('data-orientation'),
     };
     setPlacingShip(true);
+    setShipNumber(parseInt(e.target.getAttribute('data-shipnumber')));
     setChosenShip(chosenShip);
   }
 
@@ -93,7 +95,17 @@ const GameLoopContainer = (props) => {
           chosenShip.shipLength,
           chosenShip.orientation
         );
-        player.removeShip(e.target.getAttribute('ship-number'));
+        player.playerShips[shipNumber].placed = true;
+        return { ...prevState };
+      });
+      setPlacingShip(false);
+    }
+  }
+
+  function removeShipFromBoard(e) {
+    if (placingShip) {
+      setPlayer((prevState) => {
+        player.playerShips[shipNumber].placed = false;
         return { ...prevState };
       });
       setPlacingShip(false);
@@ -189,6 +201,7 @@ const GameLoopContainer = (props) => {
       rotateShip={rotateShip}
       preparing={preparing}
       startGame={startGame}
+      removeShipFromBoard={removeShipFromBoard}
     />
   );
 };
