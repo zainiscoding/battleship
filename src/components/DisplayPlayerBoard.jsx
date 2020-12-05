@@ -6,7 +6,7 @@ const DisplayPlayerBoard = (props) => {
           return (
             <div
               key={index}
-              className='enemy-ship-block'
+              className='friendly-ship-block'
               id={index}
               data-x={props.setX(index)}
               data-y={props.setY(index)}
@@ -18,7 +18,7 @@ const DisplayPlayerBoard = (props) => {
           return (
             <div
               key={index}
-              className='enemy-ship-block'
+              className='friendly-ship-block'
               id={index}
               data-x={props.setX(index)}
               data-y={props.setY(index)}
@@ -30,10 +30,12 @@ const DisplayPlayerBoard = (props) => {
           return (
             <div
               key={index}
-              className='enemy-ship-block'
+              className='friendly-ship-block'
               id={index}
               data-x={props.setX(index)}
               data-y={props.setY(index)}
+              data-shipnumber={block.ship.getShipNumber()}
+              onClick={props.removeShipFromBoard}
             >
               Ship
             </div>

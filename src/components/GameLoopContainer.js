@@ -89,26 +89,34 @@ const GameLoopContainer = (props) => {
       const targetBlockX = parseInt(e.target.getAttribute('data-x'));
       const targetBlockY = parseInt(e.target.getAttribute('data-y'));
       setPlayer((prevState) => {
-        prevState.playerBoard.placeShip(
+        let placedShip = prevState.playerBoard.placeShip(
           targetBlockX,
           targetBlockY,
           chosenShip.shipLength,
-          chosenShip.orientation
+          chosenShip.orientation,
+          shipNumber
         );
-        player.playerShips[shipNumber].placed = true;
+        console.log(placedShip);
+        if (placedShip) {
+          player.playerShips[shipNumber].placed = true;
+        }
         return { ...prevState };
       });
       setPlacingShip(false);
+      console.log(player.playerBoard);
     }
   }
 
   function removeShipFromBoard(e) {
-    if (placingShip) {
+    if (preparing) {
+      const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
+      const blockId = parseInt(e.target.id);
+      console.log(blockId);
       setPlayer((prevState) => {
-        player.playerShips[shipNumber].placed = false;
+        player.playerShips[targetShip].placed = false;
+        player.playerBoard.removeShip(targetShip, blockId);
         return { ...prevState };
       });
-      setPlacingShip(false);
     }
   }
 

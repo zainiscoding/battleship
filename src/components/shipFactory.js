@@ -1,4 +1,4 @@
-const shipFactory = (x, y, shipLength, orientation) => {
+const shipFactory = (x, y, shipLength, orientation, shipNumber) => {
   let positions = [];
   if (orientation === 'horizontal') {
     for (let i = 0; i < shipLength; i++) {
@@ -14,6 +14,7 @@ const shipFactory = (x, y, shipLength, orientation) => {
 
   const getShipLength = () => shipLength;
   const getOrientation = () => orientation;
+  const getShipNumber = () => shipNumber;
   let placed = false;
 
   function hit(a, b) {
@@ -46,6 +47,7 @@ const shipFactory = (x, y, shipLength, orientation) => {
     hit,
     isSunk,
     placed,
+    getShipNumber,
   };
 };
 

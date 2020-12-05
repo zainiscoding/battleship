@@ -1,8 +1,8 @@
 import shipFactory from './shipFactory';
 
 const gameboardFactory = () => {
-  const gameBoardArray = [];
-  const currentShipPositions = [];
+  let gameBoardArray = [];
+  const playerShipPositions = [];
 
   let loopCounter = 0;
 
@@ -32,35 +32,65 @@ const gameboardFactory = () => {
     }
   })();
 
-  function placeShip(x, y, shipLength, orientation) {
-    const newShip = shipFactory(x, y, shipLength, orientation);
+  function placeShip(x, y, shipLength, orientation, shipNumber) {
+    const newShip = shipFactory(x, y, shipLength, orientation, shipNumber);
 
-    const shipBlock = {
-      empty: false,
-      ship: newShip,
-    };
+    if (newShip !== null) {
+      const shipBlock = {
+        empty: false,
+        ship: newShip,
+      };
 
-    const shipPositions = [...shipBlock.ship.positions];
-    let shipOverlap = false;
+      const shipPositions = [...shipBlock.ship.positions];
+      let shipOverlap = false;
 
-    currentShipPositions.forEach((currentPosition) => {
-      if (
-        shipPositions.some(
-          (position) =>
-            position.x === currentPosition.x && position.y === currentPosition.y
-        )
-      ) {
-        return (shipOverlap = true);
+      playerShipPositions.forEach((currentPosition) => {
+        if (
+          shipPositions.some(
+            (position) =>
+              position.x === currentPosition.x &&
+              position.y === currentPosition.y
+          )
+        ) {
+          return (shipOverlap = true);
+        }
+      });
+
+      if (shipBlock.ship !== null && !shipOverlap) {
+        shipPositions.forEach((shipPosition) => {
+          gameBoardArray.forEach((block) => {
+            if (shipPosition.x === block.x && shipPosition.y === block.y) {
+              gameBoardArray.splice(
+                gameBoardArray.indexOf(block),
+                1,
+                shipBlock
+              );
+              playerShipPositions.push(shipPosition);
+            }
+          });
+        });
+        return true;
       }
-    });
+    }
+  }
 
-    if (shipBlock.ship !== null && !shipOverlap) {
-      shipPositions.forEach((shipPosition) => {
-        gameBoardArray.forEach((block) => {
-          if (shipPosition.x === block.x && shipPosition.y === block.y) {
-            gameBoardArray.splice(gameBoardArray.indexOf(block), 1, shipBlock);
-            currentShipPositions.push(shipPosition);
+  function removeShip(shipIndex, blockId) {
+    if (gameBoardArray[blockId].ship) {
+      console.log(gameBoardArray[blockId].ship.positions);
+      const shipPositions = gameBoardArray[blockId].ship.positions;
+      gameBoardArray.forEach((block) => {
+        shipPositions.forEach((position) => {
+          let emptyBlock = { empty: true, x: position.x, y: position.y };
+          if (block.ship && block.ship.getShipNumber() === shipIndex) {
+            gameBoardArray.splice(gameBoardArray.indexOf(block), 1, emptyBlock);
           }
+          playerShipPositions.forEach((playerShipPosition) => {
+            if (playerShipPosition === position) {
+              playerShipPositions.splice(
+                playerShipPositions.indexOf(playerShipPositions, 1)
+              );
+            }
+          });
         });
       });
     }
@@ -117,8 +147,9 @@ const gameboardFactory = () => {
 
   return {
     gameBoardArray,
-    currentShipPositions,
+    playerShipPositions,
     placeShip,
+    removeShip,
     receiveAttack,
     listShips,
   };
