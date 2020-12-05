@@ -36,12 +36,7 @@ const gameboardFactory = () => {
     const newShip = shipFactory(x, y, shipLength, orientation, shipNumber);
 
     if (newShip !== null) {
-      const shipBlock = {
-        empty: false,
-        ship: newShip,
-      };
-
-      const shipPositions = [...shipBlock.ship.positions];
+      const shipPositions = [...newShip.positions];
       let shipOverlap = false;
 
       playerShipPositions.forEach((currentPosition) => {
@@ -55,11 +50,16 @@ const gameboardFactory = () => {
           return (shipOverlap = true);
         }
       });
-
-      if (shipBlock.ship !== null && !shipOverlap) {
+      if (!shipOverlap) {
         shipPositions.forEach((shipPosition) => {
           gameBoardArray.forEach((block) => {
+            const shipBlock = {
+              empty: false,
+              ship: newShip,
+            };
             if (shipPosition.x === block.x && shipPosition.y === block.y) {
+              shipBlock.x = block.x;
+              shipBlock.y = block.y;
               gameBoardArray.splice(
                 gameBoardArray.indexOf(block),
                 1,
@@ -115,9 +115,10 @@ const gameboardFactory = () => {
     if (targetArrayBlock.ship) {
       //Hit it!
       targetArrayBlock.ship.hit(a, b);
-
+      console.log('ship hit');
       //And if that ship is sunk by you hittting it...
       if (targetArrayBlock.ship.isSunk()) {
+        console.log('ship sunk');
         //Replace all relevant blocks with 'sunk ship' blocks
         gameBoardArray.forEach((block) => {
           if (block.ship === targetArrayBlock.ship) {

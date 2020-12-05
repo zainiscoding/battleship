@@ -19,6 +19,7 @@ const GameLoopContainer = (props) => {
       prevState.playerBoard.placeShip(3, 5, 3, 'horizontal');
       return { ...prevState };
     });
+    console.log(computer.playerBoard.gameBoardArray);
   }
 
   function playerAttackHandler(e) {
@@ -42,14 +43,20 @@ const GameLoopContainer = (props) => {
     }
     setHitPlayerBlocks([...hitPlayerBlocks, getPosition()]);
 
+    //Prevents repeat hits
     while (hitPlayerBlocks.includes(position) && hitPlayerBlocks.length < 100) {
       setHitPlayerBlocks([...hitPlayerBlocks, getPosition()]);
     }
 
     setPlayer((prevState) => {
-      prevState.playerBoard.receiveAttack(position);
+      prevState.playerBoard.receiveAttack(
+        position,
+        parseInt(prevState.playerBoard.gameBoardArray[position].x),
+        parseInt(prevState.playerBoard.gameBoardArray[position].y)
+      );
       return { ...prevState };
     });
+    console.log(player);
     setPlayerTurn(true);
   }
 
@@ -86,8 +93,8 @@ const GameLoopContainer = (props) => {
   }
 
   function placeChosenShip(e) {
-    setPlayer((prevState) => {
-      if (placingShip) {
+    if (placingShip) {
+      setPlayer((prevState) => {
         const targetBlockX = parseInt(e.target.getAttribute('data-x'));
         const targetBlockY = parseInt(e.target.getAttribute('data-y'));
         let placedShip = prevState.playerBoard.placeShip(
@@ -105,21 +112,22 @@ const GameLoopContainer = (props) => {
           setPlacementError(true);
         }
         return { ...prevState };
-      }
-    });
+      });
+    }
+    console.log(player.playerBoard.gameBoardArray);
   }
 
   function removeShipFromBoard(e) {
-    setPlayer((prevState) => {
-      if (preparing) {
+    if (preparing) {
+      setPlayer((prevState) => {
         const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
         const blockId = parseInt(e.target.id);
         console.log(blockId);
         player.playerShips[targetShip].placed = false;
         player.playerBoard.removeShip(targetShip, blockId);
         return { ...prevState };
-      }
-    });
+      });
+    }
   }
 
   function rotateShip(e) {

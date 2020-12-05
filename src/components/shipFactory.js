@@ -19,7 +19,9 @@ const shipFactory = (x, y, shipLength, orientation, shipNumber) => {
 
   function hit(a, b) {
     positions.forEach((shipBlock) => {
+      console.log('hit!');
       if (shipBlock.x === a && shipBlock.y === b) {
+        console.log('equal');
         positions.splice(positions.indexOf(shipBlock), 1, {
           x: shipBlock.x,
           y: shipBlock.y,
@@ -30,7 +32,8 @@ const shipFactory = (x, y, shipLength, orientation, shipNumber) => {
   }
 
   function isSunk() {
-    return positions.every((hitBlock) => hitBlock.hit);
+    console.log('checking for sunk');
+    return positions.every((block) => block.hit);
   }
 
   if (
