@@ -13,6 +13,7 @@ const GameLoopContainer = (props) => {
   const [chosenShip, setChosenShip] = useState();
   const [shipNumber, setShipNumber] = useState(0);
   const [placementError, setPlacementError] = useState(false);
+  const [placeAllShipsError, setPlaceAllShipsError] = useState(false);
 
   function placeTestShip() {
     setComputer((prevState) => {
@@ -23,8 +24,8 @@ const GameLoopContainer = (props) => {
   }
 
   function playerAttackHandler(e) {
-    setComputer((prevState) => {
-      if (playerTurn && !preparing) {
+    if (playerTurn && !preparing) {
+      setComputer((prevState) => {
         prevState.playerBoard.receiveAttack(
           e.target.id,
           parseInt(e.target.getAttribute('data-x')),
@@ -32,8 +33,8 @@ const GameLoopContainer = (props) => {
         );
         setPlayerTurn(false);
         return { ...prevState };
-      }
-    });
+      });
+    }
   }
 
   function computerAttack() {
@@ -202,7 +203,18 @@ const GameLoopContainer = (props) => {
   }, [computer]);
 
   function startGame() {
-    setPreparing(false);
+    const playerShips = [];
+
+    player.playerBoard.gameBoardArray.forEach((arrayItem) => {
+      if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
+        playerShips.push(arrayItem.ship);
+      }
+    });
+    if (preparing && playerShips.length === 5) {
+      setPreparing(false);
+    } else {
+      setPlaceAllShipsError(true);
+    }
   }
 
   return (
