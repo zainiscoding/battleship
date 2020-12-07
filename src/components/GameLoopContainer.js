@@ -16,11 +16,148 @@ const GameLoopContainer = (props) => {
   const [placeAllShipsError, setPlaceAllShipsError] = useState(false);
 
   function placeTestShip() {
-    setComputer((prevState) => {
-      prevState.playerBoard.placeShip(3, 5, 3, 'horizontal');
-      return { ...prevState };
+    const computerShips = [];
+
+    function xGenerator() {
+      let x = Math.floor(Math.random() * 10);
+      return x;
+    }
+
+    function yGenerator() {
+      let y = Math.floor(Math.random() * 10);
+      return y;
+    }
+
+    function orientationGenerator() {
+      let orientationNumber = Math.floor(Math.random() * 10);
+      if (orientationNumber % 2 === 0) {
+        return 'horizontal';
+      } else {
+        return 'vertical';
+      }
+    }
+
+    function generateShipPlacement(shipLength) {
+      // prevState.playerBoard.placeShip(3, 5, 3, 'horizontal');
+      const newShip = {
+        x: xGenerator(),
+        y: yGenerator(),
+        length: shipLength,
+        orientation: orientationGenerator(),
+      };
+      while (
+        (newShip.x !== null &&
+          newShip.x + shipLength > 10 &&
+          newShip.orientation === 'horizontal') ||
+        (newShip.y - shipLength < -1 && newShip.orientation === 'vertical') ||
+        newShip === undefined
+      ) {
+        newShip.x = xGenerator();
+        newShip.y = yGenerator();
+      }
+      computerShips.push(newShip);
+      return newShip;
+    }
+
+    let newShip = generateShipPlacement(2);
+    let newShip2 = generateShipPlacement(3);
+    let newShip3 = generateShipPlacement(3);
+    let newShip4 = generateShipPlacement(4);
+    let newShip5 = generateShipPlacement(5);
+
+    let newComputerState = computer;
+
+    let placeShip1 = newComputerState.playerBoard.placeShip(
+      newShip.x,
+      newShip.y,
+      newShip.length,
+      newShip.orientation
+    );
+
+    let placeShip2 = newComputerState.playerBoard.placeShip(
+      newShip2.x,
+      newShip2.y,
+      newShip2.length,
+      newShip2.orientation
+    );
+
+    let placeShip3 = newComputerState.playerBoard.placeShip(
+      newShip3.x,
+      newShip3.y,
+      newShip3.length,
+      newShip3.orientation
+    );
+
+    let placeShip4 = newComputerState.playerBoard.placeShip(
+      newShip4.x,
+      newShip4.y,
+      newShip4.length,
+      newShip4.orientation
+    );
+
+    let placeShip5 = newComputerState.playerBoard.placeShip(
+      newShip5.x,
+      newShip5.y,
+      newShip5.length,
+      newShip5.orientation
+    );
+
+    const placedShips = [
+      placeShip1,
+      placeShip2,
+      placeShip3,
+      placeShip4,
+      placeShip5,
+    ];
+
+    //This needs to be cleaned up lol
+
+    placedShips.forEach((ship) => {
+      while (ship !== true) {
+        let replacementShip = generateShipPlacement(ship.getShipLength());
+        ship = newComputerState.playerBoard.placeShip(
+          replacementShip.x,
+          replacementShip.y,
+          replacementShip.length,
+          replacementShip.orientation
+        );
+        setComputer(newComputerState);
+      }
     });
-    console.log(computer.playerBoard.gameBoardArray);
+
+    setComputer(newComputerState);
+    setComputer((newComputerState) => {
+      return { ...newComputerState };
+    });
+
+    //fix edge detection
+
+    // setComputer((prevState) => {
+    //   generateShipPlacement(prevState, 2);
+    //   generateShipPlacement(prevState, 3);
+    //   generateShipPlacement(prevState, 3);
+    //   generateShipPlacement(prevState, 4);
+    //   generateShipPlacement(prevState, 5);
+    //   while (computerShips.some((ship) => ship === undefined)) {
+    //     computerShips.forEach((ship) => {
+    //       const shipIndex = computerShips.indexOf(ship);
+    //       console.log(computerShips);
+    //       if (ship === undefined) {
+    //         computerShips.splice(shipIndex, 1);
+    //         if (shipIndex === 0) {
+    //           generateShipPlacement(prevState, 2);
+    //         } else if (shipIndex === 3) {
+    //           generateShipPlacement(prevState, 4);
+    //         } else if (shipIndex === 4) {
+    //           generateShipPlacement(prevState, 5);
+    //         } else {
+    //           generateShipPlacement(prevState, 3);
+    //         }
+    //       }
+    //     });
+    //   }
+    //   return { ...prevState };
+    // });
   }
 
   function playerAttackHandler(e) {
@@ -72,7 +209,7 @@ const GameLoopContainer = (props) => {
   }
 
   //Same as above
-  //Thanks to 'cyborg/human#5133' on TOP Discord for the way cleaner version of this function!
+  //Thanks to 'cyborg/human#5133' on TOP Discord for the much cleaner version of this function!
   function setY(index) {
     let y = 9;
     if (index > 89) {

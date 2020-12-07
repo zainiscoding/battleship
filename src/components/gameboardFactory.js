@@ -70,6 +70,8 @@ const gameboardFactory = () => {
           });
         });
         return true;
+      } else {
+        return newShip;
       }
     }
   }
