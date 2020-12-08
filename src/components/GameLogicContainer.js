@@ -1,8 +1,8 @@
 import playerFactory from './playerFactory';
 import DisplayGame from './DisplayGame';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-const GameLoopContainer = (props) => {
+const GameLogicContainer = (props) => {
   const [player, setPlayer] = useState(playerFactory('Player'));
   const [computer, setComputer] = useState(playerFactory('PC'));
   const [playerTurn, setPlayerTurn] = useState(true);
@@ -15,9 +15,7 @@ const GameLoopContainer = (props) => {
   const [placementError, setPlacementError] = useState(false);
   const [placeAllShipsError, setPlaceAllShipsError] = useState(false);
 
-  function placeTestShip() {
-    const computerShips = [];
-
+  function placeComputerShips() {
     function xGenerator() {
       let x = Math.floor(Math.random() * 10);
       return x;
@@ -37,14 +35,15 @@ const GameLoopContainer = (props) => {
       }
     }
 
+    //Generate positions for a new ship
     function generateShipPlacement(shipLength) {
-      // prevState.playerBoard.placeShip(3, 5, 3, 'horizontal');
       const newShip = {
         x: xGenerator(),
         y: yGenerator(),
         length: shipLength,
         orientation: orientationGenerator(),
       };
+      //Prevent impossible ships (going off grid)
       while (
         (newShip.x !== null &&
           newShip.x + shipLength > 10 &&
@@ -55,51 +54,39 @@ const GameLoopContainer = (props) => {
         newShip.x = xGenerator();
         newShip.y = yGenerator();
       }
-      computerShips.push(newShip);
       return newShip;
     }
 
-    let newShip = generateShipPlacement(2);
-    let newShip2 = generateShipPlacement(3);
-    let newShip3 = generateShipPlacement(3);
-    let newShip4 = generateShipPlacement(4);
-    let newShip5 = generateShipPlacement(5);
+    const newShip = generateShipPlacement(2);
+    const newShip2 = generateShipPlacement(3);
+    const newShip3 = generateShipPlacement(3);
+    const newShip4 = generateShipPlacement(4);
+    const newShip5 = generateShipPlacement(5);
 
     let newComputerState = computer;
 
-    let placeShip1 = newComputerState.playerBoard.placeShip(
-      newShip.x,
-      newShip.y,
-      newShip.length,
-      newShip.orientation
+    function placeShipArguments(ship) {
+      return [ship.x, ship.y, ship.length, ship.orientation];
+    }
+
+    const placeShip1 = newComputerState.playerBoard.placeShip(
+      ...placeShipArguments(newShip)
     );
 
-    let placeShip2 = newComputerState.playerBoard.placeShip(
-      newShip2.x,
-      newShip2.y,
-      newShip2.length,
-      newShip2.orientation
+    const placeShip2 = newComputerState.playerBoard.placeShip(
+      ...placeShipArguments(newShip2)
     );
 
-    let placeShip3 = newComputerState.playerBoard.placeShip(
-      newShip3.x,
-      newShip3.y,
-      newShip3.length,
-      newShip3.orientation
+    const placeShip3 = newComputerState.playerBoard.placeShip(
+      ...placeShipArguments(newShip3)
     );
 
-    let placeShip4 = newComputerState.playerBoard.placeShip(
-      newShip4.x,
-      newShip4.y,
-      newShip4.length,
-      newShip4.orientation
+    const placeShip4 = newComputerState.playerBoard.placeShip(
+      ...placeShipArguments(newShip4)
     );
 
-    let placeShip5 = newComputerState.playerBoard.placeShip(
-      newShip5.x,
-      newShip5.y,
-      newShip5.length,
-      newShip5.orientation
+    const placeShip5 = newComputerState.playerBoard.placeShip(
+      ...placeShipArguments(newShip5)
     );
 
     const placedShips = [
@@ -110,8 +97,7 @@ const GameLoopContainer = (props) => {
       placeShip5,
     ];
 
-    //This needs to be cleaned up lol
-
+    //If a ship overlaps another ship, create a new one
     placedShips.forEach((ship) => {
       while (ship !== true) {
         let replacementShip = generateShipPlacement(ship.getShipLength());
@@ -129,35 +115,6 @@ const GameLoopContainer = (props) => {
     setComputer((newComputerState) => {
       return { ...newComputerState };
     });
-
-    //fix edge detection
-
-    // setComputer((prevState) => {
-    //   generateShipPlacement(prevState, 2);
-    //   generateShipPlacement(prevState, 3);
-    //   generateShipPlacement(prevState, 3);
-    //   generateShipPlacement(prevState, 4);
-    //   generateShipPlacement(prevState, 5);
-    //   while (computerShips.some((ship) => ship === undefined)) {
-    //     computerShips.forEach((ship) => {
-    //       const shipIndex = computerShips.indexOf(ship);
-    //       console.log(computerShips);
-    //       if (ship === undefined) {
-    //         computerShips.splice(shipIndex, 1);
-    //         if (shipIndex === 0) {
-    //           generateShipPlacement(prevState, 2);
-    //         } else if (shipIndex === 3) {
-    //           generateShipPlacement(prevState, 4);
-    //         } else if (shipIndex === 4) {
-    //           generateShipPlacement(prevState, 5);
-    //         } else {
-    //           generateShipPlacement(prevState, 3);
-    //         }
-    //       }
-    //     });
-    //   }
-    //   return { ...prevState };
-    // });
   }
 
   function playerAttackHandler(e) {
@@ -171,52 +128,6 @@ const GameLoopContainer = (props) => {
         setPlayerTurn(false);
         return { ...prevState };
       });
-    }
-  }
-
-  function computerAttack() {
-    let position = 0;
-    function getPosition() {
-      return (position = Math.floor(Math.random() * 100));
-    }
-    setHitPlayerBlocks([...hitPlayerBlocks, getPosition()]);
-
-    //Prevents repeat hits
-    while (hitPlayerBlocks.includes(position) && hitPlayerBlocks.length < 100) {
-      setHitPlayerBlocks([...hitPlayerBlocks, getPosition()]);
-    }
-
-    setPlayer((prevState) => {
-      prevState.playerBoard.receiveAttack(
-        position,
-        parseInt(prevState.playerBoard.gameBoardArray[position].x),
-        parseInt(prevState.playerBoard.gameBoardArray[position].y)
-      );
-      return { ...prevState };
-    });
-    console.log(player);
-    setPlayerTurn(true);
-  }
-
-  //Used to set data values in the JSX of <DisplayGame>
-  function setX(index) {
-    let x = index;
-    if (index > 9) {
-      return (x = index % 10);
-    } else {
-      return x;
-    }
-  }
-
-  //Same as above
-  //Thanks to 'cyborg/human#5133' on TOP Discord for the much cleaner version of this function!
-  function setY(index) {
-    let y = 9;
-    if (index > 89) {
-      return (y = 0);
-    } else {
-      const val = Math.floor(index / 10);
-      return (y = 9 - val);
     }
   }
 
@@ -242,21 +153,21 @@ const GameLoopContainer = (props) => {
           chosenShip.orientation,
           shipNumber
         );
-        setPlacingShip(false);
-        if (placedShip) {
+        if (placedShip === true) {
+          console.log('derped');
           player.playerShips[shipNumber].placed = true;
           setPlacementError(false);
+          setPlacingShip(false);
         } else {
           setPlacementError(true);
         }
         return { ...prevState };
       });
     }
-    console.log(player.playerBoard.gameBoardArray);
   }
 
   function removeShipFromBoard(e) {
-    if (preparing) {
+    if (preparing && !placingShip) {
       setPlayer((prevState) => {
         const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
         const blockId = parseInt(e.target.id);
@@ -288,25 +199,60 @@ const GameLoopContainer = (props) => {
     }
   }
 
-  useEffect(() => {
-    if (!player.playerShips.length) {
-      //Timeout used to give the computer some fake thinking time
-      setTimeout(function () {
-        computerAttack();
-      }, 0);
+  function startGame() {
+    const playerShips = [];
+    placeComputerShips();
+
+    player.playerBoard.gameBoardArray.forEach((arrayItem) => {
+      if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
+        playerShips.push(arrayItem.ship);
+      }
+    });
+    if (preparing && playerShips.length === 5) {
+      setPreparing(false);
+      setPlaceAllShipsError(false);
+    } else {
+      setPlaceAllShipsError(true);
     }
-    //eslint-disable-next-line
-  }, [playerTurn]);
+  }
 
   //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
   useEffect(() => {
+    function computerAttack() {
+      let position = 0;
+
+      //Choose a random position to attack
+      function getPosition() {
+        return (position = Math.floor(Math.random() * 100));
+      }
+      setHitPlayerBlocks([...hitPlayerBlocks, getPosition()]);
+
+      //Prevents repeat hits
+      while (
+        hitPlayerBlocks.includes(position) &&
+        hitPlayerBlocks.length < 100
+      ) {
+        setHitPlayerBlocks([...hitPlayerBlocks, getPosition()]);
+      }
+
+      setPlayer((prevState) => {
+        prevState.playerBoard.receiveAttack(
+          position,
+          parseInt(prevState.playerBoard.gameBoardArray[position].x),
+          parseInt(prevState.playerBoard.gameBoardArray[position].y)
+        );
+        return { ...prevState };
+      });
+
+      setPlayerTurn(true);
+    }
     if (!playerTurn) {
       //Timeout used to give the computer some fake thinking time
       setTimeout(function () {
         computerAttack();
       }, 0);
     }
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, [playerTurn]);
 
   //Checks for game over
@@ -336,33 +282,13 @@ const GameLoopContainer = (props) => {
         setGameOver(true);
       }
     }
-    // eslint-disable-next-line
-  }, [computer]);
-
-  function startGame() {
-    const playerShips = [];
-
-    player.playerBoard.gameBoardArray.forEach((arrayItem) => {
-      if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
-        playerShips.push(arrayItem.ship);
-      }
-    });
-    if (preparing && playerShips.length === 5) {
-      setPreparing(false);
-    } else {
-      setPlaceAllShipsError(true);
-    }
-  }
+  }, [computer, preparing, player.playerBoard.gameBoardArray]);
 
   return (
     <DisplayGame
       player={player}
       computer={computer}
-      placeTestShip={placeTestShip}
       playerAttackHandler={playerAttackHandler}
-      setX={setX}
-      setY={setY}
-      computerAttack={computerAttack}
       chooseShip={chooseShip}
       placeChosenShip={placeChosenShip}
       rotateShip={rotateShip}
@@ -370,8 +296,10 @@ const GameLoopContainer = (props) => {
       startGame={startGame}
       removeShipFromBoard={removeShipFromBoard}
       placementError={placementError}
+      placeAllShipsError={placeAllShipsError}
+      gameOver={gameOver}
     />
   );
 };
 
-export default GameLoopContainer;
+export default GameLogicContainer;
