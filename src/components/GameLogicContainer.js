@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 const GameLogicContainer = (props) => {
   const [player, setPlayer] = useState(playerFactory('Player'));
-  const [computer, setComputer] = useState(playerFactory('PC'));
+  const [computer, setComputer] = useState(playerFactory('Computer'));
   const [playerTurn, setPlayerTurn] = useState(true);
   const [hitPlayerBlocks, setHitPlayerBlocks] = useState([]);
   const [gameOver, setGameOver] = useState(false);
@@ -14,6 +14,7 @@ const GameLogicContainer = (props) => {
   const [shipNumber, setShipNumber] = useState(0);
   const [placementError, setPlacementError] = useState(false);
   const [placeAllShipsError, setPlaceAllShipsError] = useState(false);
+  const [playerWins, setPlayerWins] = useState();
 
   function placeComputerShips() {
     function xGenerator() {
@@ -154,7 +155,6 @@ const GameLogicContainer = (props) => {
           shipNumber
         );
         if (placedShip === true) {
-          console.log('derped');
           player.playerShips[shipNumber].placed = true;
           setPlacementError(false);
           setPlacingShip(false);
@@ -171,7 +171,6 @@ const GameLogicContainer = (props) => {
       setPlayer((prevState) => {
         const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
         const blockId = parseInt(e.target.id);
-        console.log(blockId);
         player.playerShips[targetShip].placed = false;
         player.playerBoard.removeShip(targetShip, blockId);
         return { ...prevState };
@@ -214,6 +213,16 @@ const GameLogicContainer = (props) => {
     } else {
       setPlaceAllShipsError(true);
     }
+  }
+
+  function restartGame() {
+    setPreparing(true);
+    setPlayerTurn(true);
+    setHitPlayerBlocks([]);
+    setGameOver(false);
+    setPlayerWins('');
+    setPlayer(playerFactory('Player'));
+    setComputer(playerFactory('Computer'));
   }
 
   //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
@@ -273,12 +282,12 @@ const GameLogicContainer = (props) => {
       });
 
       if (computerShips.every((ship) => ship.isSunk())) {
-        console.log('all sunk! winner!');
+        setPlayerWins(true);
         setGameOver(true);
       }
 
       if (playerShips.every((ship) => ship.isSunk())) {
-        console.log('all sunk! loser!');
+        setPlayerWins(false);
         setGameOver(true);
       }
     }
@@ -294,9 +303,11 @@ const GameLogicContainer = (props) => {
       rotateShip={rotateShip}
       preparing={preparing}
       startGame={startGame}
+      restartGame={restartGame}
       removeShipFromBoard={removeShipFromBoard}
       placementError={placementError}
       placeAllShipsError={placeAllShipsError}
+      playerWins={playerWins}
       gameOver={gameOver}
     />
   );

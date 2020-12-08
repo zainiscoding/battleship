@@ -37,7 +37,6 @@ const playerFactory = (name) => {
   }
 
   function removeShip(shipIndex) {
-    console.log(playerShips[shipIndex]);
     const filteredShips = playerShips.filter(
       (ship) => ship !== playerShips[shipIndex]
     );

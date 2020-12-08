@@ -57,6 +57,13 @@ const DisplayGame = (props) => {
           <button onClick={props.startGame}>Start game</button>
         </>
       )}
+      {props.gameOver && (
+        <>
+          {props.playerWins && <div>You win!</div>}
+          {!props.playerWins && <div>You lose!</div>}
+          <button onClick={props.restartGame}>Restart</button>
+        </>
+      )}
     </div>
   );
 };

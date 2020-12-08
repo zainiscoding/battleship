@@ -78,7 +78,6 @@ const gameboardFactory = () => {
 
   function removeShip(shipIndex, blockId) {
     if (gameBoardArray[blockId].ship) {
-      console.log(gameBoardArray[blockId].ship.positions);
       const shipPositions = gameBoardArray[blockId].ship.positions;
       gameBoardArray.forEach((block) => {
         shipPositions.forEach((position) => {
@@ -117,10 +116,8 @@ const gameboardFactory = () => {
     if (targetArrayBlock.ship) {
       //Hit it!
       targetArrayBlock.ship.hit(a, b);
-      console.log('ship hit');
       //And if that ship is sunk by you hittting it...
       if (targetArrayBlock.ship.isSunk()) {
-        console.log('ship sunk');
         //Replace all relevant blocks with 'sunk ship' blocks
         gameBoardArray.forEach((block) => {
           if (block.ship === targetArrayBlock.ship) {
