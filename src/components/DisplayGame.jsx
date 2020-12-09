@@ -28,6 +28,9 @@ const DisplayGame = (props) => {
 
   return (
     <div id='game-wrapper'>
+      <div id='header-wrapper'>
+        <h1>Battleship</h1>
+      </div>
       <div id='board-wrapper'>
         <DisplayPlayerBoard
           player={props.player}
