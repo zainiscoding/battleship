@@ -3,7 +3,7 @@ import shipFactory from './shipFactory';
 
 const playerFactory = (name) => {
   const getName = () => name;
-  const playerBoard = gameboardFactory();
+  const gameBoard = gameboardFactory();
   let playerShips = [];
 
   if (name === 'Player') {
@@ -54,7 +54,7 @@ const playerFactory = (name) => {
 
   return {
     getName,
-    playerBoard,
+    gameBoard,
     makePlay,
     removeShip,
     playerShips,

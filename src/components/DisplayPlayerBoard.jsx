@@ -1,7 +1,7 @@
 const DisplayPlayerBoard = (props) => {
   return (
     <div id='board-wrapper__player-board-wrapper'>
-      {props.player.playerBoard.gameBoardArray.map((block, index) => {
+      {props.player.gameBoard.gameBoardArray.map((block, index) => {
         if (block.ship && block.sunk) {
           return (
             <div

@@ -37,7 +37,7 @@ const DisplayGame = (props) => {
           removeShipFromBoard={props.removeShipFromBoard}
         />
         <DisplayComputerBoard
-          computerBoardArray={props.computer.playerBoard.gameBoardArray}
+          computerBoardArray={props.computer.gameBoard.gameBoardArray}
           setX={setX}
           setY={setY}
           playerAttackHandler={props.playerAttackHandler}

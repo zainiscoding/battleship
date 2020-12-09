@@ -1,6 +1,6 @@
 import playerFactory from './playerFactory';
 import DisplayGame from './DisplayGame';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const GameLogicContainer = (props) => {
   const [player, setPlayer] = useState(playerFactory('Player'));
@@ -70,23 +70,23 @@ const GameLogicContainer = (props) => {
       return [ship.x, ship.y, ship.length, ship.orientation];
     }
 
-    const placeShip1 = newComputerState.playerBoard.placeShip(
+    const placeShip1 = newComputerState.gameBoard.placeShip(
       ...placeShipArguments(newShip)
     );
 
-    const placeShip2 = newComputerState.playerBoard.placeShip(
+    const placeShip2 = newComputerState.gameBoard.placeShip(
       ...placeShipArguments(newShip2)
     );
 
-    const placeShip3 = newComputerState.playerBoard.placeShip(
+    const placeShip3 = newComputerState.gameBoard.placeShip(
       ...placeShipArguments(newShip3)
     );
 
-    const placeShip4 = newComputerState.playerBoard.placeShip(
+    const placeShip4 = newComputerState.gameBoard.placeShip(
       ...placeShipArguments(newShip4)
     );
 
-    const placeShip5 = newComputerState.playerBoard.placeShip(
+    const placeShip5 = newComputerState.gameBoard.placeShip(
       ...placeShipArguments(newShip5)
     );
 
@@ -102,7 +102,7 @@ const GameLogicContainer = (props) => {
     placedShips.forEach((ship) => {
       while (ship !== true) {
         let replacementShip = generateShipPlacement(ship.getShipLength());
-        ship = newComputerState.playerBoard.placeShip(
+        ship = newComputerState.gameBoard.placeShip(
           replacementShip.x,
           replacementShip.y,
           replacementShip.length,
@@ -121,7 +121,7 @@ const GameLogicContainer = (props) => {
   function playerAttackHandler(e) {
     if (playerTurn && !preparing) {
       setComputer((prevState) => {
-        prevState.playerBoard.receiveAttack(
+        prevState.gameBoard.receiveAttack(
           e.target.id,
           parseInt(e.target.getAttribute('data-x')),
           parseInt(e.target.getAttribute('data-y'))
@@ -147,7 +147,7 @@ const GameLogicContainer = (props) => {
       setPlayer((prevState) => {
         const targetBlockX = parseInt(e.target.getAttribute('data-x'));
         const targetBlockY = parseInt(e.target.getAttribute('data-y'));
-        let placedShip = prevState.playerBoard.placeShip(
+        let placedShip = prevState.gameBoard.placeShip(
           targetBlockX,
           targetBlockY,
           chosenShip.shipLength,
@@ -172,7 +172,7 @@ const GameLogicContainer = (props) => {
         const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
         const blockId = parseInt(e.target.id);
         player.playerShips[targetShip].placed = false;
-        player.playerBoard.removeShip(targetShip, blockId);
+        player.gameBoard.removeShip(targetShip, blockId);
         return { ...prevState };
       });
     }
@@ -202,7 +202,7 @@ const GameLogicContainer = (props) => {
     const playerShips = [];
     placeComputerShips();
 
-    player.playerBoard.gameBoardArray.forEach((arrayItem) => {
+    player.gameBoard.gameBoardArray.forEach((arrayItem) => {
       if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
         playerShips.push(arrayItem.ship);
       }
@@ -245,10 +245,10 @@ const GameLogicContainer = (props) => {
       }
 
       setPlayer((prevState) => {
-        prevState.playerBoard.receiveAttack(
+        prevState.gameBoard.receiveAttack(
           position,
-          parseInt(prevState.playerBoard.gameBoardArray[position].x),
-          parseInt(prevState.playerBoard.gameBoardArray[position].y)
+          parseInt(prevState.gameBoard.gameBoardArray[position].x),
+          parseInt(prevState.gameBoard.gameBoardArray[position].y)
         );
         return { ...prevState };
       });
@@ -269,13 +269,13 @@ const GameLogicContainer = (props) => {
     if (!preparing) {
       const computerShips = [];
       const playerShips = [];
-      computer.playerBoard.gameBoardArray.forEach((arrayItem) => {
+      computer.gameBoard.gameBoardArray.forEach((arrayItem) => {
         if (arrayItem.ship && !computerShips.includes(arrayItem.ship)) {
           computerShips.push(arrayItem.ship);
         }
       });
 
-      player.playerBoard.gameBoardArray.forEach((arrayItem) => {
+      player.gameBoard.gameBoardArray.forEach((arrayItem) => {
         if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
           playerShips.push(arrayItem.ship);
         }
@@ -291,7 +291,7 @@ const GameLogicContainer = (props) => {
         setGameOver(true);
       }
     }
-  }, [computer, preparing, player.playerBoard.gameBoardArray]);
+  }, [computer, preparing, player.gameBoard.gameBoardArray]);
 
   return (
     <DisplayGame
