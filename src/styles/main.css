@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+#header-wrapper{
+  align-self: center;
+}
+
 #board-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -70,6 +74,8 @@
 }
 
 #player-ships-wrapper {
+  grid-column: 3;
+  grid-row: 1;
   display: flex;
   flex-wrap: wrap;
   width: fit-content;
@@ -125,4 +131,12 @@
   width: 49px;
   border: solid 1px black;
   pointer-events: none;
+}
+
+.error-wrapper{
+  grid-column: 2;
+}
+
+#start-game-button{
+  grid-column: 2;
 }

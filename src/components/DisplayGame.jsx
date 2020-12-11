@@ -52,7 +52,7 @@ const DisplayGame = (props) => {
               chooseShip={props.chooseShip}
               rotateShip={props.rotateShip}
             />
-            <button id='start_game_button' onClick={props.startGame}>
+            <button id='start-game-button' onClick={props.startGame}>
               Start game
             </button>
           </>
