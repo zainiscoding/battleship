@@ -23,9 +23,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-
   "homepage": "http://zainiscoding.github.io/battleship",
-
   "eslintConfig": {
     "extends": [
       "react-app",

@@ -76,14 +76,31 @@
   display: flex;
   flex-direction: row;
   width: fit-content;
-  padding: 20px;
+  margin: 20px;
 }
+
+.player-ships-wrapper__ship--horizontal--selected {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  margin: 20px;
+  border: solid 1px red;
+}
+
 
 .player-ships-wrapper__ship--vertical {
   display: flex;
   flex-direction: column;
   width: fit-content;
-  padding: 20px;
+  margin: 20px;
+}
+
+.player-ships-wrapper__ship--vertical--selected {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: 20px;
+  border: solid 1px red;
 }
 
 .player-ship__ship-blocks {

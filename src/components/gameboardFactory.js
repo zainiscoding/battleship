@@ -192,32 +192,19 @@ const gameboardFactory = () => {
     const newShip4 = generateShipPlacement(4);
     const newShip5 = generateShipPlacement(5);
 
-    let newComputerState = this;
-    console.log(newComputerState);
-
     function placeShipArguments(ship) {
       return [ship.x, ship.y, ship.length, ship.orientation];
     }
 
-    const placeShip1 = newComputerState.placeShip(
-      ...placeShipArguments(newShip)
-    );
+    const placeShip1 = this.placeShip(...placeShipArguments(newShip));
 
-    const placeShip2 = newComputerState.placeShip(
-      ...placeShipArguments(newShip2)
-    );
+    const placeShip2 = this.placeShip(...placeShipArguments(newShip2));
 
-    const placeShip3 = newComputerState.placeShip(
-      ...placeShipArguments(newShip3)
-    );
+    const placeShip3 = this.placeShip(...placeShipArguments(newShip3));
 
-    const placeShip4 = newComputerState.placeShip(
-      ...placeShipArguments(newShip4)
-    );
+    const placeShip4 = this.placeShip(...placeShipArguments(newShip4));
 
-    const placeShip5 = newComputerState.placeShip(
-      ...placeShipArguments(newShip5)
-    );
+    const placeShip5 = this.placeShip(...placeShipArguments(newShip5));
 
     const placedShips = [
       placeShip1,
@@ -231,20 +218,14 @@ const gameboardFactory = () => {
     placedShips.forEach((ship) => {
       while (ship !== true) {
         let replacementShip = generateShipPlacement(ship.getShipLength());
-        ship = newComputerState.placeShip(
+        ship = this.placeShip(
           replacementShip.x,
           replacementShip.y,
           replacementShip.length,
           replacementShip.orientation
         );
-        // setComputer(newComputerState);
       }
     });
-
-    // setComputer(newComputerState);
-    // setComputer((newComputerState) => {
-    //   return { ...newComputerState };
-    // });
   }
 
   return {

@@ -31,13 +31,16 @@ const GameLogicContainer = (props) => {
   }
 
   function chooseShip(e) {
-    const chosenShip = {
-      shipLength: parseInt(e.target.getAttribute('data-length')),
-      orientation: e.target.getAttribute('data-orientation'),
-    };
-    setPlacingShip(true);
-    setShipNumber(parseInt(e.target.getAttribute('data-shipnumber')));
-    setChosenShip(chosenShip);
+    if (!placingShip) {
+      const chosenShip = {
+        shipLength: parseInt(e.target.getAttribute('data-length')),
+        orientation: e.target.getAttribute('data-orientation'),
+      };
+      setPlacingShip(true);
+      setShipNumber(parseInt(e.target.getAttribute('data-shipnumber')));
+      setChosenShip(chosenShip);
+      e.target.className += '--selected';
+    }
   }
 
   function placeChosenShip(e) {
