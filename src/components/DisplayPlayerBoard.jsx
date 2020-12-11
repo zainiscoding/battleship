@@ -12,7 +12,7 @@ const DisplayPlayerBoard = (props) => {
           return (
             <div
               key={index}
-              className='friendly-ship-block'
+              className='player-ship-block--sunk'
               id={index}
               data-x={props.setX(index)}
               data-y={props.setY(index)}
@@ -24,7 +24,7 @@ const DisplayPlayerBoard = (props) => {
           return (
             <div
               key={index}
-              className='friendly-ship-block'
+              className='player-ship-block--hit'
               id={index}
               data-x={props.setX(index)}
               data-y={props.setY(index)}
@@ -36,7 +36,7 @@ const DisplayPlayerBoard = (props) => {
           return (
             <div
               key={index}
-              className='friendly-ship-block'
+              className='player-ship-block'
               id={index}
               data-x={props.setX(index)}
               data-y={props.setY(index)}

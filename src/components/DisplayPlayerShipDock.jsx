@@ -26,7 +26,7 @@ const DisplayPlayerShipDock = (props) => {
                     return (
                       <div
                         key={index}
-                        className='player-ship-block'
+                        className='player-ship-block--docked'
                         id={index}
                         data-x={props.setX(index)}
                         data-y={props.setY(index)}

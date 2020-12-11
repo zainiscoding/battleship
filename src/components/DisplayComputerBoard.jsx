@@ -35,7 +35,9 @@ const DisplayComputerBoard = (props) => {
               data-x={props.setX(index)}
               data-y={props.setY(index)}
               onClick={props.playerAttackHandler}
-            ></div>
+            >
+              ship
+            </div>
           );
         } else if (block.miss) {
           return (

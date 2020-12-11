@@ -17,7 +17,7 @@ const GameLogicContainer = (props) => {
   const [playerWins, setPlayerWins] = useState();
 
   function playerAttackHandler(e) {
-    if (playerTurn && !preparing) {
+    if (playerTurn && !preparing && !gameOver) {
       setComputer((prevState) => {
         prevState.gameBoard.receiveAttack(
           e.target.id,
@@ -101,7 +101,6 @@ const GameLogicContainer = (props) => {
 
   function startGame() {
     const playerShips = [];
-    computer.gameBoard.placeComputerShips();
 
     player.gameBoard.gameBoardArray.forEach((arrayItem) => {
       if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
@@ -109,6 +108,7 @@ const GameLogicContainer = (props) => {
       }
     });
     if (preparing && playerShips.length === 5) {
+      computer.gameBoard.placeComputerShips();
       setPreparing(false);
       setPlaceAllShipsError(false);
     } else {
