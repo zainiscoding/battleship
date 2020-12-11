@@ -20,6 +20,15 @@
   width: 500px;
 }
 
+#board-wrapper__player-board-wrapper--preparing {
+  display: grid;
+  grid-column: 2;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  height: 500px;
+  width: 500px;
+}
+
 #board-wrapper__computer-board-wrapper {
   display: grid;
   grid-column: 3;
@@ -52,7 +61,6 @@
 .enemy-ship-block {
   background: white;
   border: solid 1px black;
-  height: 100%;
 }
 
 .enemy-ship-block-hit {
@@ -70,6 +78,11 @@
 .ship {
   background: white;
   border: solid 1px black;
+}
+
+.ship__rotate-ship-button{
+ height: 51px; 
+ width: 51px;
 }
 
 .player-ships-wrapper__ship--horizontal {

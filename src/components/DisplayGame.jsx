@@ -2,6 +2,7 @@ import DisplayPlayerBoard from './DisplayPlayerBoard';
 import DisplayComputerBoard from './DisplayComputerBoard';
 import PlayerShipDockContainer from './PlayerShipDockContainer';
 import DisplayPlacementError from './DisplayPlacementError';
+import DisplayPlaceAllShipsError from './DisplayPlaceAllShipsError';
 
 const DisplayGame = (props) => {
   //Used to set data values of the blocks
@@ -38,28 +39,34 @@ const DisplayGame = (props) => {
           setY={setY}
           placeChosenShip={props.placeChosenShip}
           removeShipFromBoard={props.removeShipFromBoard}
+          preparing={props.preparing}
         />
-        <DisplayComputerBoard
-          computerBoardArray={props.computer.gameBoard.gameBoardArray}
-          setX={setX}
-          setY={setY}
-          playerAttackHandler={props.playerAttackHandler}
-          placeChosenShip={props.placeChosenShip}
-        />
-      </div>
-      {props.preparing && (
-        <>
-          {props.placementError && <DisplayPlacementError />}
-          <PlayerShipDockContainer
-            player={props.player}
+        {props.preparing && (
+          <>
+            {props.placementError && <DisplayPlacementError />}
+            {props.placeAllShipsError && <DisplayPlaceAllShipsError />}
+            <PlayerShipDockContainer
+              player={props.player}
+              setX={setX}
+              setY={setY}
+              chooseShip={props.chooseShip}
+              rotateShip={props.rotateShip}
+            />
+            <button id='start_game_button' onClick={props.startGame}>
+              Start game
+            </button>
+          </>
+        )}
+        {!props.preparing && (
+          <DisplayComputerBoard
+            computerBoardArray={props.computer.gameBoard.gameBoardArray}
             setX={setX}
             setY={setY}
-            chooseShip={props.chooseShip}
-            rotateShip={props.rotateShip}
+            playerAttackHandler={props.playerAttackHandler}
+            placeChosenShip={props.placeChosenShip}
           />
-          <button onClick={props.startGame}>Start game</button>
-        </>
-      )}
+        )}
+      </div>
       {props.gameOver && (
         <>
           {props.playerWins && <div>You win!</div>}

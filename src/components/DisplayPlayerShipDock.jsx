@@ -15,7 +15,12 @@ const DisplayPlayerShipDock = (props) => {
                 data-orientation={ship.getOrientation()}
                 onClick={props.chooseShip}
               >
-                <button onClick={props.rotateShip}>Rotate</button>
+                <button
+                  className='ship__rotate-ship-button'
+                  onClick={props.rotateShip}
+                >
+                  Rotate
+                </button>
                 <>
                   {ship.positions.map((position, index) => {
                     return (
