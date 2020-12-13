@@ -16,9 +16,7 @@ const DisplayPlayerBoard = (props) => {
               id={index}
               data-x={props.setX(index)}
               data-y={props.setY(index)}
-            >
-              Sunk Ship
-            </div>
+            ></div>
           );
         } else if (block.hit) {
           return (
@@ -29,7 +27,7 @@ const DisplayPlayerBoard = (props) => {
               data-x={props.setX(index)}
               data-y={props.setY(index)}
             >
-              Hit
+              !
             </div>
           );
         } else if (block.ship && !block.hit) {
@@ -42,16 +40,10 @@ const DisplayPlayerBoard = (props) => {
               data-y={props.setY(index)}
               data-shipnumber={block.ship.getShipNumber()}
               onClick={props.removeShipFromBoard}
-            >
-              Ship
-            </div>
+            ></div>
           );
         } else if (block.miss) {
-          return (
-            <div key={index} className='miss-block'>
-              Miss
-            </div>
-          );
+          return <div key={index} className='miss-block'></div>;
         }
         return (
           <>

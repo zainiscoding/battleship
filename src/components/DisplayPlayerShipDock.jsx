@@ -16,8 +16,8 @@ const DisplayPlayerShipDock = (props) => {
                 onClick={props.chooseShip}
               >
                 <button
-                  className='ship__rotate-ship-button'
                   onClick={props.rotateShip}
+                  className='ship__rotate-ship-button'
                 >
                   Rotate
                 </button>

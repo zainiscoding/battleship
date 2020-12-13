@@ -35,6 +35,7 @@ const gameboardFactory = () => {
 
     if (newShip !== null) {
       const shipPositions = [...newShip.positions];
+      console.log(shipPositions);
       let shipOverlap = false;
 
       playerShipPositions.forEach((currentPosition) => {
@@ -49,6 +50,8 @@ const gameboardFactory = () => {
         }
       });
       if (!shipOverlap) {
+        console.log(gameBoardArray);
+        //duplicates are being created (ie. when 4:3 is removed, two 4:3's are created)
         shipPositions.forEach((shipPosition) => {
           gameBoardArray.forEach((block) => {
             const shipBlock = {
@@ -56,6 +59,7 @@ const gameboardFactory = () => {
               ship: newShip,
             };
             if (shipPosition.x === block.x && shipPosition.y === block.y) {
+              console.log('equal');
               shipBlock.x = block.x;
               shipBlock.y = block.y;
               gameBoardArray.splice(
@@ -80,18 +84,25 @@ const gameboardFactory = () => {
       gameBoardArray.forEach((block) => {
         shipPositions.forEach((position) => {
           let emptyBlock = { empty: true, x: position.x, y: position.y };
-          if (block.ship && block.ship.getShipNumber() === shipIndex) {
+          if (
+            block.ship &&
+            block.ship.getShipNumber() === shipIndex &&
+            block.x === emptyBlock.x &&
+            block.y === emptyBlock.y
+          ) {
             gameBoardArray.splice(gameBoardArray.indexOf(block), 1, emptyBlock);
           }
           playerShipPositions.forEach((playerShipPosition) => {
             if (playerShipPosition === position) {
               playerShipPositions.splice(
-                playerShipPositions.indexOf(playerShipPositions, 1)
+                playerShipPositions.indexOf(playerShipPosition, 1)
               );
             }
+            console.log(playerShipPositions);
           });
         });
       });
+      console.log(gameBoardArray);
     }
   }
 

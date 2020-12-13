@@ -192,7 +192,7 @@ const GameLogicContainer = (props) => {
         setGameOver(true);
       }
     }
-  }, [computer, preparing, player.gameBoard.gameBoardArray]);
+  }, [player, computer, preparing]);
 
   return (
     <DisplayGame

@@ -59,10 +59,29 @@ const DisplayGame = (props) => {
         )}
         {!props.preparing && (
           <>
-            {props.playerTurn ? (
-              <h2 className='turn-display'>Player turn</h2>
-            ) : (
-              <h2 className='turn-display'>Computer turn</h2>
+            {!props.gameOver && (
+              <>
+                {props.playerTurn ? (
+                  <h2 id='turn-display'>Player turn</h2>
+                ) : (
+                  <h2 id='turn-display'>Computer turn</h2>
+                )}
+              </>
+            )}
+            {props.gameOver && (
+              <>
+                {props.playerWins ? (
+                  <div id='game-over-info'>
+                    You win!{' '}
+                    <button onClick={props.restartGame}>Restart</button>
+                  </div>
+                ) : (
+                  <div id='game-over-info'>
+                    You lose!{' '}
+                    <button onClick={props.restartGame}>Restart</button>
+                  </div>
+                )}
+              </>
             )}
             <DisplayComputerBoard
               computerBoardArray={props.computer.gameBoard.gameBoardArray}
@@ -74,13 +93,6 @@ const DisplayGame = (props) => {
           </>
         )}
       </div>
-      {props.gameOver && (
-        <>
-          {props.playerWins && <div>You win!</div>}
-          {!props.playerWins && <div>You lose!</div>}
-          <button onClick={props.restartGame}>Restart</button>
-        </>
-      )}
     </div>
   );
 };

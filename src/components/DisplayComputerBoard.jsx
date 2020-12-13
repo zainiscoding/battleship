@@ -20,7 +20,9 @@ const DisplayComputerBoard = (props) => {
               id={index}
               data-x={props.setX(index)}
               data-y={props.setY(index)}
-            ></div>
+            >
+              !
+            </div>
           );
         } else if (block.ship && !block.hit) {
           return (
