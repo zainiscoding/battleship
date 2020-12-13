@@ -58,13 +58,20 @@ const DisplayGame = (props) => {
           </>
         )}
         {!props.preparing && (
-          <DisplayComputerBoard
-            computerBoardArray={props.computer.gameBoard.gameBoardArray}
-            setX={setX}
-            setY={setY}
-            playerAttackHandler={props.playerAttackHandler}
-            placeChosenShip={props.placeChosenShip}
-          />
+          <>
+            {props.playerTurn ? (
+              <h2 className='turn-display'>Player turn</h2>
+            ) : (
+              <h2 className='turn-display'>Computer turn</h2>
+            )}
+            <DisplayComputerBoard
+              computerBoardArray={props.computer.gameBoard.gameBoardArray}
+              setX={setX}
+              setY={setY}
+              playerAttackHandler={props.playerAttackHandler}
+              placeChosenShip={props.placeChosenShip}
+            />
+          </>
         )}
       </div>
       {props.gameOver && (

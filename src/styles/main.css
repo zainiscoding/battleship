@@ -69,6 +69,10 @@
   height: 100%;
 }
 
+.miss-block{
+  background:black
+}
+
 .invisible-block {
   background: white;
   height: 100%;
@@ -80,8 +84,14 @@
   border: solid 1px black;
 }
 
-.enemy-ship-block-hit {
-  background: red;
+.enemy-ship-block--hit {
+  background: orange;
+  border: solid 1px black;
+  height: 100%;
+}
+
+.enemy-ship-block--sunk {
+  background: grey;
   border: solid 1px black;
   height: 100%;
 }

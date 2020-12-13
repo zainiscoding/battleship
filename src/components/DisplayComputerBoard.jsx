@@ -6,25 +6,21 @@ const DisplayComputerBoard = (props) => {
           return (
             <div
               key={index}
-              className='enemy-ship-block'
+              className='enemy-ship-block--sunk'
               id={index}
               data-x={props.setX(index)}
               data-y={props.setY(index)}
-            >
-              Sunk Ship
-            </div>
+            ></div>
           );
         } else if (block.hit) {
           return (
             <div
               key={index}
-              className='enemy-ship-block'
+              className='enemy-ship-block--hit'
               id={index}
               data-x={props.setX(index)}
               data-y={props.setY(index)}
-            >
-              Hit
-            </div>
+            ></div>
           );
         } else if (block.ship && !block.hit) {
           return (
@@ -35,16 +31,10 @@ const DisplayComputerBoard = (props) => {
               data-x={props.setX(index)}
               data-y={props.setY(index)}
               onClick={props.playerAttackHandler}
-            >
-              ship
-            </div>
+            ></div>
           );
         } else if (block.miss) {
-          return (
-            <div key={index} className='miss-block'>
-              Miss
-            </div>
-          );
+          return <div key={index} className='miss-block'></div>;
         }
         return (
           <>

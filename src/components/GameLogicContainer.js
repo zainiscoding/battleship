@@ -160,7 +160,7 @@ const GameLogicContainer = (props) => {
       //Timeout used to give the computer some fake thinking time
       setTimeout(function () {
         computerAttack();
-      }, 0);
+      }, 500);
     }
     // eslint-disable-next-line
   }, [playerTurn]);
@@ -204,6 +204,7 @@ const GameLogicContainer = (props) => {
       rotateShip={rotateShip}
       preparing={preparing}
       startGame={startGame}
+      playerTurn={playerTurn}
       restartGame={restartGame}
       removeShipFromBoard={removeShipFromBoard}
       placementError={placementError}
