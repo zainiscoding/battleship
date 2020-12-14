@@ -4,6 +4,7 @@ const playerFactory = (name) => {
   const getName = () => name;
   let playerShips = [];
 
+  //Create the initial ships that the player can place
   if (name === 'Player') {
     let newShip = shipFactory(undefined, undefined, 5, 'horizontal');
     let newShip2 = shipFactory(undefined, undefined, 4, 'horizontal');
@@ -34,26 +35,8 @@ const playerFactory = (name) => {
     return playerShips.splice(shipIndex, 1, newHorizontalShip);
   }
 
-  function removeShip(shipIndex) {
-    const filteredShips = playerShips.filter(
-      (ship) => ship !== playerShips[shipIndex]
-    );
-    return (playerShips = [...filteredShips]);
-  }
-
-  function makePlay(toAttack, x, y, length) {
-    let randomPosition = Math.floor(Math.random() * 100);
-    if (x !== undefined) {
-      toAttack.placeShip(x, y, length);
-    } else {
-      toAttack.receiveAttack(randomPosition);
-    }
-  }
-
   return {
     getName,
-    makePlay,
-    removeShip,
     playerShips,
     rotateHorizontalShip,
     rotateVerticalShip,
