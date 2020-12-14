@@ -98,11 +98,9 @@ const gameboardFactory = () => {
                 playerShipPositions.indexOf(playerShipPosition, 1)
               );
             }
-            console.log(playerShipPositions);
           });
         });
       });
-      console.log(gameBoardArray);
     }
   }
 

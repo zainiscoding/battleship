@@ -129,10 +129,12 @@ body{
 }
 
 #player-ships-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   height: 100%;
   grid-column: 3;
   grid-row: 1;
-  display: flex;
   flex-wrap: wrap;
   width: fit-content;
 }
@@ -146,6 +148,7 @@ body{
   border: none;
   outline: none;
   align-self: center;
+  height: 31px;
 }
 
 .player-ships-wrapper__ship--horizontal {
@@ -213,7 +216,7 @@ body{
   flex-direction: column;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 769px) {
   #board-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -299,6 +302,7 @@ body{
   
 
   .ship__rotate-ship-button{
+    height: 51px;
     align-self: center;
   }
 }
