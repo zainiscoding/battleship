@@ -1,10 +1,14 @@
 import playerFactory from './playerFactory';
+import gameboardFactory from './gameboardFactory';
 import DisplayGame from './DisplayGame';
+import placeComputerShips from '../helper_functions/placeComputerShips';
 import { useEffect, useState } from 'react';
 
 const GameLogicContainer = (props) => {
   const [player, setPlayer] = useState(playerFactory('Player'));
   const [computer, setComputer] = useState(playerFactory('Computer'));
+  const [playerBoard, setPlayerBoard] = useState(gameboardFactory());
+  const [computerBoard, setComputerBoard] = useState(gameboardFactory());
   const [playerTurn, setPlayerTurn] = useState(true);
   const [hitPlayerBlocks, setHitPlayerBlocks] = useState([]);
   const [gameOver, setGameOver] = useState(false);
@@ -18,8 +22,8 @@ const GameLogicContainer = (props) => {
 
   function playerAttackHandler(e) {
     if (playerTurn && !preparing && !gameOver) {
-      setComputer((prevState) => {
-        prevState.gameBoard.receiveAttack(
+      setComputerBoard((prevState) => {
+        prevState.receiveAttack(
           e.target.id,
           parseInt(e.target.getAttribute('data-x')),
           parseInt(e.target.getAttribute('data-y'))
@@ -45,10 +49,10 @@ const GameLogicContainer = (props) => {
 
   function placeChosenShip(e) {
     if (placingShip) {
-      setPlayer((prevState) => {
+      setPlayerBoard((prevState) => {
         const targetBlockX = parseInt(e.target.getAttribute('data-x'));
         const targetBlockY = parseInt(e.target.getAttribute('data-y'));
-        let placedShip = prevState.gameBoard.placeShip(
+        let placedShip = prevState.placeShip(
           targetBlockX,
           targetBlockY,
           chosenShip.shipLength,
@@ -69,11 +73,11 @@ const GameLogicContainer = (props) => {
 
   function removeShipFromBoard(e) {
     if (preparing && !placingShip) {
-      setPlayer((prevState) => {
+      setPlayerBoard((prevState) => {
         const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
         const blockId = parseInt(e.target.id);
         player.playerShips[targetShip].placed = false;
-        player.gameBoard.removeShip(targetShip, blockId);
+        playerBoard.removeShip(targetShip, blockId);
         return { ...prevState };
       });
     }
@@ -102,13 +106,13 @@ const GameLogicContainer = (props) => {
   function startGame() {
     const playerShips = [];
 
-    player.gameBoard.gameBoardArray.forEach((arrayItem) => {
+    playerBoard.gameBoardArray.forEach((arrayItem) => {
       if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
         playerShips.push(arrayItem.ship);
       }
     });
     if (preparing && playerShips.length === 5) {
-      computer.gameBoard.placeComputerShips();
+      computerBoard.placeShips();
       setPreparing(false);
       setPlaceAllShipsError(false);
     } else {
@@ -124,6 +128,8 @@ const GameLogicContainer = (props) => {
     setPlayerWins('');
     setPlayer(playerFactory('Player'));
     setComputer(playerFactory('Computer'));
+    setPlayerBoard(gameboardFactory());
+    setComputerBoard(gameboardFactory());
   }
 
   //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
@@ -131,7 +137,7 @@ const GameLogicContainer = (props) => {
     function computerAttack() {
       let position = 0;
 
-      //Choose a random position to attack
+      //Create a random position to attack
       function getPosition() {
         return (position = Math.floor(Math.random() * 100));
       }
@@ -145,18 +151,19 @@ const GameLogicContainer = (props) => {
         setHitPlayerBlocks([...hitPlayerBlocks, getPosition()]);
       }
 
-      setPlayer((prevState) => {
-        prevState.gameBoard.receiveAttack(
+      setPlayerBoard((prevState) => {
+        prevState.receiveAttack(
           position,
-          parseInt(prevState.gameBoard.gameBoardArray[position].x),
-          parseInt(prevState.gameBoard.gameBoardArray[position].y)
+          parseInt(prevState.gameBoardArray[position].x),
+          parseInt(prevState.gameBoardArray[position].y)
         );
         return { ...prevState };
       });
 
       setPlayerTurn(true);
     }
-    if (!playerTurn) {
+
+    if (!playerTurn && !gameOver) {
       //Timeout used to give the computer some fake thinking time
       setTimeout(function () {
         computerAttack();
@@ -170,13 +177,14 @@ const GameLogicContainer = (props) => {
     if (!preparing) {
       const computerShips = [];
       const playerShips = [];
-      computer.gameBoard.gameBoardArray.forEach((arrayItem) => {
+
+      computerBoard.gameBoardArray.forEach((arrayItem) => {
         if (arrayItem.ship && !computerShips.includes(arrayItem.ship)) {
           computerShips.push(arrayItem.ship);
         }
       });
 
-      player.gameBoard.gameBoardArray.forEach((arrayItem) => {
+      playerBoard.gameBoardArray.forEach((arrayItem) => {
         if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
           playerShips.push(arrayItem.ship);
         }
@@ -192,12 +200,14 @@ const GameLogicContainer = (props) => {
         setGameOver(true);
       }
     }
-  }, [player, computer, preparing]);
+  }, [playerBoard, computerBoard, preparing]);
 
   return (
     <DisplayGame
       player={player}
+      playerBoard={playerBoard}
       computer={computer}
+      computerBoard={computerBoard}
       playerAttackHandler={playerAttackHandler}
       chooseShip={chooseShip}
       placeChosenShip={placeChosenShip}

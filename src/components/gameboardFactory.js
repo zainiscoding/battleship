@@ -1,43 +1,21 @@
 import shipFactory from './shipFactory';
+import createGameBoardArray from '../helper_functions/createGameBoardArray';
+import placeComputerShips from '../helper_functions/placeComputerShips';
 
 const gameboardFactory = () => {
-  let gameBoardArray = [];
+  let gameBoardArray = createGameBoardArray();
   const playerShipPositions = [];
 
-  let loopCounter = 0;
-
-  for (let i = 0; i < 100; i++) {
-    let x = i;
-    let y = 9;
-
-    function setX() {
-      if (i > 9) {
-        return (x = i % 10);
-      } else {
-        return x;
-      }
-    }
-
-    function setY() {
-      if (i % 10 === 0 && i > 9) {
-        loopCounter += 1;
-      }
-      return y - loopCounter;
-    }
-
-    let emptyBlock = { empty: true, x: setX(), y: setY() };
-
-    gameBoardArray.push(emptyBlock);
-  }
-
   function placeShip(x, y, shipLength, orientation, shipNumber) {
+    //Create a new ship
     const newShip = shipFactory(x, y, shipLength, orientation, shipNumber);
 
+    //If that ship was successfully created...
     if (newShip !== null) {
       const shipPositions = [...newShip.positions];
-      console.log(shipPositions);
       let shipOverlap = false;
 
+      //Check if it overlaps with any other ships
       playerShipPositions.forEach((currentPosition) => {
         if (
           shipPositions.some(
@@ -49,9 +27,9 @@ const gameboardFactory = () => {
           return (shipOverlap = true);
         }
       });
+
+      //If it doesn't overlap, push it to the gameBoardArray and return true
       if (!shipOverlap) {
-        console.log(gameBoardArray);
-        //duplicates are being created (ie. when 4:3 is removed, two 4:3's are created)
         shipPositions.forEach((shipPosition) => {
           gameBoardArray.forEach((block) => {
             const shipBlock = {
@@ -59,7 +37,6 @@ const gameboardFactory = () => {
               ship: newShip,
             };
             if (shipPosition.x === block.x && shipPosition.y === block.y) {
-              console.log('equal');
               shipBlock.x = block.x;
               shipBlock.y = block.y;
               gameBoardArray.splice(
@@ -79,11 +56,16 @@ const gameboardFactory = () => {
   }
 
   function removeShip(shipIndex, blockId) {
+    //If you clicked a ship...
     if (gameBoardArray[blockId].ship) {
+      //Create an array of that ship's positions
       const shipPositions = gameBoardArray[blockId].ship.positions;
+
+      //Check the gameBoardArray and the shipPositions array
       gameBoardArray.forEach((block) => {
         shipPositions.forEach((position) => {
           let emptyBlock = { empty: true, x: position.x, y: position.y };
+          //If an index of the gameBoardArray matches the position of the clicked ship, splice it with an empty block
           if (
             block.ship &&
             block.ship.getShipNumber() === shipIndex &&
@@ -92,6 +74,7 @@ const gameboardFactory = () => {
           ) {
             gameBoardArray.splice(gameBoardArray.indexOf(block), 1, emptyBlock);
           }
+          //Then remove them from playerShipPositions and move onto the next
           playerShipPositions.forEach((playerShipPosition) => {
             if (playerShipPosition === position) {
               playerShipPositions.splice(
@@ -144,97 +127,8 @@ const gameboardFactory = () => {
     }
   }
 
-  function listShips() {
-    gameBoardArray.forEach((block) => {
-      if (block.ship) {
-        return block;
-      }
-    });
-  }
-
-  function placeComputerShips() {
-    function xGenerator() {
-      let x = Math.floor(Math.random() * 10);
-      return x;
-    }
-
-    function yGenerator() {
-      let y = Math.floor(Math.random() * 10);
-      return y;
-    }
-
-    function orientationGenerator() {
-      let orientationNumber = Math.floor(Math.random() * 10);
-      if (orientationNumber % 2 === 0) {
-        return 'horizontal';
-      } else {
-        return 'vertical';
-      }
-    }
-
-    //Generate positions for a new ship
-    function generateShipPlacement(shipLength) {
-      const newShip = {
-        x: xGenerator(),
-        y: yGenerator(),
-        length: shipLength,
-        orientation: orientationGenerator(),
-      };
-      //Prevent impossible ships (going off grid)
-      while (
-        (newShip.x !== null &&
-          newShip.x + shipLength > 10 &&
-          newShip.orientation === 'horizontal') ||
-        (newShip.y - shipLength < -1 && newShip.orientation === 'vertical') ||
-        newShip === undefined
-      ) {
-        newShip.x = xGenerator();
-        newShip.y = yGenerator();
-        newShip.orientation = orientationGenerator();
-      }
-      return newShip;
-    }
-
-    const newShip = generateShipPlacement(2);
-    const newShip2 = generateShipPlacement(3);
-    const newShip3 = generateShipPlacement(3);
-    const newShip4 = generateShipPlacement(4);
-    const newShip5 = generateShipPlacement(5);
-
-    function placeShipArguments(ship) {
-      return [ship.x, ship.y, ship.length, ship.orientation];
-    }
-
-    const placeShip1 = this.placeShip(...placeShipArguments(newShip));
-
-    const placeShip2 = this.placeShip(...placeShipArguments(newShip2));
-
-    const placeShip3 = this.placeShip(...placeShipArguments(newShip3));
-
-    const placeShip4 = this.placeShip(...placeShipArguments(newShip4));
-
-    const placeShip5 = this.placeShip(...placeShipArguments(newShip5));
-
-    const placedShips = [
-      placeShip1,
-      placeShip2,
-      placeShip3,
-      placeShip4,
-      placeShip5,
-    ];
-
-    //If a ship overlaps another ship, create a new one
-    placedShips.forEach((ship) => {
-      while (ship !== true) {
-        let replacementShip = generateShipPlacement(ship.getShipLength());
-        ship = this.placeShip(
-          replacementShip.x,
-          replacementShip.y,
-          replacementShip.length,
-          replacementShip.orientation
-        );
-      }
-    });
+  function placeShips() {
+    placeComputerShips(this);
   }
 
   return {
@@ -243,8 +137,7 @@ const gameboardFactory = () => {
     placeShip,
     removeShip,
     receiveAttack,
-    placeComputerShips,
-    listShips,
+    placeShips,
   };
 };
 

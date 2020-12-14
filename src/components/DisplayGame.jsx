@@ -35,6 +35,7 @@ const DisplayGame = (props) => {
       <div id='board-wrapper'>
         <DisplayPlayerBoard
           player={props.player}
+          playerBoard={props.playerBoard}
           setX={setX}
           setY={setY}
           placeChosenShip={props.placeChosenShip}
@@ -84,7 +85,7 @@ const DisplayGame = (props) => {
               </>
             )}
             <DisplayComputerBoard
-              computerBoardArray={props.computer.gameBoard.gameBoardArray}
+              computerBoardArray={props.computerBoard.gameBoardArray}
               setX={setX}
               setY={setY}
               playerAttackHandler={props.playerAttackHandler}
