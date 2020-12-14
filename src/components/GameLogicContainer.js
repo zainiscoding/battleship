@@ -1,6 +1,6 @@
-import playerFactory from './playerFactory';
-import gameboardFactory from './gameboardFactory';
-import DisplayGame from './DisplayGame';
+import playerFactory from '../factories/playerFactory';
+import gameboardFactory from '../factories/gameboardFactory';
+import DisplayGame from './display_components/DisplayGame';
 import placeComputerShips from '../helper_functions/placeShipsHelper';
 import { useEffect, useState } from 'react';
 

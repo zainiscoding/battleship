@@ -1,4 +1,4 @@
-import gameboardFactory from './gameboardFactory';
+import gameboardFactory from '../factories/gameboardFactory';
 
 it('returns the size', () => {
   let newGrid = gameboardFactory();

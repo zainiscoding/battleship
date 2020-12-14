@@ -1,6 +1,6 @@
 import DisplayPlayerBoard from './DisplayPlayerBoard';
 import DisplayComputerBoard from './DisplayComputerBoard';
-import PlayerShipDockContainer from './PlayerShipDockContainer';
+import PlayerShipDockContainer from '../PlayerShipDockContainer';
 import DisplayPlacementError from './DisplayPlacementError';
 import DisplayPlaceAllShipsError from './DisplayPlaceAllShipsError';
 

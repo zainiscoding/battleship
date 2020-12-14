@@ -1,4 +1,4 @@
-import shipFactory from './shipFactory';
+import shipFactory from '../factories/shipFactory';
 
 it('returns the size', () => {
   let newShip = shipFactory(1, 3, 3, 'horizontal');

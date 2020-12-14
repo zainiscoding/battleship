@@ -1,4 +1,4 @@
-import DisplayPlayerShipDock from './DisplayPlayerShipDock';
+import DisplayPlayerShipDock from './display_components/DisplayPlayerShipDock';
 
 const PlayerShipDockContainer = (props) => {
   return (
