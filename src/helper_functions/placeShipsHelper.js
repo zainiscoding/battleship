@@ -40,7 +40,7 @@ function generateShipPlacement(shipLength) {
   return newShip;
 }
 
-function placeComputerShips(computerBoard) {
+function placeShipsHelper(board) {
   const newShip = generateShipPlacement(2);
   const newShip2 = generateShipPlacement(3);
   const newShip3 = generateShipPlacement(3);
@@ -51,15 +51,15 @@ function placeComputerShips(computerBoard) {
     return [ship.x, ship.y, ship.length, ship.orientation];
   }
 
-  const placeShip1 = computerBoard.placeShip(...placeShipArguments(newShip));
+  const placeShip1 = board.placeShip(...placeShipArguments(newShip));
 
-  const placeShip2 = computerBoard.placeShip(...placeShipArguments(newShip2));
+  const placeShip2 = board.placeShip(...placeShipArguments(newShip2));
 
-  const placeShip3 = computerBoard.placeShip(...placeShipArguments(newShip3));
+  const placeShip3 = board.placeShip(...placeShipArguments(newShip3));
 
-  const placeShip4 = computerBoard.placeShip(...placeShipArguments(newShip4));
+  const placeShip4 = board.placeShip(...placeShipArguments(newShip4));
 
-  const placeShip5 = computerBoard.placeShip(...placeShipArguments(newShip5));
+  const placeShip5 = board.placeShip(...placeShipArguments(newShip5));
 
   const placedShips = [
     placeShip1,
@@ -73,7 +73,7 @@ function placeComputerShips(computerBoard) {
   placedShips.forEach((ship) => {
     while (ship !== true) {
       let replacementShip = generateShipPlacement(ship.getShipLength());
-      ship = computerBoard.placeShip(
+      ship = board.placeShip(
         replacementShip.x,
         replacementShip.y,
         replacementShip.length,
@@ -83,4 +83,4 @@ function placeComputerShips(computerBoard) {
   });
 }
 
-export default placeComputerShips;
+export default placeShipsHelper;

@@ -1,7 +1,7 @@
 import playerFactory from './playerFactory';
 import gameboardFactory from './gameboardFactory';
 import DisplayGame from './DisplayGame';
-import placeComputerShips from '../helper_functions/placeComputerShips';
+import placeComputerShips from '../helper_functions/placeShipsHelper';
 import { useEffect, useState } from 'react';
 
 const GameLogicContainer = (props) => {
@@ -132,6 +132,11 @@ const GameLogicContainer = (props) => {
     setComputerBoard(gameboardFactory());
   }
 
+  function placeRandomShips() {
+    playerBoard.placeShips();
+    startGame();
+  }
+
   //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
   useEffect(() => {
     function computerAttack() {
@@ -214,6 +219,7 @@ const GameLogicContainer = (props) => {
       rotateShip={rotateShip}
       preparing={preparing}
       startGame={startGame}
+      placeRandomShips={placeRandomShips}
       playerTurn={playerTurn}
       restartGame={restartGame}
       removeShipFromBoard={removeShipFromBoard}

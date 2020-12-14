@@ -53,6 +53,7 @@ const DisplayGame = (props) => {
               chooseShip={props.chooseShip}
               rotateShip={props.rotateShip}
             />
+            <button onClick={props.placeRandomShips}>test</button>
             <button id='start-game-button' onClick={props.startGame}>
               Start game
             </button>

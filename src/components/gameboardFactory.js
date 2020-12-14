@@ -1,6 +1,6 @@
 import shipFactory from './shipFactory';
 import createGameBoardArray from '../helper_functions/createGameBoardArray';
-import placeComputerShips from '../helper_functions/placeComputerShips';
+import placeShipsHelper from '../helper_functions/placeShipsHelper';
 
 const gameboardFactory = () => {
   let gameBoardArray = createGameBoardArray();
@@ -128,7 +128,7 @@ const gameboardFactory = () => {
   }
 
   function placeShips() {
-    placeComputerShips(this);
+    placeShipsHelper(this);
   }
 
   return {
