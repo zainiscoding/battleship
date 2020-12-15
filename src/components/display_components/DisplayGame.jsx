@@ -63,15 +63,18 @@ const DisplayGame = (props) => {
         )}
         {!props.preparing && (
           <>
-            {!props.gameOver && (
-              <>
-                {props.playerTurn ? (
-                  <h2 id='turn-display'>Player turn</h2>
-                ) : (
-                  <h2 id='turn-display'>Computer turn</h2>
-                )}
-              </>
-            )}
+            <div id='info-area'>
+              <EnemyFaceContainer playerHit={props.playerHit} />
+              {!props.gameOver && (
+                <>
+                  {props.playerTurn ? (
+                    <h2 id='turn-display'>Player turn</h2>
+                  ) : (
+                    <h2 id='turn-display'>Computer turn</h2>
+                  )}
+                </>
+              )}
+            </div>
             {props.gameOver && (
               <>
                 {props.playerWins ? (
@@ -87,16 +90,13 @@ const DisplayGame = (props) => {
                 )}
               </>
             )}
-            <div id='computer-board-wrapper'>
-              <EnemyFaceContainer playerHit={props.playerHit} />
-              <DisplayComputerBoard
-                computerBoardArray={props.computerBoard.gameBoardArray}
-                setX={setX}
-                setY={setY}
-                playerAttackHandler={props.playerAttackHandler}
-                placeChosenShip={props.placeChosenShip}
-              />
-            </div>
+            <DisplayComputerBoard
+              computerBoardArray={props.computerBoard.gameBoardArray}
+              setX={setX}
+              setY={setY}
+              playerAttackHandler={props.playerAttackHandler}
+              placeChosenShip={props.placeChosenShip}
+            />
           </>
         )}
       </div>

@@ -57,10 +57,24 @@ body{
   height: 300px;
   width: 300px;
 }
+#info-area{
+  display:flex;
+  flex-direction: column;
+  grid-column: 2;
+  place-items: center;
+}
+
+#turn-display{
+}
+
+#cat-face{
+  margin-bottom: 20px;
+}
 
 #board-wrapper__computer-board-wrapper {
   display: grid;
   grid-column: 3;
+  grid-row: 1;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   height: 300px;
@@ -246,6 +260,7 @@ body{
   #board-wrapper__computer-board-wrapper {
     display: grid;
     grid-column: 3;
+    grid-row: 1;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     height: 500px;
