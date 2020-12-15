@@ -1,6 +1,6 @@
 function computerAttack(
-  setPlayerBoard,
   setPlayerTurn,
+  setPlayerBoard,
   hitPlayerBlocks,
   setHitPlayerBlocks
 ) {
@@ -25,6 +25,7 @@ function computerAttack(
     );
     return { ...prevState };
   });
+
   setPlayerTurn(true);
 }
 

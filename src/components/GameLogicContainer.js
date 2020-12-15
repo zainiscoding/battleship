@@ -1,7 +1,7 @@
 import playerFactory from '../factories/playerFactory';
 import gameboardFactory from '../factories/gameboardFactory';
 import DisplayGame from './display_components/DisplayGame';
-import placeComputerShips from '../helper_functions/placeShipsHelper';
+import computerAttack from '../helper_functions/computerAttack';
 import { useEffect, useState } from 'react';
 
 const GameLogicContainer = (props) => {
@@ -19,15 +19,20 @@ const GameLogicContainer = (props) => {
   const [placementError, setPlacementError] = useState(false);
   const [placeAllShipsError, setPlaceAllShipsError] = useState(false);
   const [playerWins, setPlayerWins] = useState();
+  const [playerHit, setPlayerHit] = useState(false);
 
   function playerAttackHandler(e) {
     if (playerTurn && !preparing && !gameOver) {
       setComputerBoard((prevState) => {
-        prevState.receiveAttack(
-          e.target.id,
-          parseInt(e.target.getAttribute('data-x')),
-          parseInt(e.target.getAttribute('data-y'))
-        );
+        if (
+          prevState.receiveAttack(
+            e.target.id,
+            parseInt(e.target.getAttribute('data-x')),
+            parseInt(e.target.getAttribute('data-y'))
+          ) === undefined
+        ) {
+          setPlayerHit(true);
+        }
         setPlayerTurn(false);
         return { ...prevState };
       });
@@ -137,46 +142,6 @@ const GameLogicContainer = (props) => {
     startGame();
   }
 
-  //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
-  useEffect(() => {
-    function computerAttack() {
-      let position = 0;
-
-      //Create a random position to attack
-      function getPosition() {
-        return (position = Math.floor(Math.random() * 100));
-      }
-      setHitPlayerBlocks([...hitPlayerBlocks, getPosition()]);
-
-      //Prevents repeat hits
-      while (
-        hitPlayerBlocks.includes(position) &&
-        hitPlayerBlocks.length < 100
-      ) {
-        setHitPlayerBlocks([...hitPlayerBlocks, getPosition()]);
-      }
-
-      setPlayerBoard((prevState) => {
-        prevState.receiveAttack(
-          position,
-          parseInt(prevState.gameBoardArray[position].x),
-          parseInt(prevState.gameBoardArray[position].y)
-        );
-        return { ...prevState };
-      });
-
-      setPlayerTurn(true);
-    }
-
-    if (!playerTurn && !gameOver) {
-      //Timeout used to give the computer some fake thinking time
-      setTimeout(function () {
-        computerAttack();
-      }, 500);
-    }
-    // eslint-disable-next-line
-  }, [playerTurn]);
-
   //Checks for game over
   useEffect(() => {
     if (!preparing) {
@@ -207,6 +172,30 @@ const GameLogicContainer = (props) => {
     }
   }, [playerBoard, computerBoard, preparing]);
 
+  //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
+  useEffect(() => {
+    if (!playerTurn && !gameOver) {
+      //Timeout used to give the computer some fake thinking time
+      setTimeout(function () {
+        computerAttack(
+          setPlayerTurn,
+          setPlayerBoard,
+          hitPlayerBlocks,
+          setHitPlayerBlocks
+        );
+      }, 1500);
+    }
+    //eslint-disable-next-line
+  }, [playerTurn]);
+
+  useEffect(() => {
+    if (playerHit === true) {
+      setTimeout(function () {
+        setPlayerHit(false);
+      }, 1500);
+    }
+  }, [playerHit]);
+
   return (
     <DisplayGame
       player={player}
@@ -214,6 +203,7 @@ const GameLogicContainer = (props) => {
       computer={computer}
       computerBoard={computerBoard}
       playerAttackHandler={playerAttackHandler}
+      playerHit={playerHit}
       chooseShip={chooseShip}
       placeChosenShip={placeChosenShip}
       rotateShip={rotateShip}

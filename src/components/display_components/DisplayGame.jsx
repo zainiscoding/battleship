@@ -1,8 +1,9 @@
 import DisplayPlayerBoard from './DisplayPlayerBoard';
 import DisplayComputerBoard from './DisplayComputerBoard';
-import PlayerShipDockContainer from '../PlayerShipDockContainer';
+import DisplayPlayerShipDock from './DisplayPlayerShipDock';
 import DisplayPlacementError from './DisplayPlacementError';
 import DisplayPlaceAllShipsError from './DisplayPlaceAllShipsError';
+import EnemyFaceContainer from '../EnemyFaceContainer';
 
 const DisplayGame = (props) => {
   //Used to set data values of the blocks
@@ -46,12 +47,13 @@ const DisplayGame = (props) => {
           <>
             {props.placementError && <DisplayPlacementError />}
             {props.placeAllShipsError && <DisplayPlaceAllShipsError />}
-            <PlayerShipDockContainer
+            <DisplayPlayerShipDock
               player={props.player}
               setX={setX}
               setY={setY}
               chooseShip={props.chooseShip}
               rotateShip={props.rotateShip}
+              mouseMove={props.mouseMove}
             />
             <button onClick={props.placeRandomShips}>test</button>
             <button id='start-game-button' onClick={props.startGame}>
@@ -85,13 +87,16 @@ const DisplayGame = (props) => {
                 )}
               </>
             )}
-            <DisplayComputerBoard
-              computerBoardArray={props.computerBoard.gameBoardArray}
-              setX={setX}
-              setY={setY}
-              playerAttackHandler={props.playerAttackHandler}
-              placeChosenShip={props.placeChosenShip}
-            />
+            <div id='computer-board-wrapper'>
+              <EnemyFaceContainer playerHit={props.playerHit} />
+              <DisplayComputerBoard
+                computerBoardArray={props.computerBoard.gameBoardArray}
+                setX={setX}
+                setY={setY}
+                playerAttackHandler={props.playerAttackHandler}
+                placeChosenShip={props.placeChosenShip}
+              />
+            </div>
           </>
         )}
       </div>
