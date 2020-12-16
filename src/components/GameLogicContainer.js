@@ -20,6 +20,7 @@ const GameLogicContainer = (props) => {
   const [placeAllShipsError, setPlaceAllShipsError] = useState(false);
   const [playerWins, setPlayerWins] = useState();
   const [playerHit, setPlayerHit] = useState(false);
+  const [playerMiss, setPlayerMiss] = useState(false);
 
   function playerAttackHandler(e) {
     if (playerTurn && !preparing && !gameOver) {
@@ -32,6 +33,8 @@ const GameLogicContainer = (props) => {
           ) === undefined
         ) {
           setPlayerHit(true);
+        } else {
+          setPlayerMiss(true);
         }
         setPlayerTurn(false);
         return { ...prevState };
@@ -189,12 +192,14 @@ const GameLogicContainer = (props) => {
   }, [playerTurn]);
 
   useEffect(() => {
-    if (playerHit === true) {
-      setTimeout(function () {
+    setTimeout(function () {
+      if (playerHit === true) {
         setPlayerHit(false);
-      }, 1500);
-    }
-  }, [playerHit]);
+      } else if (playerMiss === true) {
+        setPlayerMiss(false);
+      }
+    }, 1500);
+  }, [playerHit, playerMiss]);
 
   return (
     <DisplayGame
@@ -204,6 +209,7 @@ const GameLogicContainer = (props) => {
       computerBoard={computerBoard}
       playerAttackHandler={playerAttackHandler}
       playerHit={playerHit}
+      playerMiss={playerMiss}
       chooseShip={chooseShip}
       placeChosenShip={placeChosenShip}
       rotateShip={rotateShip}

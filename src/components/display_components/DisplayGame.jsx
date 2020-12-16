@@ -3,7 +3,7 @@ import DisplayComputerBoard from './DisplayComputerBoard';
 import DisplayPlayerShipDock from './DisplayPlayerShipDock';
 import DisplayPlacementError from './DisplayPlacementError';
 import DisplayPlaceAllShipsError from './DisplayPlaceAllShipsError';
-import EnemyFaceContainer from '../EnemyFaceContainer';
+import DisplayEnemyFace from './DisplayEnemyFace';
 
 const DisplayGame = (props) => {
   //Used to set data values of the blocks
@@ -53,9 +53,8 @@ const DisplayGame = (props) => {
               setY={setY}
               chooseShip={props.chooseShip}
               rotateShip={props.rotateShip}
-              mouseMove={props.mouseMove}
+              placeRandomShips={props.placeRandomShips}
             />
-            <button onClick={props.placeRandomShips}>test</button>
             <button id='start-game-button' onClick={props.startGame}>
               Start game
             </button>
@@ -64,7 +63,6 @@ const DisplayGame = (props) => {
         {!props.preparing && (
           <>
             <div id='info-area'>
-              <EnemyFaceContainer playerHit={props.playerHit} />
               {!props.gameOver && (
                 <>
                   {props.playerTurn ? (
@@ -74,22 +72,27 @@ const DisplayGame = (props) => {
                   )}
                 </>
               )}
+              {props.gameOver && (
+                <>
+                  {props.playerWins ? (
+                    <div id='game-over-info'>
+                      You win!{' '}
+                      <button onClick={props.restartGame}>Restart</button>
+                    </div>
+                  ) : (
+                    <div id='game-over-info'>
+                      You lose!{' '}
+                      <button onClick={props.restartGame}>Restart</button>
+                    </div>
+                  )}
+                </>
+              )}
+              <DisplayEnemyFace
+                playerHit={props.playerHit}
+                playerMiss={props.playerMiss}
+                playerWins={props.playerWins}
+              />
             </div>
-            {props.gameOver && (
-              <>
-                {props.playerWins ? (
-                  <div id='game-over-info'>
-                    You win!{' '}
-                    <button onClick={props.restartGame}>Restart</button>
-                  </div>
-                ) : (
-                  <div id='game-over-info'>
-                    You lose!{' '}
-                    <button onClick={props.restartGame}>Restart</button>
-                  </div>
-                )}
-              </>
-            )}
             <DisplayComputerBoard
               computerBoardArray={props.computerBoard.gameBoardArray}
               setX={setX}

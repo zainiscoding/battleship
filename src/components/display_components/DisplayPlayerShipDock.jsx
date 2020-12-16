@@ -44,6 +44,7 @@ const DisplayPlayerShipDock = (props) => {
           );
         })}
       </div>
+      <button onClick={props.placeRandomShips}>Auto place</button>
     </div>
   );
 };
