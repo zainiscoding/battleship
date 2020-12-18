@@ -49,6 +49,7 @@ const DisplayGame = (props) => {
             {props.placeAllShipsError && <DisplayPlaceAllShipsError />}
             <DisplayPlayerShipDock
               player={props.player}
+              playerBoard={props.playerBoard}
               setX={setX}
               setY={setY}
               chooseShip={props.chooseShip}
@@ -94,7 +95,7 @@ const DisplayGame = (props) => {
               />
             </div>
             <DisplayComputerBoard
-              computerBoardArray={props.computerBoard.gameBoardArray}
+              computerBoard={props.computerBoard}
               setX={setX}
               setY={setY}
               playerAttackHandler={props.playerAttackHandler}

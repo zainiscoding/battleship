@@ -5,10 +5,17 @@ import computerAttack from '../helper_functions/computerAttack';
 import { useEffect, useState } from 'react';
 
 const GameLogicContainer = (props) => {
+  const initialPlayer = gameboardFactory();
+  const initialComputer = gameboardFactory();
+
   const [player, setPlayer] = useState(playerFactory('Player'));
   const [computer, setComputer] = useState(playerFactory('Computer'));
-  const [playerBoard, setPlayerBoard] = useState(gameboardFactory());
-  const [computerBoard, setComputerBoard] = useState(gameboardFactory());
+  const [playerBoard, setPlayerBoard] = useState(
+    initialPlayer.getInitialState()
+  );
+  const [computerBoard, setComputerBoard] = useState(
+    initialComputer.getInitialState()
+  );
   const [playerTurn, setPlayerTurn] = useState(true);
   const [hitPlayerBlocks, setHitPlayerBlocks] = useState([]);
   const [gameOver, setGameOver] = useState(false);
@@ -57,25 +64,25 @@ const GameLogicContainer = (props) => {
 
   function placeChosenShip(e) {
     if (placingShip) {
-      setPlayerBoard((prevState) => {
-        const targetBlockX = parseInt(e.target.getAttribute('data-x'));
-        const targetBlockY = parseInt(e.target.getAttribute('data-y'));
-        let placedShip = prevState.placeShip(
-          targetBlockX,
-          targetBlockY,
-          chosenShip.shipLength,
-          chosenShip.orientation,
-          shipNumber
-        );
-        if (placedShip === true) {
-          player.playerShips[shipNumber].placed = true;
-          setPlacementError(false);
-          setPlacingShip(false);
-        } else {
-          setPlacementError(true);
-        }
-        return { ...prevState };
-      });
+      const targetBlockX = parseInt(e.target.getAttribute('data-x'));
+      const targetBlockY = parseInt(e.target.getAttribute('data-y'));
+      const newState = initialPlayer.placeShip(
+        targetBlockX,
+        targetBlockY,
+        chosenShip.shipLength,
+        chosenShip.orientation,
+        shipNumber,
+        playerBoard.gameBoardArray
+      );
+      if (newState === true) {
+        player.playerShips[shipNumber].placed = true;
+        setPlacementError(false);
+        setPlacingShip(false);
+      } else {
+        setPlacementError(true);
+      }
+      console.log(newState);
+      setPlayerBoard(newState);
     }
   }
 
