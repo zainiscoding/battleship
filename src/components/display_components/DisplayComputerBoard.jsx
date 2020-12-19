@@ -1,7 +1,7 @@
 const DisplayComputerBoard = (props) => {
   return (
     <div id='board-wrapper__computer-board-wrapper'>
-      {props.computerBoard.gameBoardArray.map((block, index) => {
+      {props.computerBoard.gameboardArray.map((block, index) => {
         if (block.ship && block.sunk) {
           return (
             <div
@@ -33,7 +33,9 @@ const DisplayComputerBoard = (props) => {
               data-x={props.setX(index)}
               data-y={props.setY(index)}
               onClick={props.playerAttackHandler}
-            ></div>
+            >
+              s
+            </div>
           );
         } else if (block.miss) {
           return <div key={index} className='miss-block'></div>;

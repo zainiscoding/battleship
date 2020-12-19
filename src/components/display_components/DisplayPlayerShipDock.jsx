@@ -44,7 +44,7 @@ const DisplayPlayerShipDock = (props) => {
           );
         })}
       </div>
-      {props.playerBoard.shipPositions.length === 0 && (
+      {props.playerBoard.playerShipPositions.length === 0 && (
         <button onClick={props.placeRandomShips}>Auto place</button>
       )}
     </div>

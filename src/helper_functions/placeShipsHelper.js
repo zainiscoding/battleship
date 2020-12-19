@@ -40,7 +40,7 @@ function generateShipPlacement(shipLength) {
   return newShip;
 }
 
-function placeShipsHelper(board) {
+function placeShipsHelper(board, array) {
   const newShip = generateShipPlacement(2);
   const newShip2 = generateShipPlacement(3);
   const newShip3 = generateShipPlacement(3);
@@ -48,7 +48,14 @@ function placeShipsHelper(board) {
   const newShip5 = generateShipPlacement(5);
 
   function placeShipArguments(ship) {
-    return [ship.x, ship.y, ship.length, ship.orientation];
+    return [
+      ship.x,
+      ship.y,
+      ship.length,
+      ship.orientation,
+      ship.shipNumber,
+      array,
+    ];
   }
 
   const placeShip1 = board.placeShip(...placeShipArguments(newShip));
@@ -77,7 +84,9 @@ function placeShipsHelper(board) {
         replacementShip.x,
         replacementShip.y,
         replacementShip.length,
-        replacementShip.orientation
+        replacementShip.orientation,
+        replacementShip.shipNumber,
+        array
       );
     }
   });

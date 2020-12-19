@@ -1,5 +1,5 @@
-function createGameBoardArray() {
-  let gameBoardArray = [];
+function createGameboardArray() {
+  let gameboardArray = [];
   let loopCounter = 0;
   for (let i = 0; i < 100; i++) {
     let x = i;
@@ -22,9 +22,9 @@ function createGameBoardArray() {
 
     let emptyBlock = { empty: true, x: setX(), y: setY() };
 
-    gameBoardArray.push(emptyBlock);
+    gameboardArray.push(emptyBlock);
   }
-  return gameBoardArray;
+  return gameboardArray;
 }
 
-export default createGameBoardArray;
+export default createGameboardArray;

@@ -1,16 +1,26 @@
 import shipFactory from './shipFactory';
-import createGameBoardArray from '../helper_functions/createGameBoardArray';
+import createGameboardArray from '../helper_functions/createGameboardArray';
 import placeShipsHelper from '../helper_functions/placeShipsHelper';
 
 const gameboardFactory = () => {
-  let gameBoardArray = createGameBoardArray();
-  const shipPositions = [];
+  let gameboardArray = createGameboardArray();
+  const playerShipPositions = [];
 
   function getInitialState() {
-    return { gameBoardArray: gameBoardArray, shipPositions: shipPositions };
+    return {
+      gameboardArray: gameboardArray,
+      playerShipPositions: playerShipPositions,
+    };
   }
 
-  function placeShip(x, y, shipLength, orientation, shipNumber, array) {
+  function placeShip(
+    x,
+    y,
+    shipLength,
+    orientation,
+    shipNumber,
+    gameboardArray
+  ) {
     //Create a new ship
     const newShip = shipFactory(x, y, shipLength, orientation, shipNumber);
 
@@ -20,7 +30,7 @@ const gameboardFactory = () => {
       let shipOverlap = false;
 
       //Check if it overlaps with any other ships
-      shipPositions.forEach((currentPosition) => {
+      playerShipPositions.forEach((currentPosition) => {
         if (
           shipPositions.some(
             (position) =>
@@ -32,10 +42,10 @@ const gameboardFactory = () => {
         }
       });
 
-      //If it doesn't overlap, push it to the gameBoardArray and return true
+      //If it doesn't overlap, push it to the gameboardArray and return true
       if (!shipOverlap) {
         shipPositions.forEach((shipPosition) => {
-          array.forEach((block) => {
+          gameboardArray.forEach((block) => {
             const shipBlock = {
               empty: false,
               ship: newShip,
@@ -43,8 +53,12 @@ const gameboardFactory = () => {
             if (shipPosition.x === block.x && shipPosition.y === block.y) {
               shipBlock.x = block.x;
               shipBlock.y = block.y;
-              array.splice(array.indexOf(block), 1, shipBlock);
-              shipPositions.push(shipPosition);
+              gameboardArray.splice(
+                gameboardArray.indexOf(block),
+                1,
+                shipBlock
+              );
+              playerShipPositions.push(shipPosition);
             }
           });
         });
@@ -57,28 +71,28 @@ const gameboardFactory = () => {
 
   function removeShip(shipIndex, blockId) {
     //If you clicked a ship...
-    if (gameBoardArray[blockId].ship) {
+    if (gameboardArray[blockId].ship) {
       //Create an array of that ship's positions
-      const shipPositions = gameBoardArray[blockId].ship.positions;
+      const shipPositions = gameboardArray[blockId].ship.positions;
 
-      //Check the gameBoardArray and the shipPositions array
-      gameBoardArray.forEach((block) => {
+      //Check the gameboardArray and the shipPositions array
+      gameboardArray.forEach((block) => {
         shipPositions.forEach((position) => {
           let emptyBlock = { empty: true, x: position.x, y: position.y };
-          //If an index of the gameBoardArray matches the position of the clicked ship, splice it with an empty block
+          //If an index of the gameboardArray matches the position of the clicked ship, splice it with an empty block
           if (
             block.ship &&
             block.ship.getShipNumber() === shipIndex &&
             block.x === emptyBlock.x &&
             block.y === emptyBlock.y
           ) {
-            gameBoardArray.splice(gameBoardArray.indexOf(block), 1, emptyBlock);
+            gameboardArray.splice(gameboardArray.indexOf(block), 1, emptyBlock);
           }
-          //Then remove them from shipPositions and move onto the next
-          shipPositions.forEach((playerShipPosition) => {
+          //Then remove them from playerShipPositions and move onto the next
+          playerShipPositions.forEach((playerShipPosition) => {
             if (playerShipPosition === position) {
-              shipPositions.splice(
-                shipPositions.indexOf(playerShipPosition, 1)
+              playerShipPositions.splice(
+                playerShipPositions.indexOf(playerShipPosition, 1)
               );
             }
           });
@@ -88,18 +102,18 @@ const gameboardFactory = () => {
   }
 
   function receiveAttack(blockNumber, a, b) {
-    let targetArrayBlock = gameBoardArray[blockNumber];
+    let targetArrayBlock = gameboardArray[blockNumber];
     let missBlock = { empty: false, miss: true, hit: false };
     let hitBlock = {
       empty: false,
       hit: true,
-      ship: gameBoardArray[blockNumber].ship,
+      ship: gameboardArray[blockNumber].ship,
     };
     let sunkBlock = {
       empty: false,
       sunk: true,
       hit: true,
-      ship: gameBoardArray[blockNumber].ship,
+      ship: gameboardArray[blockNumber].ship,
     };
 
     //If you click a ship...
@@ -109,32 +123,32 @@ const gameboardFactory = () => {
       //And if that ship is sunk by you hittting it...
       if (targetArrayBlock.ship.isSunk()) {
         //Replace all relevant blocks with 'sunk ship' blocks
-        gameBoardArray.forEach((block) => {
+        gameboardArray.forEach((block) => {
           if (block.ship === targetArrayBlock.ship) {
-            gameBoardArray.splice(gameBoardArray.indexOf(block), 1, sunkBlock);
+            gameboardArray.splice(gameboardArray.indexOf(block), 1, sunkBlock);
           }
         });
 
         //Else just replace the block you hit with a 'hit' block
       } else {
-        gameBoardArray.splice(blockNumber, 1, hitBlock);
+        gameboardArray.splice(blockNumber, 1, hitBlock);
       }
     }
 
     //Else if you missed, replace the clicked block with a 'miss' block
     else {
-      return gameBoardArray.splice(blockNumber, 1, missBlock);
+      return gameboardArray.splice(blockNumber, 1, missBlock);
     }
   }
 
   function placeShips() {
-    placeShipsHelper(this);
+    placeShipsHelper(this, this.gameboardArray);
   }
 
   return {
-    gameBoardArray,
+    gameboardArray,
     getInitialState,
-    shipPositions,
+    playerShipPositions,
     placeShip,
     removeShip,
     receiveAttack,

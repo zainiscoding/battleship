@@ -2,7 +2,8 @@ import playerFactory from '../factories/playerFactory';
 import gameboardFactory from '../factories/gameboardFactory';
 import DisplayGame from './display_components/DisplayGame';
 import computerAttack from '../helper_functions/computerAttack';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+const clone = require('rfdc')();
 
 const GameLogicContainer = (props) => {
   const initialPlayer = gameboardFactory();
@@ -62,39 +63,62 @@ const GameLogicContainer = (props) => {
     }
   }
 
+  const previousBoardRef = useRef();
+  useEffect(() => {
+    previousBoardRef.current = playerBoard;
+  });
+  const prevBoard = previousBoardRef.current;
+
   function placeChosenShip(e) {
     if (placingShip) {
       const targetBlockX = parseInt(e.target.getAttribute('data-x'));
       const targetBlockY = parseInt(e.target.getAttribute('data-y'));
-      const newState = initialPlayer.placeShip(
+      const stateCopy = clone(prevBoard);
+
+      console.log(stateCopy);
+      console.log(playerBoard);
+      console.log(stateCopy);
+      const shipPlacement = initialPlayer.placeShip(
         targetBlockX,
         targetBlockY,
         chosenShip.shipLength,
         chosenShip.orientation,
         shipNumber,
-        playerBoard.gameBoardArray
+        stateCopy.gameboardArray
       );
-      if (newState === true) {
+      console.log(playerBoard);
+      console.log(stateCopy);
+
+      if (shipPlacement === true) {
         player.playerShips[shipNumber].placed = true;
         setPlacementError(false);
         setPlacingShip(false);
       } else {
         setPlacementError(true);
       }
-      console.log(newState);
-      setPlayerBoard(newState);
+      setPlayerBoard(stateCopy);
     }
   }
 
+  useEffect(() => {
+    console.log(playerBoard);
+  }, [playerBoard]);
+
   function removeShipFromBoard(e) {
     if (preparing && !placingShip) {
-      setPlayerBoard((prevState) => {
-        const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
-        const blockId = parseInt(e.target.id);
-        player.playerShips[targetShip].placed = false;
-        playerBoard.removeShip(targetShip, blockId);
-        return { ...prevState };
-      });
+      const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
+      const blockId = parseInt(e.target.id);
+      player.playerShips[targetShip].placed = false;
+      const newState = initialPlayer;
+      newState.removeShip(targetShip, blockId);
+      setPlayerBoard(newState);
+      // setPlayerBoard((prevState) => {
+      //   const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
+      //   const blockId = parseInt(e.target.id);
+      //   player.playerShips[targetShip].placed = false;
+      //   playerBoard.removeShip(targetShip, blockId);
+      //   return { ...prevState };
+      // });
     }
   }
 
@@ -121,13 +145,13 @@ const GameLogicContainer = (props) => {
   function startGame() {
     const playerShips = [];
 
-    playerBoard.gameBoardArray.forEach((arrayItem) => {
+    playerBoard.gameboardArray.forEach((arrayItem) => {
       if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
         playerShips.push(arrayItem.ship);
       }
     });
     if (preparing && playerShips.length === 5) {
-      computerBoard.placeShips();
+      initialComputer.placeShips();
       setPreparing(false);
       setPlaceAllShipsError(false);
     } else {
@@ -148,7 +172,7 @@ const GameLogicContainer = (props) => {
   }
 
   function placeRandomShips() {
-    playerBoard.placeShips();
+    initialPlayer.placeShips();
     startGame();
   }
 
@@ -158,13 +182,13 @@ const GameLogicContainer = (props) => {
       const computerShips = [];
       const playerShips = [];
 
-      computerBoard.gameBoardArray.forEach((arrayItem) => {
+      computerBoard.gameboardArray.forEach((arrayItem) => {
         if (arrayItem.ship && !computerShips.includes(arrayItem.ship)) {
           computerShips.push(arrayItem.ship);
         }
       });
 
-      playerBoard.gameBoardArray.forEach((arrayItem) => {
+      playerBoard.gameboardArray.forEach((arrayItem) => {
         if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
           playerShips.push(arrayItem.ship);
         }

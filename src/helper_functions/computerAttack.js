@@ -20,8 +20,8 @@ function computerAttack(
   setPlayerBoard((prevState) => {
     prevState.receiveAttack(
       position,
-      parseInt(prevState.gameBoardArray[position].x),
-      parseInt(prevState.gameBoardArray[position].y)
+      parseInt(prevState.gameboardArray[position].x),
+      parseInt(prevState.gameboardArray[position].y)
     );
     return { ...prevState };
   });
