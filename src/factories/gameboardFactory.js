@@ -30,7 +30,7 @@ const gameboardFactory = () => {
       let shipOverlap = false;
 
       //Check if it overlaps with any other ships
-      playerShipPositions.forEach((currentPosition) => {
+      this.playerShipPositions.forEach((currentPosition) => {
         if (
           shipPositions.some(
             (position) =>
@@ -58,7 +58,7 @@ const gameboardFactory = () => {
                 1,
                 shipBlock
               );
-              playerShipPositions.push(shipPosition);
+              this.playerShipPositions.push(shipPosition);
             }
           });
         });
@@ -141,8 +141,10 @@ const gameboardFactory = () => {
     }
   }
 
-  function placeShips() {
-    placeShipsHelper(this, this.gameboardArray);
+  function placeShips(board, array) {
+    console.log(this);
+    console.log(board);
+    placeShipsHelper(board, array);
   }
 
   return {

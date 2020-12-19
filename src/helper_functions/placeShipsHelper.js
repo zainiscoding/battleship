@@ -85,7 +85,7 @@ function placeShipsHelper(board, array) {
         replacementShip.y,
         replacementShip.length,
         replacementShip.orientation,
-        replacementShip.shipNumber,
+        ship.shipNumber,
         array
       );
     }

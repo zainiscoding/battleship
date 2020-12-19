@@ -2,7 +2,7 @@ import playerFactory from '../factories/playerFactory';
 import gameboardFactory from '../factories/gameboardFactory';
 import DisplayGame from './display_components/DisplayGame';
 import computerAttack from '../helper_functions/computerAttack';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 const clone = require('rfdc')();
 
 const GameLogicContainer = (props) => {
@@ -69,9 +69,6 @@ const GameLogicContainer = (props) => {
       const targetBlockY = parseInt(e.target.getAttribute('data-y'));
       const stateCopy = clone(playerBoard);
 
-      console.log(stateCopy);
-      console.log(playerBoard);
-      console.log(stateCopy);
       const shipPlacement = initialPlayer.placeShip(
         targetBlockX,
         targetBlockY,
@@ -80,8 +77,6 @@ const GameLogicContainer = (props) => {
         shipNumber,
         stateCopy.gameboardArray
       );
-      console.log(playerBoard);
-      console.log(stateCopy);
 
       if (shipPlacement === true) {
         player.playerShips[shipNumber].placed = true;
@@ -90,13 +85,10 @@ const GameLogicContainer = (props) => {
       } else {
         setPlacementError(true);
       }
+
       setPlayerBoard(stateCopy);
     }
   }
-
-  useEffect(() => {
-    console.log(playerBoard);
-  }, [playerBoard]);
 
   function removeShipFromBoard(e) {
     if (preparing && !placingShip) {
@@ -106,13 +98,6 @@ const GameLogicContainer = (props) => {
       const newState = initialPlayer;
       newState.removeShip(targetShip, blockId);
       setPlayerBoard(newState);
-      // setPlayerBoard((prevState) => {
-      //   const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
-      //   const blockId = parseInt(e.target.id);
-      //   player.playerShips[targetShip].placed = false;
-      //   playerBoard.removeShip(targetShip, blockId);
-      //   return { ...prevState };
-      // });
     }
   }
 
@@ -144,8 +129,10 @@ const GameLogicContainer = (props) => {
         playerShips.push(arrayItem.ship);
       }
     });
-    if (preparing && playerShips.length === 5) {
+
+    if (preparing && playerShips.length === 16) {
       initialComputer.placeShips();
+      setComputerBoard(initialComputer.getInitialState());
       setPreparing(false);
       setPlaceAllShipsError(false);
     } else {
@@ -166,7 +153,10 @@ const GameLogicContainer = (props) => {
   }
 
   function placeRandomShips() {
-    initialPlayer.placeShips();
+    const stateCopy = clone(playerBoard);
+    const playerCopy = clone(initialPlayer);
+    playerCopy.placeShips(playerCopy, stateCopy.gameboardArray);
+    setPlayerBoard(stateCopy);
     startGame();
   }
 
