@@ -3,7 +3,6 @@ import gameboardFactory from '../factories/gameboardFactory';
 import DisplayGame from './display_components/DisplayGame';
 import computerAttack from '../helper_functions/computerAttack';
 import { useEffect, useState } from 'react';
-const clone = require('rfdc')();
 
 const GameLogicContainer = (props) => {
   const initialPlayer = gameboardFactory();
@@ -67,7 +66,7 @@ const GameLogicContainer = (props) => {
     if (placingShip) {
       const targetBlockX = parseInt(e.target.getAttribute('data-x'));
       const targetBlockY = parseInt(e.target.getAttribute('data-y'));
-      const stateCopy = clone(playerBoard);
+      const newBoard = gameboardFactory(playerBoard.gameboardArray);
 
       const shipPlacement = initialPlayer.placeShip(
         targetBlockX,
@@ -75,7 +74,7 @@ const GameLogicContainer = (props) => {
         chosenShip.shipLength,
         chosenShip.orientation,
         shipNumber,
-        stateCopy.gameboardArray
+        newBoard.gameboardArray
       );
 
       if (shipPlacement === true) {
@@ -86,7 +85,7 @@ const GameLogicContainer = (props) => {
         setPlacementError(true);
       }
 
-      setPlayerBoard(stateCopy);
+      setPlayerBoard(newBoard);
     }
   }
 
@@ -121,7 +120,15 @@ const GameLogicContainer = (props) => {
     }
   }
 
-  function startGame() {
+  function startGame(isRandom) {
+    function gameStart() {
+      const newComputer = gameboardFactory();
+      const stateCopy = newComputer.getInitialState();
+      initialComputer.placeShips(newComputer, newComputer.gameboardArray);
+      setComputerBoard(stateCopy);
+      setPreparing(false);
+      setPlaceAllShipsError(false);
+    }
     const playerShips = [];
 
     playerBoard.gameboardArray.forEach((arrayItem) => {
@@ -130,11 +137,10 @@ const GameLogicContainer = (props) => {
       }
     });
 
-    if (preparing && playerShips.length === 16) {
-      initialComputer.placeShips();
-      setComputerBoard(initialComputer.getInitialState());
-      setPreparing(false);
-      setPlaceAllShipsError(false);
+    if (isRandom) {
+      gameStart();
+    } else if (preparing && playerShips.length === 5 && !isRandom) {
+      gameStart();
     } else {
       setPlaceAllShipsError(true);
     }
@@ -153,11 +159,12 @@ const GameLogicContainer = (props) => {
   }
 
   function placeRandomShips() {
-    const stateCopy = clone(playerBoard);
-    const playerCopy = clone(initialPlayer);
-    playerCopy.placeShips(playerCopy, stateCopy.gameboardArray);
+    const randomised = true;
+    const newPlayer = gameboardFactory();
+    const stateCopy = newPlayer.getInitialState();
+    initialPlayer.placeShips(newPlayer, newPlayer.gameboardArray);
     setPlayerBoard(stateCopy);
-    startGame();
+    startGame(randomised);
   }
 
   //Checks for game over

@@ -2,8 +2,15 @@ import shipFactory from './shipFactory';
 import createGameboardArray from '../helper_functions/createGameboardArray';
 import placeShipsHelper from '../helper_functions/placeShipsHelper';
 
-const gameboardFactory = () => {
-  let gameboardArray = createGameboardArray();
+const gameboardFactory = (gameBoard) => {
+  let gameboardArray = [];
+
+  if (gameBoard) {
+    gameboardArray = gameBoard;
+  } else {
+    gameboardArray = createGameboardArray();
+  }
+
   const playerShipPositions = [];
 
   function getInitialState() {
@@ -142,8 +149,6 @@ const gameboardFactory = () => {
   }
 
   function placeShips(board, array) {
-    console.log(this);
-    console.log(board);
     placeShipsHelper(board, array);
   }
 
