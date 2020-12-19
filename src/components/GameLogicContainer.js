@@ -63,17 +63,11 @@ const GameLogicContainer = (props) => {
     }
   }
 
-  const previousBoardRef = useRef();
-  useEffect(() => {
-    previousBoardRef.current = playerBoard;
-  });
-  const prevBoard = previousBoardRef.current;
-
   function placeChosenShip(e) {
     if (placingShip) {
       const targetBlockX = parseInt(e.target.getAttribute('data-x'));
       const targetBlockY = parseInt(e.target.getAttribute('data-y'));
-      const stateCopy = clone(prevBoard);
+      const stateCopy = clone(playerBoard);
 
       console.log(stateCopy);
       console.log(playerBoard);
