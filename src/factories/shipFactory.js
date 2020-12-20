@@ -1,14 +1,19 @@
-const shipFactory = (x, y, shipLength, orientation, shipNumber) => {
-  let positions = [];
-  if (orientation === 'horizontal') {
-    for (let i = 0; i < shipLength; i++) {
-      const newPosition = { x: x + i, y: y, hit: false };
-      positions.push(newPosition);
-    }
+const shipFactory = (x, y, shipLength, orientation, shipNumber, positions) => {
+  let positionsArray = [];
+
+  if (positions) {
+    positionsArray = positions;
   } else {
-    for (let i = 0; i < shipLength; i++) {
-      const newPosition = { x: x, y: y - i, hit: false };
-      positions.push(newPosition);
+    if (orientation === 'horizontal') {
+      for (let i = 0; i < shipLength; i++) {
+        const newPosition = { x: x + i, y: y, hit: false };
+        positionsArray.push(newPosition);
+      }
+    } else {
+      for (let i = 0; i < shipLength; i++) {
+        const newPosition = { x: x, y: y - i, hit: false };
+        positionsArray.push(newPosition);
+      }
     }
   }
 
@@ -18,9 +23,9 @@ const shipFactory = (x, y, shipLength, orientation, shipNumber) => {
   let placed = false;
 
   function hit(a, b) {
-    positions.forEach((shipBlock) => {
+    positionsArray.forEach((shipBlock) => {
       if (shipBlock.x === a && shipBlock.y === b) {
-        positions.splice(positions.indexOf(shipBlock), 1, {
+        positionsArray.splice(positionsArray.indexOf(shipBlock), 1, {
           x: shipBlock.x,
           y: shipBlock.y,
           hit: true,
@@ -30,7 +35,7 @@ const shipFactory = (x, y, shipLength, orientation, shipNumber) => {
   }
 
   function isSunk() {
-    return positions.every((block) => block.hit);
+    return positionsArray.every((block) => block.hit);
   }
 
   if (
@@ -43,7 +48,7 @@ const shipFactory = (x, y, shipLength, orientation, shipNumber) => {
   return {
     getShipLength,
     getOrientation,
-    positions,
+    positionsArray,
     hit,
     isSunk,
     placed,

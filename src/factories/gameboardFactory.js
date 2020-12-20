@@ -33,7 +33,7 @@ const gameboardFactory = (gameBoard) => {
 
     //If that ship was successfully created...
     if (newShip !== null) {
-      const shipPositions = [...newShip.positions];
+      const shipPositions = [...newShip.positionsArray];
       let shipOverlap = false;
 
       //Check if it overlaps with any other ships
@@ -61,6 +61,7 @@ const gameboardFactory = (gameBoard) => {
                 shipLength: shipLength,
                 orientation: orientation,
                 shipNumber: shipNumber,
+                positionsArray: newShip.positionsArray,
                 isSunk: newShip.isSunk(),
               },
             };
@@ -88,7 +89,7 @@ const gameboardFactory = (gameBoard) => {
     //If you clicked a ship...
     if (gameboardArray[blockId].ship) {
       //Create an array of that ship's positions
-      const shipPositions = gameboardArray[blockId].ship.positions;
+      const shipPositions = gameboardArray[blockId].ship.positionsArray;
 
       //Check the gameboardArray and the shipPositions array
       gameboardArray.forEach((block) => {
@@ -117,38 +118,46 @@ const gameboardFactory = (gameBoard) => {
   }
 
   function receiveAttack(blockNumber, a, b) {
-    let targetArrayBlock = gameboardArray[blockNumber];
+    let targetShip = gameboardArray[blockNumber].ship;
+
     let missBlock = { empty: false, miss: true, hit: false };
     let hitBlock = {
       empty: false,
       hit: true,
-      ship: gameboardArray[blockNumber].ship,
+      ship: targetShip,
     };
     let sunkBlock = {
       empty: false,
       sunk: true,
       hit: true,
-      ship: gameboardArray[blockNumber].ship,
+      ship: targetShip,
     };
 
     //If you click a ship...
-    if (targetArrayBlock.ship) {
-      let newBlock = targetArrayBlock.ship;
-      console.log(newBlock);
+    if (targetShip) {
       //Hit it!
       let newShip = shipFactory(
-        newBlock.x,
-        newBlock.y,
-        newBlock.shipLength,
-        newBlock.orientation
+        targetShip.x,
+        targetShip.y,
+        targetShip.shipLength,
+        targetShip.orientation,
+        targetShip.shipNumber,
+        targetShip.positionsArray
       );
+
       newShip.hit(a, b);
       //And if that ship is sunk by you hitting it...
       if (newShip.isSunk()) {
         //Replace all relevant blocks with 'sunk ship' blocks
         gameboardArray.forEach((block) => {
-          if (block.ship === newShip) {
-            gameboardArray.splice(gameboardArray.indexOf(block), 1, sunkBlock);
+          if (block.ship) {
+            if (block.ship.positionsArray === newShip.positionsArray) {
+              gameboardArray.splice(
+                gameboardArray.indexOf(block),
+                1,
+                sunkBlock
+              );
+            }
           }
         });
 

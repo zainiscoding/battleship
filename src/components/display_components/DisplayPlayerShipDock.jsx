@@ -26,7 +26,7 @@ const DisplayPlayerShipDock = (props) => {
                     Rotate
                   </button>
                   <>
-                    {ship.positions.map((position, index) => {
+                    {ship.positionsArray.map((position, index) => {
                       return (
                         <div
                           key={index}
