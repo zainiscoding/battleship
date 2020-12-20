@@ -1,5 +1,8 @@
+import gameboardFactory from '../factories/gameboardFactory';
+
 function computerAttack(
   setPlayerTurn,
+  playerBoard,
   setPlayerBoard,
   hitPlayerBlocks,
   setHitPlayerBlocks
@@ -10,6 +13,7 @@ function computerAttack(
   function getPosition() {
     return (position = Math.floor(Math.random() * 100));
   }
+
   setHitPlayerBlocks([...hitPlayerBlocks, getPosition()]);
 
   //Prevents repeat hits
@@ -17,15 +21,15 @@ function computerAttack(
     setHitPlayerBlocks([...hitPlayerBlocks, getPosition()]);
   }
 
-  setPlayerBoard((prevState) => {
-    prevState.receiveAttack(
-      position,
-      parseInt(prevState.gameboardArray[position].x),
-      parseInt(prevState.gameboardArray[position].y)
-    );
-    return { ...prevState };
-  });
+  const newBoard = gameboardFactory(playerBoard.gameboardArray);
 
+  newBoard.receiveAttack(
+    position,
+    parseInt(newBoard.gameboardArray[position].x),
+    parseInt(newBoard.gameboardArray[position].y)
+  );
+
+  setPlayerBoard(newBoard);
   setPlayerTurn(true);
 }
 

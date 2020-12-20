@@ -31,21 +31,21 @@ const GameLogicContainer = (props) => {
 
   function playerAttackHandler(e) {
     if (playerTurn && !preparing && !gameOver) {
-      setComputerBoard((prevState) => {
-        if (
-          prevState.receiveAttack(
-            e.target.id,
-            parseInt(e.target.getAttribute('data-x')),
-            parseInt(e.target.getAttribute('data-y'))
-          ) === undefined
-        ) {
-          setPlayerHit(true);
-        } else {
-          setPlayerMiss(true);
-        }
-        setPlayerTurn(false);
-        return { ...prevState };
-      });
+      const newBoard = gameboardFactory(computerBoard.gameboardArray);
+
+      if (
+        newBoard.receiveAttack(
+          e.target.id,
+          parseInt(e.target.getAttribute('data-x')),
+          parseInt(e.target.getAttribute('data-y'))
+        ) === undefined
+      ) {
+        setPlayerHit(true);
+      } else {
+        setPlayerMiss(true);
+      }
+      setPlayerTurn(false);
+      setComputerBoard(newBoard);
     }
   }
 
@@ -185,12 +185,12 @@ const GameLogicContainer = (props) => {
         }
       });
 
-      if (computerShips.every((ship) => ship.isSunk())) {
+      if (computerShips.every((ship) => ship.sunk)) {
         setPlayerWins(true);
         setGameOver(true);
       }
 
-      if (playerShips.every((ship) => ship.isSunk())) {
+      if (playerShips.every((ship) => ship.sunk)) {
         setPlayerWins(false);
         setGameOver(true);
       }
@@ -204,6 +204,7 @@ const GameLogicContainer = (props) => {
       setTimeout(function () {
         computerAttack(
           setPlayerTurn,
+          playerBoard,
           setPlayerBoard,
           hitPlayerBlocks,
           setHitPlayerBlocks

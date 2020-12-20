@@ -55,8 +55,16 @@ const gameboardFactory = (gameBoard) => {
           gameboardArray.forEach((block) => {
             const shipBlock = {
               empty: false,
-              ship: newShip,
+              ship: {
+                x: x,
+                y: y,
+                shipLength: shipLength,
+                orientation: orientation,
+                shipNumber: shipNumber,
+                isSunk: newShip.isSunk(),
+              },
             };
+
             if (shipPosition.x === block.x && shipPosition.y === block.y) {
               shipBlock.x = block.x;
               shipBlock.y = block.y;
@@ -125,13 +133,21 @@ const gameboardFactory = (gameBoard) => {
 
     //If you click a ship...
     if (targetArrayBlock.ship) {
+      let newBlock = targetArrayBlock.ship;
+      console.log(newBlock);
       //Hit it!
-      targetArrayBlock.ship.hit(a, b);
-      //And if that ship is sunk by you hittting it...
-      if (targetArrayBlock.ship.isSunk()) {
+      let newShip = shipFactory(
+        newBlock.x,
+        newBlock.y,
+        newBlock.shipLength,
+        newBlock.orientation
+      );
+      newShip.hit(a, b);
+      //And if that ship is sunk by you hitting it...
+      if (newShip.isSunk()) {
         //Replace all relevant blocks with 'sunk ship' blocks
         gameboardArray.forEach((block) => {
-          if (block.ship === targetArrayBlock.ship) {
+          if (block.ship === newShip) {
             gameboardArray.splice(gameboardArray.indexOf(block), 1, sunkBlock);
           }
         });

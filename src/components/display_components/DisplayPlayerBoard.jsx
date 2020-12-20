@@ -40,7 +40,7 @@ const DisplayPlayerBoard = (props) => {
                   id={index}
                   data-x={props.setX(index)}
                   data-y={props.setY(index)}
-                  data-shipnumber={block.ship.getShipNumber()}
+                  data-shipnumber={block.ship.shipNumber}
                   onClick={props.removeShipFromBoard}
                 ></div>
               );
