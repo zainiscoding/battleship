@@ -14,8 +14,11 @@ let gameOver = false;
 const GameLogicContainer = (props) => {
   const initialPlayerBoard = gameboardFactory();
   const initialComputerBoard = gameboardFactory();
-  const [player, setPlayer] = useState(playerFactory('Player'));
-  const [computer, setComputer] = useState(playerFactory('Computer'));
+  const initialPlayer = playerFactory('Player');
+  const initialComputer = playerFactory('Computer');
+
+  const [player, setPlayer] = useState(initialPlayer);
+  const [computer, setComputer] = useState(initialComputer);
   const [playerBoard, setPlayerBoard] = useState(
     initialPlayerBoard.getInitialState()
   );
@@ -57,7 +60,6 @@ const GameLogicContainer = (props) => {
       };
       placingShip = true;
       shipNumber = parseInt(e.target.getAttribute('data-shipnumber'));
-      console.log(chosenShip);
       e.target.className += '--selected';
     }
   }
@@ -78,13 +80,16 @@ const GameLogicContainer = (props) => {
       );
 
       if (shipPlacement === true) {
-        player.playerShips[shipNumber].placed = true;
+        const newPlayerState = playerFactory('Player');
+
+        newPlayerState.playerShips[shipNumber].placed = false;
+
         placementError = false;
         placingShip = false;
+        setPlayer(newPlayerState);
       } else {
         placementError = true;
       }
-
       setPlayerBoard(newBoard);
     }
   }
@@ -93,12 +98,20 @@ const GameLogicContainer = (props) => {
     if (preparing && !placingShip) {
       const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
       const blockId = parseInt(e.target.id);
-      player.playerShips[targetShip].placed = false;
-      const newState = initialPlayerBoard;
-      newState.removeShip(targetShip, blockId);
-      setPlayerBoard(newState);
+      const newBoardState = initialPlayerBoard;
+      const newPlayerState = playerFactory('Player');
+
+      newPlayerState.playerShips[targetShip].placed = false;
+      newBoardState.removeShip(targetShip, blockId);
+
+      setPlayerBoard(newBoardState);
+      setPlayer(newPlayerState);
     }
   }
+
+  useEffect(() => {
+    console.log(player);
+  }, [player]);
 
   function rotateShip(e) {
     e.stopPropagation();

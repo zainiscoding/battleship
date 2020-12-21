@@ -42,7 +42,6 @@ function generateShipPlacement(shipLength) {
 
 function placeShipsHelper(board, array) {
   const newShip = generateShipPlacement(2);
-  console.log(newShip.shipNumber);
   const newShip2 = generateShipPlacement(3);
   const newShip3 = generateShipPlacement(3);
   const newShip4 = generateShipPlacement(4);
