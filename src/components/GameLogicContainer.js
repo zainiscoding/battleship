@@ -142,9 +142,9 @@ const GameLogicContainer = (props) => {
       }
     });
 
-    if (isRandom) {
+    if (isRandom === true) {
       gameStart();
-    } else if (preparing && playerShips.length === 5 && !isRandom) {
+    } else if (playerShips.length === 17) {
       gameStart();
     } else {
       setPlaceAllShipsError(true);
@@ -164,12 +164,11 @@ const GameLogicContainer = (props) => {
   }
 
   function placeRandomShips() {
-    const randomised = true;
     const newPlayer = gameboardFactory();
     const stateCopy = newPlayer.getInitialState();
     initialPlayerBoard.placeShips(newPlayer, newPlayer.gameboardArray);
     setPlayerBoard(stateCopy);
-    startGame(randomised);
+    startGame(true);
   }
 
   //Checks for game over
