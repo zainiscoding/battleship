@@ -7,7 +7,7 @@ it('returns the size', () => {
 
 it('returns the coords', () => {
   let newShip = shipFactory(1, 3, 3, 'horizontal');
-  expect(newShip.positions[2]).toEqual({
+  expect(newShip.positionsArray[2]).toEqual({
     x: 3,
     y: 3,
     hit: false,
@@ -16,7 +16,7 @@ it('returns the coords', () => {
 
 it('rotates correctly', () => {
   let newShip = shipFactory(1, 3, 3, 'vertical');
-  expect(newShip.positions[2]).toEqual({
+  expect(newShip.positionsArray[2]).toEqual({
     x: 1,
     y: 1,
     hit: false,
@@ -26,13 +26,13 @@ it('rotates correctly', () => {
 it('gets hit', () => {
   let newShip = shipFactory(5, 3, 3, 'horizontal');
   newShip.hit(6, 3);
-  expect(newShip.positions[1].hit).toEqual(true);
+  expect(newShip.positionsArray[1].hit).toEqual(true);
 });
 
 it('gets hit vertically', () => {
   let newShip = shipFactory(5, 3, 3, 'vertical');
   newShip.hit(5, 2);
-  expect(newShip.positions[1].hit).toEqual(true);
+  expect(newShip.positionsArray[1].hit).toEqual(true);
 });
 
 it('not sunk by default', () => {
