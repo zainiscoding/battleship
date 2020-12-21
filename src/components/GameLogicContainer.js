@@ -27,7 +27,6 @@ const GameLogicContainer = (props) => {
   );
   const [hitPlayerBlocks, setHitPlayerBlocks] = useState([]);
   const [playerTurn, setPlayerTurn] = useState(true);
-  const [placeAllShipsError, setPlaceAllShipsError] = useState(false);
   const [playerWins, setPlayerWins] = useState();
   const [playerHit, setPlayerHit] = useState(false);
   const [playerMiss, setPlayerMiss] = useState(false);
@@ -139,7 +138,6 @@ const GameLogicContainer = (props) => {
       initialComputerBoard.placeShips(newComputer, newComputer.gameboardArray);
       setComputerBoard(stateCopy);
       preparing = false;
-      setPlaceAllShipsError(false);
     }
 
     const playerShips = playerBoard.gameboardArray.filter((arrayItem) => {
@@ -151,7 +149,6 @@ const GameLogicContainer = (props) => {
     } else if (playerShips.length === 17) {
       gameStart();
     } else {
-      setPlaceAllShipsError(true);
     }
   }
 
@@ -244,7 +241,6 @@ const GameLogicContainer = (props) => {
       restartGame={restartGame}
       removeShipFromBoard={removeShipFromBoard}
       placementError={placementError}
-      placeAllShipsError={placeAllShipsError}
       playerWins={playerWins}
       gameOver={gameOver}
     />
