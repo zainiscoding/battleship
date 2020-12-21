@@ -62,7 +62,6 @@ const gameboardFactory = (gameBoard) => {
                 orientation: orientation,
                 shipNumber: shipNumber,
                 positionsArray: newShip.positionsArray,
-                isSunk: newShip.isSunk(),
               },
             };
 

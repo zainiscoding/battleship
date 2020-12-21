@@ -175,13 +175,14 @@ const GameLogicContainer = (props) => {
 
       computerBoard.gameboardArray.forEach((arrayItem) => {
         if (arrayItem.ship && !computerShips.includes(arrayItem.ship)) {
-          computerShips.push(arrayItem.ship);
+          computerShips.push(arrayItem);
         }
       });
+      console.log(computerShips);
 
       playerBoard.gameboardArray.forEach((arrayItem) => {
         if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
-          playerShips.push(arrayItem.ship);
+          playerShips.push(arrayItem);
         }
       });
 
@@ -209,7 +210,7 @@ const GameLogicContainer = (props) => {
           hitPlayerBlocks,
           setHitPlayerBlocks
         );
-      }, 1500);
+      }, 0);
     }
     //eslint-disable-next-line
   }, [playerTurn]);
