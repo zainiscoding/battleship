@@ -47,11 +47,6 @@ const GameLogicContainer = (props) => {
       setPlayerTurn(false);
       setComputerBoard(newBoard);
     }
-    console.log(player);
-    console.log(computer);
-    console.log(playerBoard);
-    console.log(computerBoard);
-    console.log(hitPlayerBlocks);
   }
 
   function chooseShip(e) {
@@ -134,12 +129,9 @@ const GameLogicContainer = (props) => {
       preparing = false;
       setPlaceAllShipsError(false);
     }
-    const playerShips = [];
 
-    playerBoard.gameboardArray.forEach((arrayItem) => {
-      if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
-        playerShips.push(arrayItem.ship);
-      }
+    const playerShips = playerBoard.gameboardArray.filter((arrayItem) => {
+      return arrayItem.ship;
     });
 
     if (isRandom === true) {
@@ -173,23 +165,15 @@ const GameLogicContainer = (props) => {
 
   //Checks for game over
   useEffect(() => {
-    if (!preparing) {
-      const computerShips = [];
-      const playerShips = [];
+    const computerShips = computerBoard.gameboardArray.filter((arrayItem) => {
+      return arrayItem.ship;
+    });
 
-      computerBoard.gameboardArray.forEach((arrayItem) => {
-        if (arrayItem.ship && !computerShips.includes(arrayItem.ship)) {
-          computerShips.push(arrayItem);
-        }
-      });
-      console.log(computerShips);
+    const playerShips = playerBoard.gameboardArray.filter((arrayItem) => {
+      return arrayItem.ship;
+    });
 
-      playerBoard.gameboardArray.forEach((arrayItem) => {
-        if (arrayItem.ship && !playerShips.includes(arrayItem.ship)) {
-          playerShips.push(arrayItem);
-        }
-      });
-
+    if (playerShips.length > 0) {
       if (computerShips.every((ship) => ship.sunk)) {
         setPlayerWins(true);
         gameOver = true;
@@ -200,7 +184,7 @@ const GameLogicContainer = (props) => {
         gameOver = true;
       }
     }
-  }, [playerBoard, computerBoard, preparing]);
+  }, [playerBoard, computerBoard]);
 
   //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
   useEffect(() => {
