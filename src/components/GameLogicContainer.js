@@ -96,13 +96,15 @@ const GameLogicContainer = (props) => {
 
   function removeShipFromBoard(e) {
     if (preparing && !placingShip) {
-      const targetShip = parseInt(e.target.getAttribute('data-shipnumber'));
+      const targetShipNumber = parseInt(
+        e.target.getAttribute('data-shipnumber')
+      );
       const blockId = parseInt(e.target.id);
       const newBoardState = initialPlayerBoard;
       const newPlayerState = playerFactory('Player');
 
-      newPlayerState.playerShips[targetShip].placed = false;
-      newBoardState.removeShip(targetShip, blockId);
+      newPlayerState.playerShips[targetShipNumber].placed = false;
+      newBoardState.removeShip(targetShipNumber, blockId);
 
       setPlayerBoard(newBoardState);
       setPlayer(newPlayerState);
@@ -116,20 +118,16 @@ const GameLogicContainer = (props) => {
   function rotateShip(e) {
     e.stopPropagation();
     if (!placingShip) {
+      const newPlayerState = playerFactory('Player', player.playerShips);
       const targetShipNumber = e.target.parentNode.getAttribute(
         'data-shipnumber'
       );
       const orientation = e.target.parentNode.getAttribute('data-orientation');
 
       orientation === 'horizontal'
-        ? setPlayer((prevState) => {
-            prevState.rotateHorizontalShip(targetShipNumber);
-            return { ...prevState };
-          })
-        : setPlayer((prevState) => {
-            prevState.rotateVerticalShip(targetShipNumber);
-            return { ...prevState };
-          });
+        ? newPlayerState.rotateHorizontalShip(targetShipNumber)
+        : newPlayerState.rotateVerticalShip(targetShipNumber);
+      setPlayer(newPlayerState);
     }
   }
 

@@ -1,16 +1,20 @@
 import shipFactory from './shipFactory';
 
-const playerFactory = (name) => {
+const playerFactory = (name, playerShipsArray) => {
   let playerShips = [];
 
-  //Create the initial ships that the player can place
-  if (name === 'Player') {
-    let newShip = shipFactory(undefined, undefined, 5, 'horizontal');
-    let newShip2 = shipFactory(undefined, undefined, 4, 'horizontal');
-    let newShip3 = shipFactory(undefined, undefined, 3, 'horizontal');
-    let newShip4 = shipFactory(undefined, undefined, 3, 'horizontal');
-    let newShip5 = shipFactory(undefined, undefined, 2, 'horizontal');
-    playerShips.push(newShip, newShip2, newShip3, newShip4, newShip5);
+  if (playerShipsArray) {
+    playerShips = playerShipsArray;
+  } else {
+    //Create the initial ships that the player can place
+    if (name === 'Player') {
+      let newShip = shipFactory(undefined, undefined, 5, 'horizontal');
+      let newShip2 = shipFactory(undefined, undefined, 4, 'horizontal');
+      let newShip3 = shipFactory(undefined, undefined, 3, 'horizontal');
+      let newShip4 = shipFactory(undefined, undefined, 3, 'horizontal');
+      let newShip5 = shipFactory(undefined, undefined, 2, 'horizontal');
+      playerShips.push(newShip, newShip2, newShip3, newShip4, newShip5);
+    }
   }
 
   //It's possible to consolidate the following two rotation functions into one, but requires React to not run in Strict Mode.
