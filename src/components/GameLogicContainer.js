@@ -80,9 +80,9 @@ const GameLogicContainer = (props) => {
       );
 
       if (shipPlacement === true) {
-        const newPlayerState = playerFactory('Player');
+        const newPlayerState = playerFactory('Player', player.playerShips);
 
-        newPlayerState.playerShips[shipNumber].placed = false;
+        newPlayerState.playerShips[shipNumber].placed = true;
 
         placementError = false;
         placingShip = false;
@@ -100,8 +100,9 @@ const GameLogicContainer = (props) => {
         e.target.getAttribute('data-shipnumber')
       );
       const blockId = parseInt(e.target.id);
-      const newBoardState = initialPlayerBoard;
-      const newPlayerState = playerFactory('Player');
+      const newBoardState = gameboardFactory(playerBoard.gameboardArray);
+      console.log(newBoardState.gameboardArray);
+      const newPlayerState = playerFactory('Player', player.playerShips);
 
       newPlayerState.playerShips[targetShipNumber].placed = false;
       newBoardState.removeShip(targetShipNumber, blockId);
@@ -209,7 +210,7 @@ const GameLogicContainer = (props) => {
           hitPlayerBlocks,
           setHitPlayerBlocks
         );
-      }, 0);
+      }, 1500);
     }
     //eslint-disable-next-line
   }, [playerTurn]);

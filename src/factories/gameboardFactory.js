@@ -97,7 +97,7 @@ const gameboardFactory = (gameBoard) => {
           //If an index of the gameboardArray matches the position of the clicked ship, splice it with an empty block
           if (
             block.ship &&
-            block.ship.getShipNumber() === shipIndex &&
+            block.ship.shipNumber === shipIndex &&
             block.x === emptyBlock.x &&
             block.y === emptyBlock.y
           ) {
