@@ -1,7 +1,6 @@
 import shipFactory from './shipFactory';
 
 const playerFactory = (name) => {
-  const getName = () => name;
   let playerShips = [];
 
   //Create the initial ships that the player can place
@@ -36,7 +35,6 @@ const playerFactory = (name) => {
   }
 
   return {
-    getName,
     playerShips,
     rotateHorizontalShip,
     rotateVerticalShip,
