@@ -2,7 +2,6 @@ import DisplayPlayerBoard from './DisplayPlayerBoard';
 import DisplayComputerBoard from './DisplayComputerBoard';
 import DisplayPlayerShipDock from './DisplayPlayerShipDock';
 import DisplayPlacementError from './DisplayPlacementError';
-import DisplayPlaceAllShipsError from './DisplayPlaceAllShipsError';
 import DisplayEnemyFace from './DisplayEnemyFace';
 
 const DisplayGame = (props) => {
@@ -28,6 +27,11 @@ const DisplayGame = (props) => {
     }
   }
 
+  //For preventing the start button from appearing before placing all ships
+  const playerShips = props.playerBoard.gameboardArray.filter((arrayItem) => {
+    return arrayItem.ship;
+  });
+
   return (
     <div id='game-wrapper'>
       <div id='header-wrapper'>
@@ -46,7 +50,6 @@ const DisplayGame = (props) => {
         {props.preparing && (
           <>
             {props.placementError && <DisplayPlacementError />}
-            {props.placeAllShipsError && <DisplayPlaceAllShipsError />}
             <DisplayPlayerShipDock
               player={props.player}
               playerBoard={props.playerBoard}
@@ -56,9 +59,11 @@ const DisplayGame = (props) => {
               rotateShip={props.rotateShip}
               placeRandomShips={props.placeRandomShips}
             />
-            <button id='start-game-button' onClick={props.startGame}>
-              Start game
-            </button>
+            {playerShips.length === 17 && (
+              <button id='start-game-button' onClick={props.startGame}>
+                Start game
+              </button>
+            )}
           </>
         )}
         {!props.preparing && (
