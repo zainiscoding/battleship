@@ -185,7 +185,7 @@ const GameLogicContainer = (props) => {
       return arrayItem.ship;
     });
 
-    if (playerShips.length > 0) {
+    if (playerShips.length > 0 && computerShips.length > 0) {
       if (computerShips.every((ship) => ship.sunk)) {
         setPlayerWins(true);
         gameOver = true;
