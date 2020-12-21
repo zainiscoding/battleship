@@ -3,12 +3,10 @@ import createGameboardArray from '../helper_functions/createGameboardArray';
 import placeShipsHelper from '../helper_functions/placeShipsHelper';
 
 const gameboardFactory = (gameBoard) => {
-  let gameboardArray = [];
+  let gameboardArray = createGameboardArray();
 
   if (gameBoard) {
     gameboardArray = gameBoard;
-  } else {
-    gameboardArray = createGameboardArray();
   }
 
   const playerShipPositions = [];

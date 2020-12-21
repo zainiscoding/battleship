@@ -10,34 +10,42 @@ const DisplayPlayerShipDock = (props) => {
             <>
               {ship.placed === false && (
                 <div
-                  key={index}
-                  className={
-                    'player-ships-wrapper__ship--' + ship.getOrientation()
-                  }
+                  className='ship-highlight'
                   data-shipnumber={index}
                   data-length={ship.getShipLength()}
                   data-orientation={ship.getOrientation()}
                   onClick={props.chooseShip}
                 >
-                  <button
-                    onClick={props.rotateShip}
-                    className='ship__rotate-ship-button'
+                  <div
+                    key={index}
+                    className={
+                      'player-ships-wrapper__ship--' + ship.getOrientation()
+                    }
+                    data-shipnumber={index}
+                    data-length={ship.getShipLength()}
+                    data-orientation={ship.getOrientation()}
+                    onClick={props.chooseShip}
                   >
-                    Rotate
-                  </button>
-                  <>
-                    {ship.positionsArray.map((position, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className='player-ship-block--docked'
-                          id={index}
-                          data-x={props.setX(index)}
-                          data-y={props.setY(index)}
-                        ></div>
-                      );
-                    })}
-                  </>
+                    <button
+                      onClick={props.rotateShip}
+                      className='ship__rotate-ship-button'
+                    >
+                      Rotate
+                    </button>
+                    <>
+                      {ship.positionsArray.map((position, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className='player-ship-block--docked'
+                            id={index}
+                            data-x={props.setX(index)}
+                            data-y={props.setY(index)}
+                          ></div>
+                        );
+                      })}
+                    </>
+                  </div>
                 </div>
               )}
             </>
