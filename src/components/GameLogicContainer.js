@@ -138,12 +138,19 @@ const GameLogicContainer = (props) => {
     setPlayer(newPlayerState);
   }
 
+  function placeRandomShips() {
+    const newPlayer = gameboardFactory();
+    const stateCopy = newPlayer.getInitialState();
+    initialPlayerBoard.placeShips(newPlayer, newPlayer.gameboardArray);
+    setPlayerBoard(stateCopy);
+    startGame(true);
+  }
+
   function startGame(isRandom) {
     function gameStart() {
       const newComputer = gameboardFactory();
       const stateCopy = newComputer.getInitialState();
-      const newArray = [...newComputer.gameboardArray];
-      newComputer.placeShips(newComputer, newArray);
+      initialComputerBoard.placeShips(newComputer, newComputer.gameboardArray);
       setComputerBoard(stateCopy);
       preparing = false;
     }
@@ -170,14 +177,6 @@ const GameLogicContainer = (props) => {
     setComputer(playerFactory('Computer'));
     setPlayerBoard(gameboardFactory());
     setComputerBoard(gameboardFactory());
-  }
-
-  function placeRandomShips() {
-    const newPlayer = gameboardFactory();
-    const stateCopy = newPlayer.getInitialState();
-    initialPlayerBoard.placeShips(newPlayer, newPlayer.gameboardArray);
-    setPlayerBoard(stateCopy);
-    startGame(true);
   }
 
   //Checks for game over

@@ -6,24 +6,25 @@ const DisplayPlayerShipDock = (props) => {
       </div>
       <div id='player-ships-wrapper__ships'>
         {props.player.playerShips.map((ship, index) => {
+          console.log(props.player.playerShips);
           return (
             <>
               {ship.placed === false && (
                 <div
                   className='ship-highlight'
                   data-shipnumber={index}
-                  data-length={ship.getShipLength()}
-                  data-orientation={ship.getOrientation()}
+                  data-length={ship.shipLength}
+                  data-orientation={ship.orientation}
                   onClick={props.chooseShip}
                 >
                   <div
                     key={index}
                     className={
-                      'player-ships-wrapper__ship--' + ship.getOrientation()
+                      'player-ships-wrapper__ship--' + ship.orientation
                     }
                     data-shipnumber={index}
-                    data-length={ship.getShipLength()}
-                    data-orientation={ship.getOrientation()}
+                    data-length={ship.shipLength}
+                    data-orientation={ship.orientation}
                     onClick={props.chooseShip}
                   >
                     <button
