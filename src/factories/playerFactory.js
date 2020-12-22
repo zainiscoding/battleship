@@ -16,38 +16,19 @@ const playerFactory = (name, playerShipsArray) => {
         placed: false,
         positionsArray: [],
       };
-      let newShip2 = {
-        x: undefined,
-        y: undefined,
-        shipLength: 4,
-        orientation: 'horizontal',
-        placed: false,
-        positionsArray: [],
-      };
-      let newShip3 = {
-        x: undefined,
-        y: undefined,
-        shipLength: 3,
-        orientation: 'horizontal',
-        placed: false,
-        positionsArray: [],
-      };
-      let newShip4 = {
-        x: undefined,
-        y: undefined,
-        shipLength: 3,
-        orientation: 'horizontal',
-        placed: false,
-        positionsArray: [],
-      };
-      let newShip5 = {
-        x: undefined,
-        y: undefined,
-        shipLength: 2,
-        orientation: 'horizontal',
-        placed: false,
-        positionsArray: [],
-      };
+
+      let newShip2 = JSON.parse(JSON.stringify(newShip));
+      newShip2.shipLength = 4;
+
+      let newShip3 = JSON.parse(JSON.stringify(newShip));
+      newShip3.shipLength = 3;
+
+      let newShip4 = JSON.parse(JSON.stringify(newShip));
+      newShip4.shipLength = 3;
+
+      let newShip5 = JSON.parse(JSON.stringify(newShip));
+      newShip5.shipLength = 2;
+
       playerShips.push(newShip, newShip2, newShip3, newShip4, newShip5);
       playerShips.forEach((ship) => {
         createShipPositionsArray(
@@ -69,8 +50,10 @@ const playerFactory = (name, playerShipsArray) => {
       y: playerShips[shipIndex].y,
       shipLength: playerShips[shipIndex].length,
       orientation: 'vertical',
+      placed: false,
+      positionsArray: playerShips[shipIndex].positionsArray,
     };
-    return playerShips.splice(shipIndex, 1, newVerticalShip);
+    playerShips.splice(shipIndex, 1, newVerticalShip);
   }
 
   function rotateVerticalShip(shipIndex) {
@@ -79,6 +62,8 @@ const playerFactory = (name, playerShipsArray) => {
       y: playerShips[shipIndex].y,
       shipLength: playerShips[shipIndex].length,
       orientation: 'horizontal',
+      placed: false,
+      positionsArray: playerShips[shipIndex].positionsArray,
     };
     return playerShips.splice(shipIndex, 1, newHorizontalShip);
   }
