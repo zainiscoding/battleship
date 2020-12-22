@@ -79,7 +79,7 @@ function placeShipsHelper(board, array) {
   //If a ship overlaps another ship, create a new one
   placedShips.forEach((ship) => {
     while (ship !== true) {
-      let replacementShip = generateShipPlacement(ship.getShipLength());
+      let replacementShip = generateShipPlacement(ship.shipLength);
       ship = board.placeShip(
         replacementShip.x,
         replacementShip.y,

@@ -1,20 +1,19 @@
-import shipFactory from './shipFactory';
 import createGameboardArray from '../helper_functions/createGameboardArray';
 import placeShipsHelper from '../helper_functions/placeShipsHelper';
 
-const gameboardFactory = (gameBoard) => {
+const gameboardFactory = (gameBoard, playerShipss) => {
+  console.log(playerShipss);
   let gameboardArray = createGameboardArray();
+  let playerShipPositions = [];
 
   if (gameBoard) {
     gameboardArray = gameBoard;
   }
 
-  const playerShipPositions = [];
-
   function getInitialState() {
     return {
       gameboardArray: gameboardArray,
-      playerShipPositions: playerShipPositions,
+      playerShipPositions: this.playerShipPositions,
     };
   }
 
@@ -26,14 +25,40 @@ const gameboardFactory = (gameBoard) => {
     shipNumber,
     gameboardArray
   ) {
+    //Prevents placement of impossible ships (not enough space)
+    if (
+      (x !== null && x + shipLength > 10 && orientation === 'horizontal') ||
+      (y - shipLength < -1 && orientation === 'vertical')
+    ) {
+      return null;
+    }
     //Create a new ship
-    const newShip = shipFactory(x, y, shipLength, orientation, shipNumber);
+    const newShip = { x, y, shipLength, orientation, shipNumber };
+    newShip.positionsArray = [];
+
+    if (orientation === 'horizontal') {
+      for (let i = 0; i < shipLength; i++) {
+        const newPosition = { x: x + i, y: y, hit: false };
+        newShip.positionsArray.push(newPosition);
+      }
+    } else {
+      for (let i = 0; i < shipLength; i++) {
+        const newPosition = { x: x, y: y - i, hit: false };
+        newShip.positionsArray.push(newPosition);
+      }
+    }
 
     //If that ship was successfully created...
     if (newShip !== null) {
+      if (playerShipss) {
+        this.playerShipPositions = playerShipss;
+      }
+      console.log(this.playerShipPositions);
+
       const shipPositions = [...newShip.positionsArray];
       let shipOverlap = false;
 
+      console.log(this.playerShipPositions);
       //Check if it overlaps with any other ships
       this.playerShipPositions.forEach((currentPosition) => {
         if (
@@ -72,6 +97,7 @@ const gameboardFactory = (gameBoard) => {
                 shipBlock
               );
               this.playerShipPositions.push(shipPosition);
+              console.log(this.playerShipPositions);
             }
           });
         });
@@ -133,14 +159,32 @@ const gameboardFactory = (gameBoard) => {
     //If you click a ship...
     if (targetShip) {
       //Hit it!
-      let newShip = shipFactory(
-        targetShip.x,
-        targetShip.y,
-        targetShip.shipLength,
-        targetShip.orientation,
-        targetShip.shipNumber,
-        targetShip.positionsArray
-      );
+      let newShip = {
+        x: targetShip.x,
+        y: targetShip.y,
+        shipLength: targetShip.shipLength,
+        orientation: targetShip.orientation,
+        shipNumber: targetShip.shipNumber,
+        positionsArray: targetShip.positionsArray,
+        hit: function hit() {
+          this.positionsArray.forEach((shipBlock) => {
+            if (shipBlock.x === a && shipBlock.y === b) {
+              this.positionsArray.splice(
+                this.positionsArray.indexOf(shipBlock),
+                1,
+                {
+                  x: shipBlock.x,
+                  y: shipBlock.y,
+                  hit: true,
+                }
+              );
+            }
+          });
+        },
+        isSunk: function isSunk() {
+          return this.positionsArray.every((block) => block.hit);
+        },
+      };
 
       newShip.hit(a, b);
       //And if that ship is sunk by you hitting it...

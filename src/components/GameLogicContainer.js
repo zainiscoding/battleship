@@ -68,9 +68,12 @@ const GameLogicContainer = (props) => {
     if (placingShip) {
       const targetBlockX = parseInt(e.target.getAttribute('data-x'));
       const targetBlockY = parseInt(e.target.getAttribute('data-y'));
-      const newBoard = gameboardFactory(playerBoard.gameboardArray);
 
-      const shipPlacement = initialPlayerBoard.placeShip(
+      const newArray = [...playerBoard.gameboardArray];
+      const newShips = [...playerBoard.playerShipPositions];
+      const newBoard = gameboardFactory(newArray, newShips);
+
+      const shipPlacement = newBoard.placeShip(
         targetBlockX,
         targetBlockY,
         chosenShip.shipLength,
@@ -87,10 +90,11 @@ const GameLogicContainer = (props) => {
         placementError = false;
         placingShip = false;
         setPlayer(newPlayerState);
+        console.log(playerBoard.playerShipPositions);
       } else {
         placementError = true;
       }
-      setPlayerBoard(newBoard);
+      setPlayerBoard(newBoard.getInitialState());
     }
   }
 
@@ -215,7 +219,7 @@ const GameLogicContainer = (props) => {
           hitPlayerBlocks,
           setHitPlayerBlocks
         );
-      }, 1500);
+      }, 0);
     }
     //eslint-disable-next-line
   }, [playerTurn]);
