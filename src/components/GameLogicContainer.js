@@ -105,7 +105,6 @@ const GameLogicContainer = (props) => {
       );
       const blockId = parseInt(e.target.id);
       const newBoardState = gameboardFactory(playerBoard.gameboardArray);
-      console.log(newBoardState.gameboardArray);
       const newPlayerState = playerFactory('Player', player.playerShips);
 
       newPlayerState.playerShips[targetShipNumber].placed = false;
@@ -115,10 +114,6 @@ const GameLogicContainer = (props) => {
       setPlayer(newPlayerState);
     }
   }
-
-  useEffect(() => {
-    console.log(player);
-  }, [player]);
 
   function rotateShip(e) {
     e.stopPropagation();
@@ -147,7 +142,8 @@ const GameLogicContainer = (props) => {
     function gameStart() {
       const newComputer = gameboardFactory();
       const stateCopy = newComputer.getInitialState();
-      initialComputerBoard.placeShips(newComputer, newComputer.gameboardArray);
+      const newArray = [...newComputer.gameboardArray];
+      newComputer.placeShips(newComputer, newArray);
       setComputerBoard(stateCopy);
       preparing = false;
     }
