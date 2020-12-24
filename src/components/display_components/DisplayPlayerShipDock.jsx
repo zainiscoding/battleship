@@ -5,8 +5,7 @@ const DisplayPlayerShipDock = (props) => {
         <h2>Place your ships</h2>
       </div>
       <div id='player-ships-wrapper__ships'>
-        {props.player.playerShips.map((ship, index) => {
-          console.log(props.player.playerShips);
+        {props.player.map((ship, index) => {
           return (
             <>
               {ship.placed === false && (

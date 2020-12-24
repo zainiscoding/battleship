@@ -1,8 +1,7 @@
 import createGameboardArray from '../helper_functions/createGameboardArray';
 import placeShipsHelper from '../helper_functions/placeShipsHelper';
 
-const gameboardFactory = (gameBoard, playerShipss) => {
-  console.log(playerShipss);
+const gameboardFactory = (gameBoard, playerShips) => {
   let gameboardArray = createGameboardArray();
   let playerShipPositions = [];
 
@@ -50,15 +49,13 @@ const gameboardFactory = (gameBoard, playerShipss) => {
 
     //If that ship was successfully created...
     if (newShip !== null) {
-      if (playerShipss) {
-        this.playerShipPositions = playerShipss;
+      if (playerShips) {
+        this.playerShipPositions = playerShips;
       }
-      console.log(this.playerShipPositions);
 
       const shipPositions = [...newShip.positionsArray];
       let shipOverlap = false;
 
-      console.log(this.playerShipPositions);
       //Check if it overlaps with any other ships
       this.playerShipPositions.forEach((currentPosition) => {
         if (
@@ -97,7 +94,6 @@ const gameboardFactory = (gameBoard, playerShipss) => {
                 shipBlock
               );
               this.playerShipPositions.push(shipPosition);
-              console.log(this.playerShipPositions);
             }
           });
         });
@@ -158,13 +154,8 @@ const gameboardFactory = (gameBoard, playerShipss) => {
 
     //If you click a ship...
     if (targetShip) {
-      //Hit it!
+      //Create a ship and hit it
       let newShip = {
-        x: targetShip.x,
-        y: targetShip.y,
-        shipLength: targetShip.shipLength,
-        orientation: targetShip.orientation,
-        shipNumber: targetShip.shipNumber,
         positionsArray: targetShip.positionsArray,
         hit: function hit() {
           this.positionsArray.forEach((shipBlock) => {

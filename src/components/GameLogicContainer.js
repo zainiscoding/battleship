@@ -17,8 +17,9 @@ const GameLogicContainer = (props) => {
   const initialPlayer = playerFactory('Player');
   const initialComputer = playerFactory('Computer');
 
-  const [player, setPlayer] = useState(initialPlayer);
-  const [computer, setComputer] = useState(initialComputer);
+  const [player, setPlayer] = useState(initialPlayer.getInitialState());
+  const [computer, setComputer] = useState(initialComputer.getInitialState());
+
   const [playerBoard, setPlayerBoard] = useState(
     initialPlayerBoard.getInitialState()
   );
@@ -47,7 +48,7 @@ const GameLogicContainer = (props) => {
         setPlayerMiss(true);
       }
       setPlayerTurn(false);
-      setComputerBoard(newBoard);
+      setComputerBoard(newBoard.getInitialState());
     }
   }
 
@@ -59,7 +60,6 @@ const GameLogicContainer = (props) => {
       };
       placingShip = true;
       shipNumber = parseInt(e.target.getAttribute('data-shipnumber'));
-      console.log(e.target);
       e.target.parentNode.className += '--selected';
     }
   }
@@ -90,7 +90,6 @@ const GameLogicContainer = (props) => {
         placementError = false;
         placingShip = false;
         setPlayer(newPlayerState);
-        console.log(playerBoard.playerShipPositions);
       } else {
         placementError = true;
       }
@@ -105,7 +104,7 @@ const GameLogicContainer = (props) => {
       );
       const blockId = parseInt(e.target.id);
       const newBoardState = gameboardFactory(playerBoard.gameboardArray);
-      const newPlayerState = playerFactory('Player', player.playerShips);
+      const newPlayerState = playerFactory('Player', player);
 
       newPlayerState.playerShips[targetShipNumber].placed = false;
       newBoardState.removeShip(targetShipNumber, blockId);
@@ -125,7 +124,7 @@ const GameLogicContainer = (props) => {
         : (chosenShip.orientation = 'horizontal');
     }
 
-    const newPlayerState = playerFactory('Player', player.playerShips);
+    const newPlayerState = playerFactory('Player', player);
     const targetShipNumber = e.target.parentNode.getAttribute(
       'data-shipnumber'
     );
@@ -201,6 +200,8 @@ const GameLogicContainer = (props) => {
       }
     }
   }, [playerBoard, computerBoard]);
+
+  //Sets computer health
 
   //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
   useEffect(() => {

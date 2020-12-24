@@ -8,26 +8,22 @@ const playerFactory = (name, playerShipsArray) => {
   } else {
     //Create the initial ships that the player can place
     if (name === 'Player') {
-      let newShip = {
-        x: undefined,
-        y: undefined,
-        shipLength: 5,
-        orientation: 'horizontal',
-        placed: false,
-        positionsArray: [],
+      const shipFactory = (length) => {
+        return {
+          x: undefined,
+          y: undefined,
+          shipLength: length,
+          orientation: 'horizontal',
+          placed: false,
+          positionsArray: [],
+        };
       };
 
-      let newShip2 = JSON.parse(JSON.stringify(newShip));
-      newShip2.shipLength = 4;
-
-      let newShip3 = JSON.parse(JSON.stringify(newShip));
-      newShip3.shipLength = 3;
-
-      let newShip4 = JSON.parse(JSON.stringify(newShip));
-      newShip4.shipLength = 3;
-
-      let newShip5 = JSON.parse(JSON.stringify(newShip));
-      newShip5.shipLength = 2;
+      const newShip = shipFactory(5);
+      const newShip2 = shipFactory(4);
+      const newShip3 = shipFactory(3);
+      const newShip4 = shipFactory(3);
+      const newShip5 = shipFactory(2);
 
       playerShips.push(newShip, newShip2, newShip3, newShip4, newShip5);
       playerShips.forEach((ship) => {
@@ -41,6 +37,10 @@ const playerFactory = (name, playerShipsArray) => {
         );
       });
     }
+  }
+
+  function getInitialState() {
+    return playerShips;
   }
 
   //It's possible to consolidate the following two rotation functions into one, but requires React to not run in Strict Mode.
@@ -69,7 +69,7 @@ const playerFactory = (name, playerShipsArray) => {
   }
 
   return {
-    playerShips,
+    getInitialState,
     rotateHorizontalShip,
     rotateVerticalShip,
   };
