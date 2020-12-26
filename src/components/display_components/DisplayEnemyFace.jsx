@@ -10,25 +10,41 @@ const DisplayEnemyFace = (props) => {
       <div id='cat-face-wrapper'>
         {props.playerWins && (
           <div id='cat-face'>
-            <img src={defeatedCatBig} alt='Defeated cat' />
+            <img
+              id='cat-face-wrapper__cat-face'
+              src={defeatedCatBig}
+              alt='Defeated cat'
+            />
             Ouch...
           </div>
         )}
         {props.playerMiss && (
           <div id='cat-face'>
-            <img src={happyCatBig} alt='Happy cat' />
+            <img
+              id='cat-face-wrapper__cat-face'
+              src={happyCatBig}
+              alt='Happy cat'
+            />
             You missed!
           </div>
         )}
         {!props.playerHit && !props.playerMiss && !props.playerWins && (
           <div id='cat-face'>
-            <img src={thinkingCatBig} alt='Thinking cat' />
+            <img
+              id='cat-face-wrapper__cat-face'
+              src={thinkingCatBig}
+              alt='Thinking cat'
+            />
             Hmm...
           </div>
         )}
         {props.playerHit && !props.playerWins && (
           <div id='cat-face'>
-            <img src={angryCatBig} alt='Angry cat' />
+            <img
+              id='cat-face-wrapper__cat-face'
+              src={angryCatBig}
+              alt='Angry cat'
+            />
             You hit my ship!
           </div>
         )}
@@ -36,9 +52,11 @@ const DisplayEnemyFace = (props) => {
       <div id='cat-lives-wrapper'>
         {Array.from(Array(props.computerHealth)).map((index) => {
           return (
-            <div className='heart' key={index}>
-              <img src={catHeart} alt='Cat life' />
-            </div>
+            <img
+              className='cat-lives-wrapper__heart'
+              src={catHeart}
+              alt='Cat life'
+            />
           );
         })}
       </div>

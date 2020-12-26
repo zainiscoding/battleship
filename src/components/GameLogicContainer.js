@@ -93,13 +93,12 @@ const GameLogicContainer = (props) => {
       );
 
       if (shipPlacement === true) {
-        const newPlayerState = playerFactory('Player', player.playerShips);
+        const newPlayerState = playerFactory('Player', player);
 
-        newPlayerState.playerShips[shipNumber].placed = true;
-
+        newPlayerState.placeShip(shipNumber);
         placementError = false;
         placingShip = false;
-        setPlayer(newPlayerState);
+        setPlayer(newPlayerState.getInitialState());
       } else {
         placementError = true;
       }
@@ -144,7 +143,7 @@ const GameLogicContainer = (props) => {
       ? newPlayerState.rotateHorizontalShip(targetShipNumber)
       : newPlayerState.rotateVerticalShip(targetShipNumber);
 
-    setPlayer(newPlayerState);
+    setPlayer(newPlayerState.getInitialState());
   }
 
   function placeRandomShips() {
@@ -180,10 +179,11 @@ const GameLogicContainer = (props) => {
     preparing = true;
     setPlayerTurn(true);
     setHitPlayerBlocks([]);
+    setComputerHealth(5);
     gameOver = false;
     setPlayerWins('');
-    setPlayer(playerFactory('Player'));
-    setComputer(playerFactory('Computer'));
+    setPlayer(initialPlayer.getInitialState());
+    setComputer(initialComputer.getInitialState());
     setPlayerBoard(gameboardFactory());
     setComputerBoard(gameboardFactory());
   }

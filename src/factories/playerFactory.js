@@ -40,7 +40,7 @@ const playerFactory = (name, playerShipsArray) => {
   }
 
   function getInitialState() {
-    return playerShips;
+    return [...playerShips];
   }
 
   //It's possible to consolidate the following two rotation functions into one, but requires React to not run in Strict Mode.
@@ -48,12 +48,12 @@ const playerFactory = (name, playerShipsArray) => {
     const newVerticalShip = {
       x: playerShips[shipIndex].x,
       y: playerShips[shipIndex].y,
-      shipLength: playerShips[shipIndex].length,
+      shipLength: playerShips[shipIndex].shipLength,
       orientation: 'vertical',
       placed: false,
       positionsArray: playerShips[shipIndex].positionsArray,
     };
-    playerShips.splice(shipIndex, 1, newVerticalShip);
+    return playerShips.splice(shipIndex, 1, newVerticalShip);
   }
 
   function rotateVerticalShip(shipIndex) {
@@ -68,7 +68,12 @@ const playerFactory = (name, playerShipsArray) => {
     return playerShips.splice(shipIndex, 1, newHorizontalShip);
   }
 
+  function placeShip(shipIndex) {
+    return (playerShips[shipIndex].placed = true);
+  }
+
   return {
+    placeShip,
     getInitialState,
     rotateHorizontalShip,
     rotateVerticalShip,

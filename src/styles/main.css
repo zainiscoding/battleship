@@ -82,10 +82,21 @@ body{
   place-items: center;
 }
 
-img{
+#cat-lives-wrapper{
+  display:flex;
+}
+
+.cat-lives-wrapper__heart{
+width: 3vw;
+max-width: 110px;
+min-width: 25px;
+}
+
+#cat-face-wrapper__cat-face{
   margin-bottom: 10px;
-  width: 60px;
-  height: 58px;
+  width: 10vw;
+  height: auto;
+  min-width: 58px;
 }
 
 #board-wrapper__computer-board-wrapper {
@@ -263,12 +274,21 @@ img{
     width: 31vw;
   }
 
-  img{
+  #cat-face-wrapper__cat-face{
     margin-bottom: 10px;
     width: 10vw;
     height: auto;
-    max-width: 140px;
   }
+
+  #cat-lives-wrapper{
+    display:flex;
+  }
+  
+  .cat-lives-wrapper__heart{
+  width: 3vw;
+  max-width: 110px;
+  }
+  
   
   #board-wrapper__computer-board-wrapper {
     display: grid;
