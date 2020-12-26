@@ -95,7 +95,7 @@ const GameLogicContainer = (props) => {
       if (shipPlacement === true) {
         const newPlayerState = playerFactory('Player', player);
 
-        newPlayerState.placeShip(shipNumber);
+        newPlayerState.switchShipPlacement(shipNumber);
         placementError = false;
         placingShip = false;
         setPlayer(newPlayerState.getInitialState());
@@ -115,11 +115,11 @@ const GameLogicContainer = (props) => {
       const newBoardState = gameboardFactory(playerBoard.gameboardArray);
       const newPlayerState = playerFactory('Player', player);
 
-      newPlayerState.playerShips[targetShipNumber].placed = false;
+      newPlayerState.switchShipPlacement(targetShipNumber);
       newBoardState.removeShip(targetShipNumber, blockId);
 
       setPlayerBoard(newBoardState);
-      setPlayer(newPlayerState);
+      setPlayer(newPlayerState.getInitialState());
     }
   }
 
@@ -210,8 +210,6 @@ const GameLogicContainer = (props) => {
       }
     }
   }, [playerBoard, computerBoard]);
-
-  //Sets computer health
 
   //The computer takes a turn whenever playerTurn changes (ie. whenever attacked)
   useEffect(() => {

@@ -68,15 +68,19 @@ const playerFactory = (name, playerShipsArray) => {
     return playerShips.splice(shipIndex, 1, newHorizontalShip);
   }
 
-  function placeShip(shipIndex) {
-    return (playerShips[shipIndex].placed = true);
+  function switchShipPlacement(shipIndex) {
+    if (playerShips[shipIndex].placed === true) {
+      playerShips[shipIndex].placed = false;
+    } else {
+      return (playerShips[shipIndex].placed = true);
+    }
   }
 
   return {
-    placeShip,
     getInitialState,
     rotateHorizontalShip,
     rotateVerticalShip,
+    switchShipPlacement,
   };
 };
 
