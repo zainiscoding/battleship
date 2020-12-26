@@ -2,7 +2,7 @@ import DisplayPlayerBoard from './DisplayPlayerBoard';
 import DisplayComputerBoard from './DisplayComputerBoard';
 import DisplayPlayerShipDock from './DisplayPlayerShipDock';
 import DisplayPlacementError from './DisplayPlacementError';
-import EnemyFaceContainer from '../EnemyFaceContainer';
+import DisplayEnemyFace from './DisplayEnemyFace';
 
 const DisplayGame = (props) => {
   //Used to set data values of the blocks
@@ -93,8 +93,9 @@ const DisplayGame = (props) => {
                   )}
                 </>
               )}
-              <EnemyFaceContainer
+              <DisplayEnemyFace
                 computerBoard={props.computerBoard}
+                computerHealth={props.computerHealth}
                 playerHit={props.playerHit}
                 playerMiss={props.playerMiss}
                 playerWins={props.playerWins}

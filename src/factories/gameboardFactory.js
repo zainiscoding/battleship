@@ -192,6 +192,7 @@ const gameboardFactory = (gameBoard, playerShips) => {
             }
           }
         });
+        return 'sunk';
 
         //Else just replace the block you hit with a 'hit' block
       } else {

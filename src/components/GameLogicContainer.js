@@ -26,6 +26,7 @@ const GameLogicContainer = (props) => {
   const [computerBoard, setComputerBoard] = useState(
     initialComputerBoard.getInitialState()
   );
+  const [computerHealth, setComputerHealth] = useState(5);
   const [hitPlayerBlocks, setHitPlayerBlocks] = useState([]);
   const [playerTurn, setPlayerTurn] = useState(true);
   const [playerWins, setPlayerWins] = useState();
@@ -44,6 +45,15 @@ const GameLogicContainer = (props) => {
         ) === undefined
       ) {
         setPlayerHit(true);
+      } else if (
+        newBoard.receiveAttack(
+          e.target.id,
+          parseInt(e.target.getAttribute('data-x')),
+          parseInt(e.target.getAttribute('data-y'))
+        ) === 'sunk'
+      ) {
+        setPlayerHit(true);
+        setComputerHealth(computerHealth - 1);
       } else {
         setPlayerMiss(true);
       }
@@ -236,6 +246,7 @@ const GameLogicContainer = (props) => {
       playerBoard={playerBoard}
       computer={computer}
       computerBoard={computerBoard}
+      computerHealth={computerHealth}
       playerAttackHandler={playerAttackHandler}
       playerHit={playerHit}
       playerMiss={playerMiss}
