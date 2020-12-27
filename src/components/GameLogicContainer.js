@@ -5,7 +5,6 @@ import computerAttack from '../helper_functions/computerAttack';
 import { useEffect, useState } from 'react';
 
 let placingShip = false;
-let chosenShip = '';
 let shipNumber = 0;
 let placementError = false;
 let preparing = true;
@@ -26,7 +25,7 @@ const GameLogicContainer = (props) => {
   const [computerBoard, setComputerBoard] = useState(
     initialComputerBoard.getInitialState()
   );
-  const [hoveredBlocks, setHoveredBlocks] = useState([]);
+  const [chosenShip, setChosenShip] = useState('');
   const [computerHealth, setComputerHealth] = useState(5);
   const [hitPlayerBlocks, setHitPlayerBlocks] = useState([]);
   const [playerTurn, setPlayerTurn] = useState(true);
@@ -65,36 +64,14 @@ const GameLogicContainer = (props) => {
 
   function chooseShip(e) {
     if (!placingShip) {
-      chosenShip = {
+      const newChosenShip = {
         shipLength: parseInt(e.target.getAttribute('data-length')),
         orientation: e.target.getAttribute('data-orientation'),
       };
+      setChosenShip(newChosenShip);
       placingShip = true;
       shipNumber = parseInt(e.target.getAttribute('data-shipnumber'));
       e.target.parentNode.className += '--selected';
-    }
-  }
-
-  function handleHover(e) {
-    const index = parseInt(e.target.id);
-    const orientation = chosenShip.orientation;
-    const hoveredBlocks = [];
-
-    if (orientation === 'horizontal') {
-      for (let i = 0; i < chosenShip.shipLength; i++) {
-        hoveredBlocks.push(index + i);
-      }
-    } else {
-      for (let i = 0; i < chosenShip.shipLength; i++) {
-        hoveredBlocks.push(index + i * 10);
-      }
-    }
-
-    setHoveredBlocks(hoveredBlocks);
-    if (hoveredBlocks.includes(e.target.id)) {
-      return true;
-    } else {
-      return '';
     }
   }
 
@@ -150,11 +127,16 @@ const GameLogicContainer = (props) => {
   function rotateShip(e) {
     e.stopPropagation();
     if (placingShip) {
+      const newChosenShip = {
+        shipLength: chosenShip.shipLength,
+        orientation: chosenShip.orientation,
+      };
       const orientation = chosenShip.orientation;
 
       orientation === 'horizontal'
-        ? (chosenShip.orientation = 'vertical')
-        : (chosenShip.orientation = 'horizontal');
+        ? (newChosenShip.orientation = 'vertical')
+        : (newChosenShip.orientation = 'horizontal');
+      setChosenShip(newChosenShip);
     }
 
     const newPlayerState = playerFactory('Player', player);
@@ -171,6 +153,7 @@ const GameLogicContainer = (props) => {
   }
 
   function placeRandomShips() {
+    placingShip = false;
     const newPlayer = gameboardFactory();
     const stateCopy = newPlayer.getInitialState();
     initialPlayerBoard.placeShips(newPlayer, newPlayer.gameboardArray);
@@ -267,14 +250,14 @@ const GameLogicContainer = (props) => {
       player={player}
       playerBoard={playerBoard}
       computer={computer}
-      handleHover={handleHover}
-      hoveredBlocks={hoveredBlocks}
       computerBoard={computerBoard}
       computerHealth={computerHealth}
       playerAttackHandler={playerAttackHandler}
       playerHit={playerHit}
       playerMiss={playerMiss}
       chooseShip={chooseShip}
+      chosenShip={chosenShip}
+      placingShip={placingShip}
       placeChosenShip={placeChosenShip}
       rotateShip={rotateShip}
       preparing={preparing}

@@ -119,6 +119,12 @@ min-width: 25px;
   border: solid 1px black;
 }
 
+.empty-block--hovered--not-allowed {
+  background: white;
+  border: solid 1px black;
+  cursor: not-allowed;
+}
+
 .ship-block {
   background: red;
   border: solid 1px black;

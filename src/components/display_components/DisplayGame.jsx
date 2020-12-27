@@ -1,8 +1,8 @@
-import DisplayPlayerBoard from './DisplayPlayerBoard';
 import DisplayComputerBoard from './DisplayComputerBoard';
 import DisplayPlayerShipDock from './DisplayPlayerShipDock';
 import DisplayPlacementError from './DisplayPlacementError';
 import DisplayEnemyFace from './DisplayEnemyFace';
+import PlayerBoardContainer from '../PlayerBoardContainer';
 
 const DisplayGame = (props) => {
   //Used to set data values of the blocks
@@ -38,15 +38,15 @@ const DisplayGame = (props) => {
         <h1>Battleship</h1>
       </div>
       <div id='board-wrapper'>
-        <DisplayPlayerBoard
+        <PlayerBoardContainer
           player={props.player}
           playerBoard={props.playerBoard}
           setX={setX}
           setY={setY}
           placeChosenShip={props.placeChosenShip}
+          placingShip={props.placingShip}
+          chosenShip={props.chosenShip}
           removeShipFromBoard={props.removeShipFromBoard}
-          handleHover={props.handleHover}
-          hoveredBlocks={props.hoveredBlocks}
           preparing={props.preparing}
         />
         {props.preparing && (
