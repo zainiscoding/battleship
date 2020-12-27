@@ -26,6 +26,7 @@ const GameLogicContainer = (props) => {
   const [computerBoard, setComputerBoard] = useState(
     initialComputerBoard.getInitialState()
   );
+  const [hoveredBlocks, setHoveredBlocks] = useState([]);
   const [computerHealth, setComputerHealth] = useState(5);
   const [hitPlayerBlocks, setHitPlayerBlocks] = useState([]);
   const [playerTurn, setPlayerTurn] = useState(true);
@@ -71,6 +72,29 @@ const GameLogicContainer = (props) => {
       placingShip = true;
       shipNumber = parseInt(e.target.getAttribute('data-shipnumber'));
       e.target.parentNode.className += '--selected';
+    }
+  }
+
+  function handleHover(e) {
+    const index = parseInt(e.target.id);
+    const orientation = chosenShip.orientation;
+    const hoveredBlocks = [];
+
+    if (orientation === 'horizontal') {
+      for (let i = 0; i < chosenShip.shipLength; i++) {
+        hoveredBlocks.push(index + i);
+      }
+    } else {
+      for (let i = 0; i < chosenShip.shipLength; i++) {
+        hoveredBlocks.push(index + i * 10);
+      }
+    }
+
+    setHoveredBlocks(hoveredBlocks);
+    if (hoveredBlocks.includes(e.target.id)) {
+      return true;
+    } else {
+      return '';
     }
   }
 
@@ -243,6 +267,8 @@ const GameLogicContainer = (props) => {
       player={player}
       playerBoard={playerBoard}
       computer={computer}
+      handleHover={handleHover}
+      hoveredBlocks={hoveredBlocks}
       computerBoard={computerBoard}
       computerHealth={computerHealth}
       playerAttackHandler={playerAttackHandler}

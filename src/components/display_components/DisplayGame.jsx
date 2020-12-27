@@ -45,6 +45,8 @@ const DisplayGame = (props) => {
           setY={setY}
           placeChosenShip={props.placeChosenShip}
           removeShipFromBoard={props.removeShipFromBoard}
+          handleHover={props.handleHover}
+          hoveredBlocks={props.hoveredBlocks}
           preparing={props.preparing}
         />
         {props.preparing && (

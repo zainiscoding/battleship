@@ -1,4 +1,18 @@
+import { useEffect, useState } from 'react';
+
 const DisplayPlayerBoard = (props) => {
+  useEffect(() => {
+    console.log(props.hoveredBlocks);
+  }, [props.hoveredBlocks]);
+
+  function setHovered() {
+    console.log(this);
+    if ('hey') {
+      return 'empty-block--hovered';
+    } else {
+      return '';
+    }
+  }
   return (
     <div
       id={
@@ -52,11 +66,16 @@ const DisplayPlayerBoard = (props) => {
                 {!block.ship && (
                   <div
                     key={index}
-                    className='empty-block'
                     id={index}
+                    className={
+                      props.hoveredBlocks.includes(index)
+                        ? 'empty-block--hovered'
+                        : 'empty-block'
+                    }
                     data-x={props.setX(index)}
                     data-y={props.setY(index)}
                     onClick={props.placeChosenShip}
+                    onMouseEnter={props.handleHover}
                   ></div>
                 )}
               </>

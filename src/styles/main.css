@@ -114,6 +114,11 @@ min-width: 25px;
   border: solid 1px black;
 }
 
+.empty-block--hovered{
+  background: red;
+  border: solid 1px black;
+}
+
 .ship-block {
   background: red;
   border: solid 1px black;
