@@ -27,6 +27,7 @@ const playerFactory = (name, playerShipsArray) => {
 
       playerShips.push(newShip, newShip2, newShip3, newShip4, newShip5);
       playerShips.forEach((ship) => {
+        console.log('creating');
         createShipPositionsArray(
           ship.x,
           ship.y,

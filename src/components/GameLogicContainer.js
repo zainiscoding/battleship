@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 
 let placingShip = false;
 let shipNumber = 0;
-let placementError = false;
 let preparing = true;
 let gameOver = false;
 
@@ -64,13 +63,10 @@ const GameLogicContainer = (props) => {
 
   function chooseShip(e) {
     if (!placingShip) {
-      console.log('yo');
-      console.log(e.target);
       const newChosenShip = {
         shipLength: parseInt(e.target.getAttribute('data-length')),
         orientation: e.target.getAttribute('data-orientation'),
       };
-      console.log(newChosenShip);
       setChosenShip(newChosenShip);
       placingShip = true;
       shipNumber = parseInt(e.target.getAttribute('data-shipnumber'));
@@ -100,11 +96,8 @@ const GameLogicContainer = (props) => {
         const newPlayerState = playerFactory('Player', player);
 
         newPlayerState.switchShipPlacement(shipNumber);
-        placementError = false;
         placingShip = false;
         setPlayer(newPlayerState.getInitialState());
-      } else {
-        placementError = true;
       }
       setPlayerBoard(newBoard.getInitialState());
     }
@@ -116,13 +109,15 @@ const GameLogicContainer = (props) => {
         e.target.getAttribute('data-shipnumber')
       );
       const blockId = parseInt(e.target.id);
-      const newBoardState = gameboardFactory(playerBoard.gameboardArray);
+      const newArray = [...playerBoard.gameboardArray];
+      const newShips = [...playerBoard.playerShipPositions];
+      const newBoardState = gameboardFactory(newArray, newShips);
       const newPlayerState = playerFactory('Player', player);
 
       newPlayerState.switchShipPlacement(targetShipNumber);
       newBoardState.removeShip(targetShipNumber, blockId);
 
-      setPlayerBoard(newBoardState);
+      setPlayerBoard(newBoardState.getInitialState());
       setPlayer(newPlayerState.getInitialState());
     }
   }
@@ -186,10 +181,12 @@ const GameLogicContainer = (props) => {
     setComputerHealth(5);
     gameOver = false;
     setPlayerWins('');
+    const newPlayerBoard = gameboardFactory();
+    const newComputerBoard = gameboardFactory();
     setPlayer(initialPlayer.getInitialState());
     setComputer(initialComputer.getInitialState());
-    setPlayerBoard(gameboardFactory());
-    setComputerBoard(gameboardFactory());
+    setPlayerBoard(newPlayerBoard.getInitialState());
+    setComputerBoard(newComputerBoard.getInitialState());
   }
 
   //Checks for game over
@@ -263,7 +260,6 @@ const GameLogicContainer = (props) => {
       playerTurn={playerTurn}
       restartGame={restartGame}
       removeShipFromBoard={removeShipFromBoard}
-      placementError={placementError}
       playerWins={playerWins}
       gameOver={gameOver}
     />

@@ -28,7 +28,7 @@ const PlayerBoardContainer = (props) => {
         newBoard.gameboardArray
       );
 
-      if (shipPlacement) {
+      if (shipPlacement === true) {
         if (orientation === 'horizontal') {
           for (let i = 0; i < length; i++) {
             hoveredBlocks.push(blockIndex + i);

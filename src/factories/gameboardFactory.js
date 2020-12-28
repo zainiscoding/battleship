@@ -8,6 +8,9 @@ const gameboardFactory = (gameBoard, playerShips) => {
   if (gameBoard) {
     gameboardArray = gameBoard;
   }
+  if (playerShips) {
+    playerShipPositions = playerShips;
+  }
 
   function getInitialState() {
     return {
@@ -99,7 +102,7 @@ const gameboardFactory = (gameBoard, playerShips) => {
         });
         return true;
       } else {
-        return false;
+        return newShip;
       }
     }
   }
