@@ -60,7 +60,7 @@ const playerFactory = (name, playerShipsArray) => {
     const newHorizontalShip = {
       x: playerShips[shipIndex].x,
       y: playerShips[shipIndex].y,
-      shipLength: playerShips[shipIndex].length,
+      shipLength: playerShips[shipIndex].shipLength,
       orientation: 'horizontal',
       placed: false,
       positionsArray: playerShips[shipIndex].positionsArray,
