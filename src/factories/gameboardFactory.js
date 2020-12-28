@@ -99,7 +99,7 @@ const gameboardFactory = (gameBoard, playerShips) => {
         });
         return true;
       } else {
-        return newShip;
+        return false;
       }
     }
   }

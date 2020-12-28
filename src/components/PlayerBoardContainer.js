@@ -1,31 +1,45 @@
 import DisplayPlayerBoard from './display_components/DisplayPlayerBoard';
+import gameboardFactory from '../factories/gameboardFactory';
 import { useState } from 'react';
 
 const PlayerBoardContainer = (props) => {
   const [hoveredBlocks, setHoveredBlocks] = useState([]);
 
   function handleHover(e) {
-    console.log(props.placingShip);
     if (props.placingShip) {
+      const hoveredBlocks = [];
+
+      const newArray = [...props.playerBoard.gameboardArray];
+      const newShips = [...props.playerBoard.playerShipPositions];
+      const newBoard = gameboardFactory(newArray, newShips);
+
+      const targetBlockX = parseInt(e.target.getAttribute('data-x'));
+      const targetBlockY = parseInt(e.target.getAttribute('data-y'));
       const blockIndex = parseInt(e.target.id);
       const orientation = props.chosenShip.orientation;
       const length = props.chosenShip.shipLength;
-      const hoveredBlocks = [];
 
-      if (orientation === 'horizontal') {
-        if (!((blockIndex % 10) + length > 10)) {
+      const shipPlacement = newBoard.placeShip(
+        targetBlockX,
+        targetBlockY,
+        length,
+        orientation,
+        blockIndex,
+        newBoard.gameboardArray
+      );
+
+      if (shipPlacement) {
+        if (orientation === 'horizontal') {
           for (let i = 0; i < length; i++) {
             hoveredBlocks.push(blockIndex + i);
           }
-        }
-      } else {
-        if (!(blockIndex + length * 10 >= 110)) {
+        } else {
           for (let i = 0; i < length; i++) {
             hoveredBlocks.push(blockIndex + i * 10);
           }
         }
+        setHoveredBlocks(hoveredBlocks);
       }
-      setHoveredBlocks(hoveredBlocks);
     }
   }
 
