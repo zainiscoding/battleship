@@ -44,28 +44,44 @@ const playerFactory = (name, playerShipsArray) => {
   }
 
   //It's possible to consolidate the following two rotation functions into one, but requires React to not run in Strict Mode.
-  function rotateHorizontalShip(shipIndex) {
-    const newVerticalShip = {
-      x: playerShips[shipIndex].x,
-      y: playerShips[shipIndex].y,
-      shipLength: playerShips[shipIndex].shipLength,
-      orientation: 'vertical',
-      placed: false,
-      positionsArray: playerShips[shipIndex].positionsArray,
-    };
-    return playerShips.splice(shipIndex, 1, newVerticalShip);
-  }
+  // function rotateHorizontalShip(shipIndex) {
+  //   const newVerticalShip = {
+  //     x: playerShips[shipIndex].x,
+  //     y: playerShips[shipIndex].y,
+  //     shipLength: playerShips[shipIndex].shipLength,
+  //     orientation: 'vertical',
+  //     placed: false,
+  //     positionsArray: playerShips[shipIndex].positionsArray,
+  //   };
+  //   return playerShips.splice(shipIndex, 1, newVerticalShip);
+  // }
 
-  function rotateVerticalShip(shipIndex) {
-    const newHorizontalShip = {
+  // function rotateVerticalShip(shipIndex) {
+  //   const newHorizontalShip = {
+  //     x: playerShips[shipIndex].x,
+  //     y: playerShips[shipIndex].y,
+  //     shipLength: playerShips[shipIndex].shipLength,
+  //     orientation: 'horizontal',
+  //     placed: false,
+  //     positionsArray: playerShips[shipIndex].positionsArray,
+  //   };
+  //   return playerShips.splice(shipIndex, 1, newHorizontalShip);
+  // }
+
+  function rotateShip(shipIndex) {
+    const orientation =
+      playerShips[shipIndex].orientation === 'horizontal'
+        ? 'vertical'
+        : 'horizontal';
+    const newShip = {
       x: playerShips[shipIndex].x,
       y: playerShips[shipIndex].y,
       shipLength: playerShips[shipIndex].shipLength,
-      orientation: 'horizontal',
+      orientation: orientation,
       placed: false,
       positionsArray: playerShips[shipIndex].positionsArray,
     };
-    return playerShips.splice(shipIndex, 1, newHorizontalShip);
+    return playerShips.splice(shipIndex, 1, newShip);
   }
 
   function switchShipPlacement(shipIndex) {
@@ -78,8 +94,7 @@ const playerFactory = (name, playerShipsArray) => {
 
   return {
     getInitialState,
-    rotateHorizontalShip,
-    rotateVerticalShip,
+    rotateShip,
     switchShipPlacement,
   };
 };

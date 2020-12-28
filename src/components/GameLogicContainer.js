@@ -141,17 +141,11 @@ const GameLogicContainer = (props) => {
         : (newChosenShip.orientation = 'horizontal');
       setChosenShip(newChosenShip);
     }
-
     const newPlayerState = playerFactory('Player', player);
     const targetShipNumber = e.target.parentNode.getAttribute(
       'data-shipnumber'
     );
-    const orientation = e.target.parentNode.getAttribute('data-orientation');
-    console.log(newPlayerState.getInitialState());
-    orientation === 'horizontal'
-      ? newPlayerState.rotateHorizontalShip(targetShipNumber)
-      : newPlayerState.rotateVerticalShip(targetShipNumber);
-    console.log(newPlayerState.getInitialState());
+    newPlayerState.rotateShip(targetShipNumber);
     setPlayer(newPlayerState.getInitialState());
   }
 
