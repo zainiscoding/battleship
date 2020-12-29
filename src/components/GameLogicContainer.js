@@ -123,6 +123,7 @@ const GameLogicContainer = (props) => {
 
   function rotateShip(e) {
     e.stopPropagation();
+    console.log(e.target.parentNode);
     if (placingShip) {
       const newChosenShip = {
         shipLength: chosenShip.shipLength,
@@ -136,7 +137,7 @@ const GameLogicContainer = (props) => {
       setChosenShip(newChosenShip);
     }
     const newPlayerState = playerFactory('Player', player);
-    const targetShipNumber = e.target.parentNode.getAttribute(
+    const targetShipNumber = e.currentTarget.parentNode.getAttribute(
       'data-shipnumber'
     );
     newPlayerState.rotateShip(targetShipNumber);

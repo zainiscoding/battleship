@@ -20,12 +20,13 @@ body{
 
 
 #game-wrapper {
-  background-image: url('../assets/images/water.png');
+  background: #242e42;
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
   place-content: center;
+  color: #9a2881
 }
 
 #header-wrapper{
@@ -65,6 +66,7 @@ body{
   grid-row: 1;
   place-items: center;
   height: 100%;
+  width: 100%;
   justify-content: center;
 }
 
@@ -73,7 +75,7 @@ body{
 
 #cat-face-wrapper{
   display: flex;
-  height: 80%;
+  height: 50%;
   align-items: center;
 }
 
@@ -85,6 +87,8 @@ body{
 
 #cat-lives-wrapper{
   display:flex;
+  width: 100%;
+  justify-content: space-evenly;
 }
 
 .cat-lives-wrapper__heart{
@@ -111,49 +115,49 @@ min-width: 25px;
 }
 
 .empty-block {
-  background: #e9fff5;
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
+  background: #536996;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
   cursor: pointer;
 }
 
 .empty-block--hovered{
-  background: #F51743;
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
+  background: #289a88;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
 }
 
 .empty-block--hovered--not-allowed {
-  background: #e9fff5;
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
+  background: #536996;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
   cursor: not-allowed;
 }
 
 .ship-block {
   background: #F51743;
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
 }
 
 .player-ship-block {
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
-  background: #9595e7;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
+  background: #289a88;
   height: 100%;
   cursor: not-allowed;
 }
 
 .player-ship-block--removable {
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
-  background: #9595e7;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
+  background: #289a88;
   height: 100%;
   cursor:pointer;
 }
@@ -162,40 +166,40 @@ min-width: 25px;
   display:flex;
   place-items: center;
   place-content: center;
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
-  background: #F51743;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
+  background: #9a2881;
   height: 100%;
 }
 
 .player-ship-block--sunk {
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
-  background:#8E7278;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
+  background:#9A8228;
   height: 100%;
 }
 
 .miss-block{
-  -webkit-box-shadow: 0px 0px 0px 0.5px #48325F;
-  -moz-box-shadow: 0px 0px 0px 0.5px #48325F;
-  box-shadow: 0px 0px 0px 0.5px #48325F;
+  -webkit-box-shadow: 0px 0px 0px 0.5px #242e42;
+  -moz-box-shadow: 0px 0px 0px 0.5px #242e42;
+  box-shadow: 0px 0px 0px 0.5px #242e42;
 }
 
 .invisible-block {
-  background: #e9fff5;
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
+  background: #536996;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
   cursor: pointer;
 }
 
 .enemy-ship-block {
-  background: #e9fff5;
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
+  background: #536996;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
   cursor: pointer;
 }
 
@@ -203,18 +207,18 @@ min-width: 25px;
   display:flex;
   place-items: center;
   place-content: center;
-  background: #F51743;
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
+  background: #9a2881;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
   height: 100%;
 }
 
 .enemy-ship-block--sunk {
-  background: #8E7278;
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
+  background: #9A8228;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
   height: 100%;
 }
 
@@ -227,21 +231,25 @@ min-width: 25px;
   grid-row: 1;
   flex-wrap: wrap;
   width: fit-content;
+  -webkit-box-shadow: 0px 0px 20px 1px #F51743;
+  -moz-box-shadow: 0px 0px 20px 1px #F51743;
+  box-shadow: 0px 0px 20px 1px #FFE9F3;
 }
 
 .ship {
-  background: #e9fff5;
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
+  background: #536996;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
 }
 
 .ship__rotate-ship-button{
   border: none;
   outline: none;
   align-self: center;
-  height: 31px;
+  height: 30px;
   cursor:pointer;
+  background: #9a2881;
 }
 
 #player-ships-wrapper__ships{
@@ -269,17 +277,17 @@ min-width: 25px;
   width: fit-content;
   margin: 10px;
   cursor:pointer;
-  background: #9595e7;
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
+  background: #289a88;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
 }
 
 .ship-highlight--selected{
   height: fit-content;
   width: fit-content;
   margin: 10px;
-  background: #9595e7;
+  background: #289a88;
   -webkit-box-shadow: 1px 1px 1px 1px #F51743;
   -moz-box-shadow: 1px 1px 1px 1px #F51743;
   box-shadow: 0px 0px 3px 2px #F51743;
@@ -291,11 +299,11 @@ min-width: 25px;
 }
 
 .player-ship-block--docked {
-  height: 31px;
-  width: 31px;
-  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
+  height: 30px;
+  width: 30px;
+  -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
   pointer-events: none;
 }
 
@@ -367,11 +375,11 @@ min-width: 25px;
   
 
   .player-ship-block--docked {
-    height: 51px;
-    width: 51px;
-    -webkit-box-shadow: 0px 0px 0px 1px #48325F;
-  -moz-box-shadow: 0px 0px 0px 1px #48325F;
-  box-shadow: 0px 0px 0px 1px #48325F;
+    height: 50px;
+    width: 50px;
+    -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+  -moz-box-shadow: 0px 0px 0px 1px #242e42;
+  box-shadow: 0px 0px 0px 1px #242e42;
     pointer-events: none;
   }
 
@@ -391,7 +399,7 @@ min-width: 25px;
   }
   
   .ship__rotate-ship-button{
-    height: 51px;
+    height: 50px;
     align-self: center;
   }
 }
