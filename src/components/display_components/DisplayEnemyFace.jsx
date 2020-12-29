@@ -35,7 +35,7 @@ const DisplayEnemyFace = (props) => {
               src={thinkingCatBig}
               alt='Thinking cat'
             />
-            Hmm...
+            Make your play, human!
           </div>
         )}
         {props.playerHit && !props.playerWins && (

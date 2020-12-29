@@ -17,7 +17,6 @@ const GameLogicContainer = (props) => {
 
   const [player, setPlayer] = useState(initialPlayer.getInitialState());
   const [computer, setComputer] = useState(initialComputer.getInitialState());
-
   const [playerBoard, setPlayerBoard] = useState(
     initialPlayerBoard.getInitialState()
   );
@@ -148,17 +147,20 @@ const GameLogicContainer = (props) => {
     placingShip = false;
     const newPlayer = gameboardFactory();
     const stateCopy = newPlayer.getInitialState();
-    initialPlayerBoard.placeShips(newPlayer, newPlayer.gameboardArray);
+    newPlayer.placeShips(newPlayer, newPlayer.gameboardArray);
     setPlayerBoard(stateCopy);
     startGame(true);
   }
 
   function startGame(isRandom) {
     function gameStart() {
-      const newComputer = gameboardFactory();
-      const stateCopy = newComputer.getInitialState();
-      initialComputerBoard.placeShips(newComputer, newComputer.gameboardArray);
-      setComputerBoard(stateCopy);
+      const newComputerBoard = gameboardFactory();
+      const newComputerBoardState = newComputerBoard.getInitialState();
+      newComputerBoard.placeShips(
+        newComputerBoard,
+        newComputerBoard.gameboardArray
+      );
+      setComputerBoard(newComputerBoardState);
       preparing = false;
     }
 
@@ -224,13 +226,14 @@ const GameLogicContainer = (props) => {
           hitPlayerBlocks,
           setHitPlayerBlocks
         );
-      }, 0);
+      }, 1500);
     }
     //eslint-disable-next-line
   }, [playerTurn]);
 
   useEffect(() => {
     setTimeout(function () {
+      console.log('happening');
       if (playerHit === true) {
         setPlayerHit(false);
       } else if (playerMiss === true) {

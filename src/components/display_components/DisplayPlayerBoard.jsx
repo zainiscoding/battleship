@@ -36,7 +36,11 @@ const DisplayPlayerBoard = (props) => {
               return (
                 <div
                   key={index}
-                  className='player-ship-block'
+                  className={
+                    props.preparing
+                      ? 'player-ship-block--removable'
+                      : 'player-ship-block'
+                  }
                   id={index}
                   data-x={props.setX(index)}
                   data-y={props.setY(index)}

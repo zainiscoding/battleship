@@ -20,6 +20,7 @@ body{
 
 
 #game-wrapper {
+  background-image: url('../assets/images/water.png');
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -110,74 +111,110 @@ min-width: 25px;
 }
 
 .empty-block {
-  background: white;
-  border: solid 1px black;
+  background: #e9fff5;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
+  cursor: pointer;
 }
 
 .empty-block--hovered{
-  background: red;
-  border: solid 1px black;
+  background: #F51743;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
 }
 
 .empty-block--hovered--not-allowed {
-  background: white;
-  border: solid 1px black;
+  background: #e9fff5;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
   cursor: not-allowed;
 }
 
 .ship-block {
-  background: red;
-  border: solid 1px black;
+  background: #F51743;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
 }
 
 .player-ship-block {
-  border: solid 1px black;
-  background: cyan;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
+  background: #9595e7;
   height: 100%;
+  cursor: not-allowed;
+}
+
+.player-ship-block--removable {
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
+  background: #9595e7;
+  height: 100%;
+  cursor:pointer;
 }
 
 .player-ship-block--hit {
   display:flex;
   place-items: center;
   place-content: center;
-  border: solid 1px black;
-  background: orange;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
+  background: #F51743;
   height: 100%;
 }
 
 .player-ship-block--sunk {
-  border: solid 1px black;
-  background:grey;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
+  background:#8E7278;
   height: 100%;
 }
 
 .miss-block{
-  background:black
+  -webkit-box-shadow: 0px 0px 0px 0.5px #48325F;
+  -moz-box-shadow: 0px 0px 0px 0.5px #48325F;
+  box-shadow: 0px 0px 0px 0.5px #48325F;
 }
 
 .invisible-block {
-  background: white;
-  height: 100%;
-  width: 100%;
+  background: #e9fff5;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
+  cursor: pointer;
 }
 
 .enemy-ship-block {
-  background: white;
-  border: solid 1px black;
+  background: #e9fff5;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
+  cursor: pointer;
 }
 
 .enemy-ship-block--hit {
   display:flex;
   place-items: center;
   place-content: center;
-  background: orange;
-  border: solid 1px black;
+  background: #F51743;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
   height: 100%;
 }
 
 .enemy-ship-block--sunk {
-  background: grey;
-  border: solid 1px black;
+  background: #8E7278;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
   height: 100%;
 }
 
@@ -193,8 +230,10 @@ min-width: 25px;
 }
 
 .ship {
-  background: white;
-  border: solid 1px black;
+  background: #e9fff5;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
 }
 
 .ship__rotate-ship-button{
@@ -202,6 +241,7 @@ min-width: 25px;
   outline: none;
   align-self: center;
   height: 31px;
+  cursor:pointer;
 }
 
 #player-ships-wrapper__ships{
@@ -228,15 +268,21 @@ min-width: 25px;
   height: fit-content;
   width: fit-content;
   margin: 10px;
+  cursor:pointer;
+  background: #9595e7;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
 }
 
 .ship-highlight--selected{
   height: fit-content;
   width: fit-content;
   margin: 10px;
-  -webkit-box-shadow: 0px 0px 0px 1px #f00;
-  -moz-box-shadow: 0px 0px 0px 1px #f00;
-  box-shadow: 0px 0px 0px 1px #f00;
+  background: #9595e7;
+  -webkit-box-shadow: 1px 1px 1px 1px #F51743;
+  -moz-box-shadow: 1px 1px 1px 1px #F51743;
+  box-shadow: 0px 0px 3px 2px #F51743;
 }
 
 
@@ -245,9 +291,11 @@ min-width: 25px;
 }
 
 .player-ship-block--docked {
-  height: 29px;
-  width: 29px;
-  border: solid 1px black;
+  height: 31px;
+  width: 31px;
+  -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
   pointer-events: none;
 }
 
@@ -319,9 +367,11 @@ min-width: 25px;
   
 
   .player-ship-block--docked {
-    height: 49px;
-    width: 49px;
-    border: solid 1px black;
+    height: 51px;
+    width: 51px;
+    -webkit-box-shadow: 0px 0px 0px 1px #48325F;
+  -moz-box-shadow: 0px 0px 0px 1px #48325F;
+  box-shadow: 0px 0px 0px 1px #48325F;
     pointer-events: none;
   }
 
