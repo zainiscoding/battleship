@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSync } from '@fortawesome/free-solid-svg-icons';
+import rotateButton from '../../assets/images/rotate.png';
 
 const DisplayPlayerShipDock = (props) => {
   return (
@@ -33,7 +32,11 @@ const DisplayPlayerShipDock = (props) => {
                       onClick={props.rotateShip}
                       className='ship__rotate-ship-button'
                     >
-                      <FontAwesomeIcon icon={faSync} size='3x' />
+                      <img
+                        className='rotate-ship-button__img'
+                        src={rotateButton}
+                        alt='Rotate ship icon'
+                      />
                     </button>
                     <>
                       {ship.positionsArray.map((position, index) => {
