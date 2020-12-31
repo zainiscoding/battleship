@@ -33,7 +33,9 @@ const DisplayComputerBoard = (props) => {
               data-x={props.setX(index)}
               data-y={props.setY(index)}
               onClick={props.playerAttackHandler}
-            ></div>
+            >
+              s
+            </div>
           );
         } else if (block.miss) {
           return <div key={index} className='miss-block'></div>;

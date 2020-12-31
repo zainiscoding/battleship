@@ -15,7 +15,7 @@ const DisplayEnemyFace = (props) => {
               src={defeatedCatBig}
               alt='Defeated cat'
             />
-            Ouch...
+            <div className='cat-face__speech'>Ouch...</div>
           </div>
         )}
         {props.playerMiss && (
@@ -25,7 +25,7 @@ const DisplayEnemyFace = (props) => {
               src={happyCatBig}
               alt='Happy cat'
             />
-            You missed!
+            <div className='cat-face__speech'>You missed!</div>
           </div>
         )}
         {!props.playerHit && !props.playerMiss && !props.playerWins && (
@@ -35,7 +35,7 @@ const DisplayEnemyFace = (props) => {
               src={thinkingCatBig}
               alt='Thinking cat'
             />
-            Make your play, human!
+            <div className='cat-face__speech'>Make your play, human!</div>
           </div>
         )}
         {props.playerHit && !props.playerWins && (
@@ -45,7 +45,7 @@ const DisplayEnemyFace = (props) => {
               src={angryCatBig}
               alt='Angry cat'
             />
-            You hit my ship!
+            <div className='cat-face__speech'>You hit my ship!</div>
           </div>
         )}
       </div>

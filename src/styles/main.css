@@ -1,35 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-html{
-  height: 100vh;
-  width: 100vw;
-}
-
-body{
-  height: 100%;
-  width: 100%;
-}
-
-#root{
-  height: 100%;
-  width: 100%;
-}
-
 .App{
-  height: 100%;
-  width: 100%;
+  display:flex;
+  place-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  background: #242e42;
 }
 
 
 #game-wrapper {
-  background: #242e42;
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
+  margin-top: 5%;
+  margin-bottom: 5%;
   place-content: center;
   color: #9a2881;
   font-family: 'Press Start 2P', cursive;
+  text-align: center;
 }
 
 #header-wrapper{
@@ -39,7 +29,6 @@ body{
 #board-wrapper {
   display: flex;
   flex-direction: column;
-  grid-gap: 10px;
   place-items: center;
   align-self: center;
 }
@@ -62,15 +51,18 @@ body{
   height: 300px;
   width: 300px;
 }
+
 #info-area{
-  display:flex;
+  display: grid;
   flex-direction: column;
   grid-column: 2;
   grid-row: 1;
   place-items: center;
+  grid-template-rows: 1fr 4fr 1fr;
   height: 100%;
-  width: 100%;
-  justify-content: center;
+  width: 15vw;
+  margin-right: 4%;
+  margin-left: 4%;
 }
 
 #turn-display{
@@ -78,20 +70,23 @@ body{
 
 #cat-face-wrapper{
   display: flex;
-  height: 50%;
+  width: 100%;
   align-items: center;
+  place-content: center;
 }
 
 #cat-face{
-  display:flex;
-  flex-direction: column;
+  display:grid;
+  grid-template-rows: 2fr 1fr;
   place-items: center;
 }
 
 #cat-lives-wrapper{
-  display:flex;
+  display: grid;
   width: 100%;
-  justify-content: space-evenly;
+  justify-content: center;
+  place-items: center;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 .cat-lives-wrapper__heart{
@@ -233,7 +228,7 @@ min-width: 25px;
   grid-column: 3;
   grid-row: 1;
   flex-wrap: wrap;
-  width: 300px;
+  width: auto;
   -webkit-box-shadow: 0px 0px 20px 1px #FFE9F3;
   -moz-box-shadow: 0px 0px 20px 1px #FFE9F3;
   box-shadow: 0px 0px 20px 1px #FFE9F3;
@@ -261,13 +256,11 @@ min-width: 25px;
 .rotate-ship-button__img{
   align-self: center;
   height: 100%;
-  width: inherit;
 }
 
 #player-ships-wrapper__ships{
   display: flex;
   flex-direction: column;
-  width: inherit;
   flex-flow: wrap;
 }
 
@@ -338,7 +331,6 @@ min-width: 25px;
   #board-wrapper {
     display: grid;
     grid-template-columns: 2fr 1fr 2fr;
-    grid-gap: 10px;
     place-items: center;
     align-self: center;
   }
@@ -367,13 +359,8 @@ min-width: 25px;
     height: auto;
   }
 
-  #cat-lives-wrapper{
-    display:flex;
-  }
-  
   .cat-lives-wrapper__heart{
-  width: 3vw;
-  max-width: 110px;
+  width: 2.5vw;
   }
   
   
