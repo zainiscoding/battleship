@@ -12,7 +12,11 @@ const DisplayPlayerShipDock = (props) => {
             <>
               {ship.placed === false && (
                 <div
-                  className='ship-highlight'
+                  className={
+                    ship.highlighted === false
+                      ? 'ship-highlight'
+                      : 'ship-highlight--selected'
+                  }
                   data-shipnumber={index}
                   data-length={ship.shipLength}
                   data-orientation={ship.orientation}

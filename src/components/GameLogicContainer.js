@@ -61,16 +61,21 @@ const GameLogicContainer = (props) => {
   }
 
   function chooseShip(e) {
-    if (!placingShip) {
-      const newChosenShip = {
-        shipLength: parseInt(e.target.getAttribute('data-length')),
-        orientation: e.target.getAttribute('data-orientation'),
-      };
-      setChosenShip(newChosenShip);
-      placingShip = true;
-      shipNumber = parseInt(e.target.getAttribute('data-shipnumber'));
-      e.target.parentNode.className += '--selected';
-    }
+    const newPlayerArray = [...player];
+    const newPlayerState = playerFactory('Player', newPlayerArray);
+    const targetShipNumber = parseInt(e.target.getAttribute('data-shipnumber'));
+    console.log(shipNumber);
+    const newChosenShip = {
+      shipLength: parseInt(e.target.getAttribute('data-length')),
+      orientation: e.target.getAttribute('data-orientation'),
+      shipNumber: targetShipNumber,
+    };
+
+    shipNumber = targetShipNumber;
+    newPlayerState.highlightShip(shipNumber);
+    setPlayer(newPlayerState.getInitialState());
+    setChosenShip(newChosenShip);
+    placingShip = true;
   }
 
   function placeChosenShip(e) {
@@ -92,7 +97,8 @@ const GameLogicContainer = (props) => {
       );
 
       if (shipPlacement === true) {
-        const newPlayerState = playerFactory('Player', player);
+        const newPlayerArray = [...player];
+        const newPlayerState = playerFactory('Player', newPlayerArray);
 
         newPlayerState.switchShipPlacement(shipNumber);
         placingShip = false;
@@ -110,8 +116,9 @@ const GameLogicContainer = (props) => {
       const blockId = parseInt(e.target.id);
       const newArray = [...playerBoard.gameboardArray];
       const newShips = [...playerBoard.playerShipPositions];
+      const newPlayerArray = [...player];
       const newBoardState = gameboardFactory(newArray, newShips);
-      const newPlayerState = playerFactory('Player', player);
+      const newPlayerState = playerFactory('Player', newPlayerArray);
 
       newPlayerState.switchShipPlacement(targetShipNumber);
       newBoardState.removeShip(targetShipNumber, blockId);
@@ -123,8 +130,11 @@ const GameLogicContainer = (props) => {
 
   function rotateShip(e) {
     e.stopPropagation();
+    const targetShipNumber = e.currentTarget.parentNode.getAttribute(
+      'data-shipnumber'
+    );
     console.log(e.target.parentNode);
-    if (placingShip) {
+    if (placingShip && targetShipNumber === chosenShip.shipNumber) {
       const newChosenShip = {
         shipLength: chosenShip.shipLength,
         orientation: chosenShip.orientation,
@@ -136,11 +146,12 @@ const GameLogicContainer = (props) => {
         : (newChosenShip.orientation = 'horizontal');
       setChosenShip(newChosenShip);
     }
-    const newPlayerState = playerFactory('Player', player);
-    const targetShipNumber = e.currentTarget.parentNode.getAttribute(
-      'data-shipnumber'
-    );
+    console.log(player);
+    const newPlayerArray = [...player];
+    const newPlayerState = playerFactory('Player', newPlayerArray);
+    console.log(player);
     newPlayerState.rotateShip(targetShipNumber);
+    console.log(player);
     setPlayer(newPlayerState.getInitialState());
   }
 

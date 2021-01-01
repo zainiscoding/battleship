@@ -16,6 +16,7 @@ const playerFactory = (name, playerShipsArray) => {
           orientation: 'horizontal',
           placed: false,
           positionsArray: [],
+          highlighted: false,
         };
       };
 
@@ -27,7 +28,6 @@ const playerFactory = (name, playerShipsArray) => {
 
       playerShips.push(newShip, newShip2, newShip3, newShip4, newShip5);
       playerShips.forEach((ship) => {
-        console.log('creating');
         createShipPositionsArray(
           ship.x,
           ship.y,
@@ -44,6 +44,24 @@ const playerFactory = (name, playerShipsArray) => {
     return [...playerShips];
   }
 
+  function highlightShip(shipIndex) {
+    const newShips = [...playerShips];
+    newShips.forEach((ship) => {
+      ship.highlighted = false;
+    });
+    const newShip = {
+      x: playerShips[shipIndex].x,
+      y: playerShips[shipIndex].y,
+      shipLength: playerShips[shipIndex].shipLength,
+      orientation: playerShips[shipIndex].orientation,
+      placed: false,
+      positionsArray: playerShips[shipIndex].positionsArray,
+      highlighted: true,
+    };
+    newShips.splice(shipIndex, 1, newShip);
+    return (playerShips = newShips);
+  }
+
   function rotateShip(shipIndex) {
     const orientation =
       playerShips[shipIndex].orientation === 'horizontal'
@@ -56,20 +74,28 @@ const playerFactory = (name, playerShipsArray) => {
       orientation: orientation,
       placed: false,
       positionsArray: playerShips[shipIndex].positionsArray,
+      highlighted: playerShips[shipIndex].highlighted,
     };
     return playerShips.splice(shipIndex, 1, newShip);
   }
 
   function switchShipPlacement(shipIndex) {
-    if (playerShips[shipIndex].placed === true) {
-      playerShips[shipIndex].placed = false;
-    } else {
-      return (playerShips[shipIndex].placed = true);
-    }
+    const placed = playerShips[shipIndex].placed === true ? false : true;
+    const newShip = {
+      x: playerShips[shipIndex].x,
+      y: playerShips[shipIndex].y,
+      shipLength: playerShips[shipIndex].shipLength,
+      orientation: playerShips[shipIndex].orientation,
+      placed: placed,
+      positionsArray: playerShips[shipIndex].positionsArray,
+      highlighted: false,
+    };
+    return playerShips.splice(shipIndex, 1, newShip);
   }
 
   return {
     getInitialState,
+    highlightShip,
     rotateShip,
     switchShipPlacement,
   };
