@@ -1,21 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+html{
+  font-size: 12px;
+}
+
 .App{
   display:flex;
+  flex-direction: column;
   place-items: center;
-  min-height: 100vh;
+  height: 100vh;
   width: 100vw;
   background: #242e42;
 }
 
 
 #game-wrapper {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr 9fr;
   height: 100%;
   width: 100%;
-  margin-top: 5%;
-  margin-bottom: 5%;
   place-content: center;
   color: #9a2881;
   font-family: 'Press Start 2P', cursive;
@@ -24,6 +27,10 @@
 
 #header-wrapper{
   align-self: center;
+  font-size: calc((0.2em + 1.5vmin) + (0.2em + 1.5vmax));
+  color: #9a2881;
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
 }
 
 #board-wrapper {
@@ -229,6 +236,8 @@ min-width: 25px;
   grid-row: 1;
   flex-wrap: wrap;
   width: auto;
+  max-width: 320px;
+  place-content: center;
   -webkit-box-shadow: 0px 0px 20px 1px #FFE9F3;
   -moz-box-shadow: 0px 0px 20px 1px #FFE9F3;
   box-shadow: 0px 0px 20px 1px #FFE9F3;
@@ -258,10 +267,13 @@ min-width: 25px;
   height: 100%;
 }
 
+
 #player-ships-wrapper__ships{
   display: flex;
   flex-direction: column;
   flex-flow: wrap;
+  width: 100%;
+  place-content: center;
 }
 
 .player-ships-wrapper__ship--horizontal {
@@ -282,7 +294,7 @@ min-width: 25px;
 .ship-highlight{
   height: fit-content;
   width: fit-content;
-  margin: 10px;
+  margin: 1%;
   cursor:pointer;
   background: #289a88;
   -webkit-box-shadow: 0px 0px 0px 1px #242e42;
@@ -293,7 +305,7 @@ min-width: 25px;
 .ship-highlight--selected{
   height: fit-content;
   width: fit-content;
-  margin: 10px;
+  margin: 1%;
   background: #289a88;
   -webkit-box-shadow: 1px 1px 1px 1px #F51743;
   -moz-box-shadow: 1px 1px 1px 1px #F51743;
@@ -312,6 +324,10 @@ min-width: 25px;
   -moz-box-shadow: 0px 0px 0px 1px #242e42;
   box-shadow: 0px 0px 0px 1px #242e42;
   pointer-events: none;
+}
+
+#instructions-wrapper__instructions{
+  font-size: 2vh;
 }
 
 .error-wrapper{
@@ -351,6 +367,10 @@ min-width: 25px;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     height: 31vw;
     width: 31vw;
+    max-height: 700px;
+    max-width: 700px;
+    min-height: 500px;
+    min-width: 500px;
   }
 
   #cat-face-wrapper__cat-face{
@@ -382,10 +402,9 @@ min-width: 25px;
     grid-column: 3;
     grid-row: 1;
     flex-wrap: wrap;
-    width: 500px;
     justify-content: space-around;
+    max-width: 500px;
   }
-  
   
 
   .player-ship-block--docked {

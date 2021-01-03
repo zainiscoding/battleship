@@ -56,7 +56,7 @@ const DisplayGame = (props) => {
               setX={setX}
               setY={setY}
               chooseShip={props.chooseShip}
-              rotateShip={props.rotateShip}
+              rotateShips={props.rotateShips}
               placeRandomShips={props.placeRandomShips}
             />
             {playerShips.length === 17 && (

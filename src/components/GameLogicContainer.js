@@ -64,7 +64,6 @@ const GameLogicContainer = (props) => {
     const newPlayerArray = [...player];
     const newPlayerState = playerFactory('Player', newPlayerArray);
     const targetShipNumber = parseInt(e.target.getAttribute('data-shipnumber'));
-    console.log(shipNumber);
     const newChosenShip = {
       shipLength: parseInt(e.target.getAttribute('data-length')),
       orientation: e.target.getAttribute('data-orientation'),
@@ -128,37 +127,19 @@ const GameLogicContainer = (props) => {
     }
   }
 
-  function rotateShip(e) {
-    e.stopPropagation();
-    const targetShipNumber = e.currentTarget.parentNode.getAttribute(
-      'data-shipnumber'
-    );
-    console.log(e.target.parentNode);
-    if (placingShip && targetShipNumber === chosenShip.shipNumber) {
-      const newChosenShip = {
-        shipLength: chosenShip.shipLength,
-        orientation: chosenShip.orientation,
-      };
-      const orientation = chosenShip.orientation;
-
-      orientation === 'horizontal'
-        ? (newChosenShip.orientation = 'vertical')
-        : (newChosenShip.orientation = 'horizontal');
-      setChosenShip(newChosenShip);
-    }
-    console.log(player);
+  function rotateShips() {
     const newPlayerArray = [...player];
     const newPlayerState = playerFactory('Player', newPlayerArray);
+
     console.log(player);
-    newPlayerState.rotateShip(targetShipNumber);
-    console.log(player);
+    newPlayerState.rotateShips();
     setPlayer(newPlayerState.getInitialState());
   }
 
   function placeRandomShips() {
-    placingShip = false;
     const newPlayer = gameboardFactory();
     const stateCopy = newPlayer.getInitialState();
+    placingShip = false;
     newPlayer.placeShips(newPlayer, newPlayer.gameboardArray);
     setPlayerBoard(stateCopy);
     startGame(true);
@@ -189,14 +170,14 @@ const GameLogicContainer = (props) => {
   }
 
   function restartGame() {
+    const newPlayerBoard = gameboardFactory();
+    const newComputerBoard = gameboardFactory();
     preparing = true;
+    gameOver = false;
     setPlayerTurn(true);
     setHitPlayerBlocks([]);
     setComputerHealth(5);
-    gameOver = false;
     setPlayerWins('');
-    const newPlayerBoard = gameboardFactory();
-    const newComputerBoard = gameboardFactory();
     setPlayer(initialPlayer.getInitialState());
     setComputer(initialComputer.getInitialState());
     setPlayerBoard(newPlayerBoard.getInitialState());
@@ -268,7 +249,7 @@ const GameLogicContainer = (props) => {
       chosenShip={chosenShip}
       placingShip={placingShip}
       placeChosenShip={placeChosenShip}
-      rotateShip={rotateShip}
+      rotateShips={rotateShips}
       preparing={preparing}
       startGame={startGame}
       placeRandomShips={placeRandomShips}
