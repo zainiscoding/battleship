@@ -228,20 +228,38 @@ min-width: 25px;
 }
 
 #player-ships-wrapper {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto auto auto;
   align-items: center;
-  height: 100%;
+  place-content: center;
   grid-column: 3;
   grid-row: 1;
-  flex-wrap: wrap;
+  height: 100%;
   width: auto;
   max-width: 320px;
-  place-content: center;
+  flex-wrap: wrap;
+  padding: 3%;
   -webkit-box-shadow: 0px 0px 20px 1px #FFE9F3;
   -moz-box-shadow: 0px 0px 20px 1px #FFE9F3;
   box-shadow: 0px 0px 20px 1px #FFE9F3;
 }
+
+#player-ships-wrapper__ships{
+  display: grid;
+  grid-row: 2;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  place-content: center;
+}
+
+#player-ships-wrapper__ships__horizontal{
+  grid-column: 1;
+}
+
+#player-ships-wrapper__ships__vertical{
+  grid-column: 2;
+}
+
 
 .ship {
   background: #536996;
@@ -250,7 +268,14 @@ min-width: 25px;
   box-shadow: 0px 0px 0px 1px #242e42;
 }
 
+#player-ships-wrapper__instructions-wrapper{
+  display: flex;
+  flex-direction: column;
+  grid-row: 1;
+}
+
 .ship__rotate-ship-button{
+  grid-row: 1;
   border: none;
   outline: none;
   align-self: center;
@@ -269,9 +294,9 @@ min-width: 25px;
 
 
 #player-ships-wrapper__ships{
-  display: flex;
-  flex-direction: column;
-  flex-flow: wrap;
+  display: grid;
+  grid-row: 2;
+  grid-template-columns: 1fr 1fr;
   width: 100%;
   place-content: center;
 }
@@ -326,6 +351,10 @@ min-width: 25px;
   pointer-events: none;
 }
 
+#player_ships_wrapper--auto-place-wrapper{
+  grid-row: 3;
+}
+
 #instructions-wrapper__instructions{
   font-size: 2vh;
 }
@@ -346,6 +375,7 @@ min-width: 25px;
 @media only screen and (min-width: 769px) {
   #board-wrapper {
     display: grid;
+    grid-gap: 1%;
     grid-template-columns: 2fr 1fr 2fr;
     place-items: center;
     align-self: center;
@@ -367,8 +397,6 @@ min-width: 25px;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     height: 31vw;
     width: 31vw;
-    max-height: 700px;
-    max-width: 700px;
     min-height: 500px;
     min-width: 500px;
   }
@@ -395,7 +423,8 @@ min-width: 25px;
   }
 
   #player-ships-wrapper {
-    display: flex;
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
     flex-direction: column;
     align-items: center;
     height: 100%;
@@ -403,7 +432,9 @@ min-width: 25px;
     grid-row: 1;
     flex-wrap: wrap;
     justify-content: space-around;
-    max-width: 500px;
+    max-height: 70vh;
+    max-width: 30vw;
+    min-height: 500px;
   }
   
 
