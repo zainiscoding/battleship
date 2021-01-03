@@ -62,26 +62,21 @@ const playerFactory = (name, playerShipsArray) => {
     return (playerShips = newShips);
   }
 
-  function rotateShips() {
-    const newPlayerShips = [...playerShips];
-    newPlayerShips.forEach((ship) => {
-      if (!ship.placed) {
-        const newShip = shipFactory(ship.shipLength);
-        const newOrientation =
-          ship.orientation === 'horizontal' ? 'vertical' : 'horizontal';
-        newShip.orientation = newOrientation;
-        createShipPositionsArray(
-          newShip.x,
-          newShip.y,
-          newShip.orientation,
-          newShip.shipLength,
-          newShip.positions,
-          newShip.positionsArray
-        );
-        return newPlayerShips.splice(newPlayerShips.indexOf(ship), 1, newShip);
-      }
-    });
-    return (playerShips = newPlayerShips);
+  function rotateShip(shipIndex) {
+    const orientation =
+      playerShips[shipIndex].orientation === 'horizontal'
+        ? 'vertical'
+        : 'horizontal';
+    const newShip = {
+      x: playerShips[shipIndex].x,
+      y: playerShips[shipIndex].y,
+      shipLength: playerShips[shipIndex].shipLength,
+      orientation: orientation,
+      placed: false,
+      positionsArray: playerShips[shipIndex].positionsArray,
+      highlighted: playerShips[shipIndex].highlighted,
+    };
+    return playerShips.splice(shipIndex, 1, newShip);
   }
 
   function switchShipPlacement(shipIndex) {
@@ -101,7 +96,7 @@ const playerFactory = (name, playerShipsArray) => {
   return {
     getInitialState,
     highlightShip,
-    rotateShips,
+    rotateShip,
     switchShipPlacement,
   };
 };

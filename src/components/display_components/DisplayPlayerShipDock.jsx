@@ -11,16 +11,6 @@ const DisplayPlayerShipDock = (props) => {
           Click on the green area of a ship to begin placing. Click on the board
           to place the selected ship.
         </p>
-        <button
-          onClick={props.rotateShips}
-          className='ship__rotate-ship-button'
-        >
-          <img
-            className='rotate-ship-button__img'
-            src={rotateButton}
-            alt='Rotate ship icon'
-          />
-        </button>
       </div>
       <div id='player-ships-wrapper__ships'>
         <div id='player-ships-wrapper__ships__horizontal'>
@@ -49,6 +39,16 @@ const DisplayPlayerShipDock = (props) => {
                       data-orientation={ship.orientation}
                       onClick={props.chooseShip}
                     >
+                      <button
+                        onClick={props.rotateShip}
+                        className='ship__rotate-ship-button'
+                      >
+                        <img
+                          className='rotate-ship-button__img'
+                          src={rotateButton}
+                          alt='Rotate ship icon'
+                        />
+                      </button>
                       <>
                         {ship.positionsArray.map((position, index) => {
                           return (
@@ -95,6 +95,16 @@ const DisplayPlayerShipDock = (props) => {
                       data-orientation={ship.orientation}
                       onClick={props.chooseShip}
                     >
+                      <button
+                        onClick={props.rotateShip}
+                        className='ship__rotate-ship-button'
+                      >
+                        <img
+                          className='rotate-ship-button__img'
+                          src={rotateButton}
+                          alt='Rotate ship icon'
+                        />
+                      </button>
                       <>
                         {ship.positionsArray.map((position, index) => {
                           return (
