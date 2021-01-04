@@ -9,7 +9,8 @@ const DisplayPlayerShipDock = (props) => {
         </h2>
         <p id='instructions-wrapper__instructions'>
           Click on the green area of a ship to begin placing. Click on the board
-          to place the selected ship.
+          to place the selected ship. Once placed, click again to remove the
+          ship.
         </p>
       </div>
       <div id='player-ships-wrapper__ships'>

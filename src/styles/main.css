@@ -373,7 +373,7 @@ min-width: 25px;
   #board-wrapper {
     display: grid;
     grid-gap: 1%;
-    grid-template-columns: 2fr 1fr 2fr;
+    grid-template-columns: 0fr 1fr 1fr;
     place-items: center;
     align-self: center;
   }
