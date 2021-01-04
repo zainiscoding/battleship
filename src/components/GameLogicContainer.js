@@ -2,6 +2,7 @@ import playerFactory from '../factories/playerFactory';
 import gameboardFactory from '../factories/gameboardFactory';
 import DisplayGame from './display_components/DisplayGame';
 import computerAttack from '../helper_functions/computerAttack';
+import React from 'react';
 import { useEffect, useState } from 'react';
 
 let placingShip = false;

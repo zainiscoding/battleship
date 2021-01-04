@@ -4,9 +4,6 @@ const DisplayPlayerShipDock = (props) => {
   return (
     <div id='player-ships-wrapper'>
       <div id='player-ships-wrapper__instructions-wrapper'>
-        <h2 id='instructions-wrapper__place-all-ships-header'>
-          Place your ships
-        </h2>
         <p id='instructions-wrapper__instructions'>
           Click on the green area of a ship to begin placing. Click on the board
           to place the selected ship. Once placed, click again to remove the
@@ -40,7 +37,7 @@ const DisplayPlayerShipDock = (props) => {
                       data-orientation={ship.orientation}
                       onClick={props.chooseShip}
                     >
-                      <button
+                      <div
                         onClick={props.rotateShip}
                         className='ship__rotate-ship-button'
                       >
@@ -49,7 +46,7 @@ const DisplayPlayerShipDock = (props) => {
                           src={rotateButton}
                           alt='Rotate ship icon'
                         />
-                      </button>
+                      </div>
                       <>
                         {ship.positionsArray.map((position, index) => {
                           return (
@@ -96,7 +93,7 @@ const DisplayPlayerShipDock = (props) => {
                       data-orientation={ship.orientation}
                       onClick={props.chooseShip}
                     >
-                      <button
+                      <div
                         onClick={props.rotateShip}
                         className='ship__rotate-ship-button'
                       >
@@ -105,7 +102,7 @@ const DisplayPlayerShipDock = (props) => {
                           src={rotateButton}
                           alt='Rotate ship icon'
                         />
-                      </button>
+                      </div>
                       <>
                         {ship.positionsArray.map((position, index) => {
                           return (
@@ -127,12 +124,20 @@ const DisplayPlayerShipDock = (props) => {
           })}
         </div>
       </div>
-      <div id='player_ships_wrapper--auto-place-wrapper'>
+      <div id='player-ships-wrapper__auto-place-wrapper'>
         <p>
-          Alternatively, press "auto place" to automatically place all ships and
+          Alternatively, press "Auto place" to automatically place all ships and
           begin the game.
         </p>
-        <button onClick={props.placeRandomShips}>Auto place</button>
+        <div
+          id='player-ships-wrapper__auto-place-button'
+          onClick={props.placeRandomShips}
+          onMouseEnter={(e) =>
+            (e.target.id = 'player-ships-wrapper__auto-place-button--color')
+          }
+        >
+          Auto place
+        </div>
       </div>
     </div>
   );

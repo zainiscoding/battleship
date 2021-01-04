@@ -13,9 +13,9 @@ const DisplayPlayerBoard = (props) => {
             if (block.ship && block.sunk) {
               return (
                 <div
-                  key={index}
                   className='player-ship-block--sunk'
                   id={index}
+                  key={index}
                   data-x={props.setX(index)}
                   data-y={props.setY(index)}
                 ></div>
@@ -23,25 +23,23 @@ const DisplayPlayerBoard = (props) => {
             } else if (block.hit) {
               return (
                 <div
-                  key={index}
                   className='player-ship-block--hit'
                   id={index}
+                  key={index}
                   data-x={props.setX(index)}
                   data-y={props.setY(index)}
-                >
-                  !
-                </div>
+                ></div>
               );
             } else if (block.ship && !block.hit) {
               return (
                 <div
-                  key={index}
                   className={
                     props.preparing
                       ? 'player-ship-block--removable'
                       : 'player-ship-block'
                   }
                   id={index}
+                  key={index}
                   data-x={props.setX(index)}
                   data-y={props.setY(index)}
                   data-shipnumber={block.ship.shipNumber}
@@ -55,8 +53,8 @@ const DisplayPlayerBoard = (props) => {
               <>
                 {!block.ship && (
                   <div
-                    key={index}
                     id={index}
+                    key={index}
                     className={
                       props.hoveredBlocks.includes(index)
                         ? 'empty-block--hovered'

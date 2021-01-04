@@ -34,7 +34,7 @@ const DisplayGame = (props) => {
   return (
     <div id='game-wrapper'>
       <div id='header-wrapper'>
-        <h1>Battleship</h1>
+        <h1>BATTLESHIP</h1>
       </div>
       <div id='board-wrapper'>
         <PlayerBoardContainer
@@ -60,9 +60,13 @@ const DisplayGame = (props) => {
               placeRandomShips={props.placeRandomShips}
             />
             {playerShips.length === 17 && (
-              <button id='start-game-button' onClick={props.startGame}>
-                Start game
-              </button>
+              <div
+                id='start-game-button'
+                onClick={props.startGame}
+                onMouseEnter={(e) => (e.target.id = 'start-game-button--color')}
+              >
+                Start
+              </div>
             )}
           </>
         )}
@@ -81,16 +85,20 @@ const DisplayGame = (props) => {
               {props.gameOver && (
                 <>
                   {props.playerWins ? (
-                    <div id='game-over-info'>
-                      You win!{' '}
-                      <button onClick={props.restartGame}>Restart</button>
-                    </div>
+                    <div id='game-over-info'>You win! </div>
                   ) : (
-                    <div id='game-over-info'>
-                      You lose!{' '}
-                      <button onClick={props.restartGame}>Restart</button>
-                    </div>
+                    <div id='game-over-info'>You lose! </div>
                   )}
+                  <div
+                    id='game-over-info__restart-game-button'
+                    onClick={props.restartGame}
+                    onMouseEnter={(e) =>
+                      (e.target.id =
+                        'game-over-info__restart-game-button--color')
+                    }
+                  >
+                    Restart
+                  </div>
                 </>
               )}
               <DisplayEnemyFace

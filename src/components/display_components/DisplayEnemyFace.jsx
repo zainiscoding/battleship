@@ -54,6 +54,7 @@ const DisplayEnemyFace = (props) => {
           return (
             <img
               className='cat-lives-wrapper__heart'
+              key={index}
               src={catHeart}
               alt='Cat life'
             />

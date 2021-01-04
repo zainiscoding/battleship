@@ -20,9 +20,7 @@ const DisplayComputerBoard = (props) => {
               id={index}
               data-x={props.setX(index)}
               data-y={props.setY(index)}
-            >
-              !
-            </div>
+            ></div>
           );
         } else if (block.ship && !block.hit) {
           return (
@@ -33,9 +31,10 @@ const DisplayComputerBoard = (props) => {
               data-x={props.setX(index)}
               data-y={props.setY(index)}
               onClick={props.playerAttackHandler}
-            >
-              s
-            </div>
+              onMouseEnter={(e) =>
+                (e.target.className = 'enemy-ship-block--color')
+              }
+            ></div>
           );
         } else if (block.miss) {
           return <div key={index} className='miss-block'></div>;
@@ -50,6 +49,9 @@ const DisplayComputerBoard = (props) => {
                 data-x={props.setX(index)}
                 data-y={props.setY(index)}
                 onClick={props.playerAttackHandler}
+                onMouseEnter={(e) =>
+                  (e.target.className = 'empty-block--color')
+                }
               ></div>
             )}
           </>
