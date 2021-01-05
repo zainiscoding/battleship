@@ -48,27 +48,24 @@ const DisplayPlayerBoard = (props) => {
               );
             } else if (block.miss) {
               return <div key={index} className='miss-block'></div>;
+            } else {
+              return (
+                <div
+                  id={index}
+                  key={index}
+                  className={
+                    props.hoveredBlocks.includes(index)
+                      ? 'empty-block--hovered'
+                      : 'empty-block--hovered--not-allowed'
+                  }
+                  data-x={props.setX(index)}
+                  data-y={props.setY(index)}
+                  onClick={props.placeChosenShip}
+                  onMouseEnter={props.handleHover}
+                  onMouseLeave={props.removeHoveredBlocks}
+                ></div>
+              );
             }
-            return (
-              <>
-                {!block.ship && (
-                  <div
-                    id={index}
-                    key={index}
-                    className={
-                      props.hoveredBlocks.includes(index)
-                        ? 'empty-block--hovered'
-                        : 'empty-block--hovered--not-allowed'
-                    }
-                    data-x={props.setX(index)}
-                    data-y={props.setY(index)}
-                    onClick={props.placeChosenShip}
-                    onMouseEnter={props.handleHover}
-                    onMouseLeave={props.removeHoveredBlocks}
-                  ></div>
-                )}
-              </>
-            );
           })}
         </>
       )}

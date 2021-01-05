@@ -378,6 +378,10 @@ html {
   font-size: calc((0.05em + 0.6vmin) + (0.05em + 1vmax));
 }
 
+#instructions-wrapper__instructions--green{
+  color: #289a88;
+}
+
 #player-ships-wrapper__auto-place-wrapper {
   display: grid;
   grid-gap: 10px;
@@ -422,6 +426,7 @@ html {
   grid-column: 2;
   background: #289a88;
   width: min-content;
+  margin: 20px;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 10px;

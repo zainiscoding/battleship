@@ -241,7 +241,6 @@ const GameLogicContainer = (props) => {
 
   useEffect(() => {
     setTimeout(function () {
-      console.log('happening');
       if (playerHit === true) {
         setPlayerHit(false);
       } else if (playerMiss === true) {

@@ -13,9 +13,10 @@ function createGameboardArray() {
       }
     }
 
+    // eslint-disable-next-line
     function setY() {
       if (i % 10 === 0 && i > 9) {
-        loopCounter += 1;
+        loopCounter++;
       }
       return y - loopCounter;
     }

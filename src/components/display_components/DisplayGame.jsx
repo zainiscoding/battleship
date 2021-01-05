@@ -19,11 +19,12 @@ const DisplayGame = (props) => {
   function setY(index) {
     let y = 9;
     if (index > 89) {
-      return (y = 0);
+      y = 0;
     } else {
       const val = Math.floor(index / 10);
-      return (y = 9 - val);
+      y = 9 - val;
     }
+    return y;
   }
 
   //For preventing the start button from appearing before placing all ships
@@ -50,15 +51,6 @@ const DisplayGame = (props) => {
         />
         {props.preparing && (
           <>
-            <DisplayPlayerShipDock
-              player={props.player}
-              playerBoard={props.playerBoard}
-              setX={setX}
-              setY={setY}
-              chooseShip={props.chooseShip}
-              rotateShip={props.rotateShip}
-              placeRandomShips={props.placeRandomShips}
-            />
             {playerShips.length === 17 && (
               <div
                 id='start-game-button'
@@ -68,6 +60,15 @@ const DisplayGame = (props) => {
                 Start
               </div>
             )}
+            <DisplayPlayerShipDock
+              player={props.player}
+              playerBoard={props.playerBoard}
+              setX={setX}
+              setY={setY}
+              chooseShip={props.chooseShip}
+              rotateShip={props.rotateShip}
+              placeRandomShips={props.placeRandomShips}
+            />
           </>
         )}
         {!props.preparing && (

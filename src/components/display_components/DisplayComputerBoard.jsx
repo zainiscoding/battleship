@@ -38,24 +38,19 @@ const DisplayComputerBoard = (props) => {
           );
         } else if (block.miss) {
           return <div key={index} className='miss-block'></div>;
+        } else {
+          return (
+            <div
+              key={index}
+              className='empty-block'
+              id={index}
+              data-x={props.setX(index)}
+              data-y={props.setY(index)}
+              onClick={props.playerAttackHandler}
+              onMouseEnter={(e) => (e.target.className = 'empty-block--color')}
+            ></div>
+          );
         }
-        return (
-          <>
-            {!block.ship && (
-              <div
-                key={index}
-                className='empty-block'
-                id={index}
-                data-x={props.setX(index)}
-                data-y={props.setY(index)}
-                onClick={props.playerAttackHandler}
-                onMouseEnter={(e) =>
-                  (e.target.className = 'empty-block--color')
-                }
-              ></div>
-            )}
-          </>
-        );
       })}
     </div>
   );
