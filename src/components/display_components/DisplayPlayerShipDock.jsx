@@ -4,13 +4,13 @@ const DisplayPlayerShipDock = (props) => {
   return (
     <div id='player-ships-wrapper'>
       <div id='player-ships-wrapper__instructions-wrapper'>
-        <p id='instructions-wrapper__instructions'>
+        <div id='instructions-wrapper__instructions'>
           Click on a
           <span id='instructions-wrapper__instructions--green'> green </span>
           block to begin placing.
           <p>Click on the board to place the selected ship.</p>
           <p> Once placed, click again to remove the ship.</p>
-        </p>
+        </div>
       </div>
       <div id='player-ships-wrapper__ships'>
         <div id='player-ships-wrapper__ships__horizontal'>

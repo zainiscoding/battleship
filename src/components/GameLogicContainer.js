@@ -130,10 +130,12 @@ const GameLogicContainer = (props) => {
 
   function rotateShip(e) {
     e.stopPropagation();
-    const targetShipNumber = e.currentTarget.parentNode.getAttribute(
-      'data-shipnumber'
+    const targetShipNumber = parseInt(
+      e.currentTarget.parentNode.getAttribute('data-shipnumber')
     );
+
     if (placingShip && targetShipNumber === chosenShip.shipNumber) {
+      console.log('here');
       const newChosenShip = {
         shipLength: chosenShip.shipLength,
         orientation: chosenShip.orientation,
