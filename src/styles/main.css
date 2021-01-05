@@ -40,6 +40,7 @@ html {
   place-items: center;
   align-self: center;
   padding-bottom: 10px;
+  width: 100vw;
 }
 
 #board-wrapper__player-board-wrapper {
@@ -72,9 +73,6 @@ html {
   font-size: calc((0.2em + 1vmin) + (0.2em + 1vmax));
 }
 
-#turn-display {
-}
-
 #cat-face-wrapper {
   display: flex;
   width: 100%;
@@ -90,7 +88,7 @@ html {
 
 #cat-lives-wrapper {
   display: grid;
-  width: 50%;
+  width: 45%;
   justify-content: center;
   place-items: center;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -538,8 +536,9 @@ html {
     font-size: calc((0.05em + 0.6vmin) + (0.05em + 0.5vmax));
   }
 
-  .cat-lives-wrapper__heart {
-    width: 2.5vw;
+
+  #cat-lives-wrapper {
+    width: 60%;
   }
 
   #board-wrapper__computer-board-wrapper {
