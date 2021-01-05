@@ -50,7 +50,7 @@ const DisplayEnemyFace = (props) => {
         )}
       </div>
       <div id='cat-lives-wrapper'>
-        {Array.from(Array(props.computerHealth)).map((index) => {
+        {Array.from(Array(props.computerHealth)).map((heart, index) => {
           return (
             <img
               className='cat-lives-wrapper__heart'
