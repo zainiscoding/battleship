@@ -63,14 +63,16 @@ html {
 }
 
 #info-area {
-  display: grid;
-  grid-column: 2;
-  grid-row: 1;
-  place-items: center;
-  grid-template-rows: 1fr 4fr 1fr;
-  height: 100%;
-  width: 100%;
-  font-size: calc((0.2em + 1vmin) + (0.2em + 1vmax));
+    display: flex;
+    flex-direction: column;
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    place-items: center;
+    height: 100%;
+    width: 100%;
+    font-size: calc(.4em + 1vmin + 1vmax);
 }
 
 #cat-face-wrapper {
