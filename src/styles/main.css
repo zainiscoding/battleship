@@ -3,6 +3,7 @@
 html {
   font-size: 12px;
   background: #242e42;
+  user-select: none;
 }
 
 .App {
@@ -226,7 +227,7 @@ html {
   cursor: pointer;
 }
 
-.enemy-ship-block--color {
+/* .enemy-ship-block--color {
   background: #536996;
   -webkit-box-shadow: 0px 0px 0px 1px #242e42;
   -moz-box-shadow: 0px 0px 0px 1px #242e42;
@@ -241,7 +242,7 @@ html {
   -moz-box-shadow: 0px 0px 0px 1px #242e42;
   box-shadow: 0px 0px 0px 1px #242e42;
   cursor: pointer;
-}
+} */
 
 .enemy-ship-block--hit {
   display: flex;
@@ -469,6 +470,8 @@ html {
   padding-bottom: 5px;
   padding-left: 10px;
   padding-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-size: calc((0.05em + 0.5vmin) + (0.05em + 0.8vmax));
   cursor: pointer;
   grid-row: 3;
@@ -558,6 +561,15 @@ html {
     width: 31vw;
   }
 
+  .enemy-ship-block--color {
+    background: #536996;
+    -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+    -moz-box-shadow: 0px 0px 0px 1px #242e42;
+    box-shadow: 0px 0px 0px 1px #242e42;
+    cursor: pointer;
+    transition: all ease-in-out;
+  }
+
   #player-ships-wrapper {
     display: grid;
     grid-gap: 10px;
@@ -604,5 +616,15 @@ html {
     align-items: center;
     width: fit-content;
     height: fit-content;
+  }
+}
+
+@media (hover: hover) {
+  .enemy-ship-block--color:hover {
+    background: #1c6c67;
+    -webkit-box-shadow: 0px 0px 0px 1px #242e42;
+    -moz-box-shadow: 0px 0px 0px 1px #242e42;
+    box-shadow: 0px 0px 0px 1px #242e42;
+    cursor: pointer;
   }
 }
