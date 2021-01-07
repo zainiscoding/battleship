@@ -70,9 +70,14 @@ html {
     margin-top: 10px;
     margin-bottom: 10px;
     place-items: center;
+    justify-content: space-evenly;
+    font-size: calc(.4em + 1vmin + 1vmax);
     height: 100%;
     width: 100%;
-    font-size: calc(.4em + 1vmin + 1vmax);
+}
+
+#turn-display{
+  margin-bottom: 10px;
 }
 
 #cat-face-wrapper {
