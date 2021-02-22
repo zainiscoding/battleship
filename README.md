@@ -2,6 +2,8 @@
 
 A test-driven incarnation of Battleship created with React and tested with Jest.
 
+[View live](https://zainthedev.github.io/battleship/)
+
 ## Screenshots
 
 <img src="https://i.imgur.com/GS1Yy5r.png" width="45%"></img> <img src="https://i.imgur.com/b5wik2i.png" width="45%"></img>
